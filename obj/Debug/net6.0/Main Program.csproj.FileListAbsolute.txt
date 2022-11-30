@@ -1,0 +1,50 @@
+/home/rodrigo/Documents/Programming/Card Project/Main Program/bin/Debug/net6.0/Main Program
+/home/rodrigo/Documents/Programming/Card Project/Main Program/bin/Debug/net6.0/Main Program.deps.json
+/home/rodrigo/Documents/Programming/Card Project/Main Program/bin/Debug/net6.0/Main Program.runtimeconfig.json
+/home/rodrigo/Documents/Programming/Card Project/Main Program/bin/Debug/net6.0/Main Program.dll
+/home/rodrigo/Documents/Programming/Card Project/Main Program/bin/Debug/net6.0/ref/Main Program.dll
+/home/rodrigo/Documents/Programming/Card Project/Main Program/bin/Debug/net6.0/Main Program.pdb
+/home/rodrigo/Documents/Programming/Card Project/Main Program/bin/Debug/net6.0/Card Generator Mannager.dll
+/home/rodrigo/Documents/Programming/Card Project/Main Program/bin/Debug/net6.0/CardLibrary.dll
+/home/rodrigo/Documents/Programming/Card Project/Main Program/bin/Debug/net6.0/Selector.dll
+/home/rodrigo/Documents/Programming/Card Project/Main Program/bin/Debug/net6.0/CardLibrary.pdb
+/home/rodrigo/Documents/Programming/Card Project/Main Program/bin/Debug/net6.0/Selector.pdb
+/home/rodrigo/Documents/Programming/Card Project/Main Program/bin/Debug/net6.0/Card Generator Mannager.pdb
+/home/rodrigo/Documents/Programming/Card Project/Main Program/obj/Debug/net6.0/Main Program.csproj.AssemblyReference.cache
+/home/rodrigo/Documents/Programming/Card Project/Main Program/obj/Debug/net6.0/Main Program.GeneratedMSBuildEditorConfig.editorconfig
+/home/rodrigo/Documents/Programming/Card Project/Main Program/obj/Debug/net6.0/Main Program.AssemblyInfoInputs.cache
+/home/rodrigo/Documents/Programming/Card Project/Main Program/obj/Debug/net6.0/Main Program.AssemblyInfo.cs
+/home/rodrigo/Documents/Programming/Card Project/Main Program/obj/Debug/net6.0/Main Program.csproj.CoreCompileInputs.cache
+/home/rodrigo/Documents/Programming/Card Project/Main Program/obj/Debug/net6.0/Main Program.csproj.CopyComplete
+/home/rodrigo/Documents/Programming/Card Project/Main Program/obj/Debug/net6.0/Main Program.dll
+/home/rodrigo/Documents/Programming/Card Project/Main Program/obj/Debug/net6.0/ref/Main Program.dll
+/home/rodrigo/Documents/Programming/Card Project/Main Program/obj/Debug/net6.0/Main Program.pdb
+/home/rodrigo/Documents/Programming/Card Project/Main Program/obj/Debug/net6.0/Main Program.genruntimeconfig.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Main Program
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Main Program.deps.json
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Main Program.runtimeconfig.json
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Main Program.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/ref/Main Program.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Main Program.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Card Generator Mannager.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/CardLibrary.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Deck Library.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Effects.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Player Library.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Selector.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Selector.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Card Generator Mannager.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Deck Library.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Player Library.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/Effects.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/bin/Debug/net6.0/CardLibrary.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/obj/Debug/net6.0/Main Program.csproj.AssemblyReference.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/obj/Debug/net6.0/Main Program.GeneratedMSBuildEditorConfig.editorconfig
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/obj/Debug/net6.0/Main Program.AssemblyInfoInputs.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/obj/Debug/net6.0/Main Program.AssemblyInfo.cs
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/obj/Debug/net6.0/Main Program.csproj.CoreCompileInputs.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/obj/Debug/net6.0/Main Program.csproj.CopyComplete
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/obj/Debug/net6.0/Main Program.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/obj/Debug/net6.0/ref/Main Program.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/obj/Debug/net6.0/Main Program.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/obj/Debug/net6.0/Main Program.genruntimeconfig.cache

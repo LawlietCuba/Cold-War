@@ -1,0 +1,100 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Main Program/1.0.0": {
+        "dependencies": {
+          "Effects": "1.0.0",
+          "Selector": "1.0.0"
+        },
+        "runtime": {
+          "Main Program.dll": {}
+        }
+      },
+      "Card Generator Mannager/1.0.0": {
+        "dependencies": {
+          "CardLibrary": "1.0.0",
+          "Selector": "1.0.0"
+        },
+        "runtime": {
+          "Card Generator Mannager.dll": {}
+        }
+      },
+      "CardLibrary/1.0.0": {
+        "runtime": {
+          "CardLibrary.dll": {}
+        }
+      },
+      "Deck Library/1.0.0": {
+        "dependencies": {
+          "CardLibrary": "1.0.0",
+          "Selector": "1.0.0"
+        },
+        "runtime": {
+          "Deck Library.dll": {}
+        }
+      },
+      "Effects/1.0.0": {
+        "runtime": {
+          "Effects.dll": {}
+        }
+      },
+      "Player Library/1.0.0": {
+        "dependencies": {
+          "CardLibrary": "1.0.0",
+          "Deck Library": "1.0.0",
+          "Selector": "1.0.0"
+        },
+        "runtime": {
+          "Player Library.dll": {}
+        }
+      },
+      "Selector/1.0.0": {
+        "runtime": {
+          "Selector.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Main Program/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Card Generator Mannager/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CardLibrary/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Deck Library/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Effects/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Player Library/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Selector/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

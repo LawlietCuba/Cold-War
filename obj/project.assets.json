@@ -1,0 +1,192 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "Card Generator Mannager/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "CardLibrary": "1.0.0",
+          "Selector": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Card Generator Mannager.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Card Generator Mannager.dll": {}
+        }
+      },
+      "CardLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/CardLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CardLibrary.dll": {}
+        }
+      },
+      "Deck Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "CardLibrary": "1.0.0",
+          "Selector": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Deck Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Deck Library.dll": {}
+        }
+      },
+      "Effects/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Effects.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Effects.dll": {}
+        }
+      },
+      "Player Library/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "CardLibrary": "1.0.0",
+          "Deck Library": "1.0.0",
+          "Selector": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Player Library.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Player Library.dll": {}
+        }
+      },
+      "Selector/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Selector.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Selector.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Card Generator Mannager/1.0.0": {
+      "type": "project",
+      "path": "../Class Library Project/Card Generator Mannager/Card Generator Mannager.csproj",
+      "msbuildProject": "../Class Library Project/Card Generator Mannager/Card Generator Mannager.csproj"
+    },
+    "CardLibrary/1.0.0": {
+      "type": "project",
+      "path": "../Class Library Project/Card Library/CardLibrary.csproj",
+      "msbuildProject": "../Class Library Project/Card Library/CardLibrary.csproj"
+    },
+    "Deck Library/1.0.0": {
+      "type": "project",
+      "path": "../Class Library Project/Deck Library/Deck Library.csproj",
+      "msbuildProject": "../Class Library Project/Deck Library/Deck Library.csproj"
+    },
+    "Effects/1.0.0": {
+      "type": "project",
+      "path": "../Class Library Project/Effects/Effects.csproj",
+      "msbuildProject": "../Class Library Project/Effects/Effects.csproj"
+    },
+    "Player Library/1.0.0": {
+      "type": "project",
+      "path": "../Class Library Project/Player Library/Player Library.csproj",
+      "msbuildProject": "../Class Library Project/Player Library/Player Library.csproj"
+    },
+    "Selector/1.0.0": {
+      "type": "project",
+      "path": "../Class Library Project/Selector/Selector.csproj",
+      "msbuildProject": "../Class Library Project/Selector/Selector.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "Card Generator Mannager >= 1.0.0",
+      "Deck Library >= 1.0.0",
+      "Effects >= 1.0.0",
+      "Player Library >= 1.0.0",
+      "Selector >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/home/daniel/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/Main Program.csproj",
+      "projectName": "Main Program",
+      "projectPath": "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/Main Program.csproj",
+      "packagesPath": "/home/daniel/.nuget/packages/",
+      "outputPath": "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Main Program/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/daniel/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Generator Mannager/Card Generator Mannager.csproj": {
+              "projectPath": "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Generator Mannager/Card Generator Mannager.csproj"
+            },
+            "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/Deck Library.csproj": {
+              "projectPath": "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/Deck Library.csproj"
+            },
+            "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Effects/Effects.csproj": {
+              "projectPath": "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Effects/Effects.csproj"
+            },
+            "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Player Library/Player Library.csproj": {
+              "projectPath": "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Player Library/Player Library.csproj"
+            },
+            "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/Selector.csproj": {
+              "projectPath": "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/Selector.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/home/daniel/.dotnet-6.0/sdk/6.0.100/RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
