@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Card Library\CardLibrary.csproj" />
+    <ProjectReference Include="..\Player Library\Player Library.csproj" />
+    <ProjectReference Include="..\Deck Library\Deck Library.csproj" />
+    <ProjectReference Include="..\Selector\Selector.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Board_Library</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

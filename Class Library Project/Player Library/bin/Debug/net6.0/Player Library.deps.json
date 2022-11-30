@@ -1,0 +1,61 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Player Library/1.0.0": {
+        "dependencies": {
+          "CardLibrary": "1.0.0",
+          "Selector": "1.0.0"
+        },
+        "runtime": {
+          "Player Library.dll": {}
+        }
+      },
+      "CardLibrary/1.0.0": {
+        "runtime": {
+          "CardLibrary.dll": {}
+        }
+      },
+      "Deck Library/1.0.0": {
+        "dependencies": {
+          "CardLibrary": "1.0.0",
+          "Selector": "1.0.0"
+        },
+        "runtime": {
+          "Deck Library.dll": {}
+        }
+      },
+      "Selector/1.0.0": {
+        "runtime": {
+          "Selector.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Player Library/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CardLibrary/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Deck Library/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Selector/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

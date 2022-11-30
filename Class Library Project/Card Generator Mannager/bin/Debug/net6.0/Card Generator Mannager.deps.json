@@ -1,0 +1,47 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Card Generator Mannager/1.0.0": {
+        "dependencies": {
+          "CardLibrary": "1.0.0",
+          "Selector": "1.0.0"
+        },
+        "runtime": {
+          "Card Generator Mannager.dll": {}
+        }
+      },
+      "CardLibrary/1.0.0": {
+        "runtime": {
+          "CardLibrary.dll": {}
+        }
+      },
+      "Selector/1.0.0": {
+        "runtime": {
+          "Selector.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Card Generator Mannager/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CardLibrary/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Selector/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

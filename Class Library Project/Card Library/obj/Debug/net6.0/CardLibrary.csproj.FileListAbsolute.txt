@@ -1,0 +1,36 @@
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/CardLibrary/bin/Debug/net6.0/CardLibrary.deps.json
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/CardLibrary/bin/Debug/net6.0/CardLibrary.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/CardLibrary/bin/Debug/net6.0/ref/CardLibrary.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/CardLibrary/bin/Debug/net6.0/CardLibrary.pdb
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/CardLibrary/obj/Debug/net6.0/CardLibrary.csproj.AssemblyReference.cache
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/CardLibrary/obj/Debug/net6.0/CardLibrary.GeneratedMSBuildEditorConfig.editorconfig
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/CardLibrary/obj/Debug/net6.0/CardLibrary.AssemblyInfoInputs.cache
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/CardLibrary/obj/Debug/net6.0/CardLibrary.AssemblyInfo.cs
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/CardLibrary/obj/Debug/net6.0/CardLibrary.csproj.CoreCompileInputs.cache
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/CardLibrary/obj/Debug/net6.0/CardLibrary.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/CardLibrary/obj/Debug/net6.0/ref/CardLibrary.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/CardLibrary/obj/Debug/net6.0/CardLibrary.pdb
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Card Library/bin/Debug/net6.0/CardLibrary.deps.json
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Card Library/bin/Debug/net6.0/CardLibrary.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Card Library/bin/Debug/net6.0/ref/CardLibrary.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Card Library/bin/Debug/net6.0/CardLibrary.pdb
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.csproj.AssemblyReference.cache
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.GeneratedMSBuildEditorConfig.editorconfig
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.AssemblyInfoInputs.cache
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.AssemblyInfo.cs
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.csproj.CoreCompileInputs.cache
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Card Library/obj/Debug/net6.0/ref/CardLibrary.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Library/bin/Debug/net6.0/CardLibrary.deps.json
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Library/bin/Debug/net6.0/CardLibrary.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Library/bin/Debug/net6.0/ref/CardLibrary.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Library/bin/Debug/net6.0/CardLibrary.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.csproj.AssemblyReference.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.GeneratedMSBuildEditorConfig.editorconfig
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.AssemblyInfoInputs.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.AssemblyInfo.cs
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.csproj.CoreCompileInputs.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Library/obj/Debug/net6.0/ref/CardLibrary.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Card Library/obj/Debug/net6.0/CardLibrary.pdb

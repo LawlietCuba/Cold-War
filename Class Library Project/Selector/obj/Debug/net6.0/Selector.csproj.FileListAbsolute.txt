@@ -1,0 +1,24 @@
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Selector/bin/Debug/net6.0/Selector.deps.json
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Selector/bin/Debug/net6.0/Selector.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Selector/bin/Debug/net6.0/ref/Selector.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Selector/bin/Debug/net6.0/Selector.pdb
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Selector/obj/Debug/net6.0/Selector.csproj.AssemblyReference.cache
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Selector/obj/Debug/net6.0/Selector.GeneratedMSBuildEditorConfig.editorconfig
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Selector/obj/Debug/net6.0/Selector.AssemblyInfoInputs.cache
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Selector/obj/Debug/net6.0/Selector.AssemblyInfo.cs
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Selector/obj/Debug/net6.0/Selector.csproj.CoreCompileInputs.cache
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Selector/obj/Debug/net6.0/Selector.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Selector/obj/Debug/net6.0/ref/Selector.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Selector/obj/Debug/net6.0/Selector.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/bin/Debug/net6.0/Selector.deps.json
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/bin/Debug/net6.0/Selector.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/bin/Debug/net6.0/ref/Selector.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/bin/Debug/net6.0/Selector.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/obj/Debug/net6.0/Selector.csproj.AssemblyReference.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/obj/Debug/net6.0/Selector.GeneratedMSBuildEditorConfig.editorconfig
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/obj/Debug/net6.0/Selector.AssemblyInfoInputs.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/obj/Debug/net6.0/Selector.AssemblyInfo.cs
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/obj/Debug/net6.0/Selector.csproj.CoreCompileInputs.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/obj/Debug/net6.0/Selector.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/obj/Debug/net6.0/ref/Selector.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Selector/obj/Debug/net6.0/Selector.pdb

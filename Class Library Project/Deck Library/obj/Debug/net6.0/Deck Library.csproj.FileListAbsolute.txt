@@ -1,0 +1,34 @@
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/bin/Debug/net6.0/Deck Library.deps.json
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/bin/Debug/net6.0/Deck Library.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/bin/Debug/net6.0/ref/Deck Library.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/bin/Debug/net6.0/Deck Library.pdb
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/bin/Debug/net6.0/CardLibrary.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/bin/Debug/net6.0/CardLibrary.pdb
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.csproj.AssemblyReference.cache
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.GeneratedMSBuildEditorConfig.editorconfig
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.AssemblyInfoInputs.cache
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.AssemblyInfo.cs
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.csproj.CoreCompileInputs.cache
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.csproj.CopyComplete
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/obj/Debug/net6.0/ref/Deck Library.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.pdb
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/bin/Debug/net6.0/Selector.dll
+/home/rodrigo/Documents/Programming/Card Project/Class Library Project/Deck Library/bin/Debug/net6.0/Selector.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/bin/Debug/net6.0/Deck Library.deps.json
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/bin/Debug/net6.0/Deck Library.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/bin/Debug/net6.0/ref/Deck Library.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/bin/Debug/net6.0/Deck Library.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/bin/Debug/net6.0/CardLibrary.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/bin/Debug/net6.0/Selector.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/bin/Debug/net6.0/CardLibrary.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/bin/Debug/net6.0/Selector.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.csproj.AssemblyReference.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.GeneratedMSBuildEditorConfig.editorconfig
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.AssemblyInfoInputs.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.AssemblyInfo.cs
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.csproj.CoreCompileInputs.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.csproj.CopyComplete
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/obj/Debug/net6.0/ref/Deck Library.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop(ActualizadoDaniel)/Class Library Project/Deck Library/obj/Debug/net6.0/Deck Library.pdb

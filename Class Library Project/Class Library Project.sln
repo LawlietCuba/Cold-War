@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardLibrary", "CardLibrary\CardLibrary.csproj", "{78EF1421-B777-4E72-89C3-3BBC8FBBC128}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Selector", "Selector\Selector.csproj", "{F56BA51F-9186-47B9-92DA-DAD8856EB660}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Effects", "Effects\Effects.csproj", "{E3978856-5504-4290-A571-438DD734572E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deck Library", "Deck Library\Deck Library.csproj", "{DE78B92A-E7DC-426B-BEE3-9C8E47B42CBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player Library", "Player Library\Player Library.csproj", "{33A35ED3-4435-4B74-8FE0-8260B67172BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Deck Generator Mannager", "Deck Generator Mannager\Deck Generator Mannager.csproj", "{6377D66B-0EE8-4650-8AFB-53E3723EE7F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Card Generator Mannager", "Card Generator Mannager\Card Generator Mannager.csproj", "{0DFD25F5-47F0-4471-8630-499FE176D4BD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78EF1421-B777-4E72-89C3-3BBC8FBBC128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78EF1421-B777-4E72-89C3-3BBC8FBBC128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78EF1421-B777-4E72-89C3-3BBC8FBBC128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78EF1421-B777-4E72-89C3-3BBC8FBBC128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F56BA51F-9186-47B9-92DA-DAD8856EB660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F56BA51F-9186-47B9-92DA-DAD8856EB660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F56BA51F-9186-47B9-92DA-DAD8856EB660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F56BA51F-9186-47B9-92DA-DAD8856EB660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3978856-5504-4290-A571-438DD734572E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3978856-5504-4290-A571-438DD734572E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3978856-5504-4290-A571-438DD734572E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3978856-5504-4290-A571-438DD734572E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE78B92A-E7DC-426B-BEE3-9C8E47B42CBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE78B92A-E7DC-426B-BEE3-9C8E47B42CBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE78B92A-E7DC-426B-BEE3-9C8E47B42CBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE78B92A-E7DC-426B-BEE3-9C8E47B42CBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33A35ED3-4435-4B74-8FE0-8260B67172BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33A35ED3-4435-4B74-8FE0-8260B67172BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33A35ED3-4435-4B74-8FE0-8260B67172BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33A35ED3-4435-4B74-8FE0-8260B67172BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6377D66B-0EE8-4650-8AFB-53E3723EE7F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6377D66B-0EE8-4650-8AFB-53E3723EE7F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6377D66B-0EE8-4650-8AFB-53E3723EE7F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6377D66B-0EE8-4650-8AFB-53E3723EE7F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DFD25F5-47F0-4471-8630-499FE176D4BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DFD25F5-47F0-4471-8630-499FE176D4BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DFD25F5-47F0-4471-8630-499FE176D4BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DFD25F5-47F0-4471-8630-499FE176D4BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
