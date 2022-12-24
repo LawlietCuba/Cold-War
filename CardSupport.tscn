@@ -1,0 +1,88 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://CardSupport.cs" type="Script" id=1]
+
+[node name="CardSupport" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="CardMargin" type="MarginContainer" parent="."]
+margin_left = 399.0
+margin_top = 161.0
+margin_right = 537.0
+margin_bottom = 357.0
+
+[node name="BackgroundCard" type="Sprite" parent="CardMargin"]
+position = Vector2( 168.5, 199 )
+scale = Vector2( 1.95245, 1.63416 )
+
+[node name="PhotoCardMargin" type="MarginContainer" parent="CardMargin/BackgroundCard"]
+margin_left = -84.0
+margin_top = -93.0
+margin_right = 83.0
+margin_bottom = 36.0
+
+[node name="PhotoCard" type="Sprite" parent="CardMargin/BackgroundCard/PhotoCardMargin"]
+position = Vector2( 85, 64.5 )
+
+[node name="RarenessMargin" type="MarginContainer" parent="CardMargin/BackgroundCard"]
+margin_left = 57.0
+margin_top = -121.0
+margin_right = 85.0
+margin_bottom = -93.0
+
+[node name="RarenessPhoto" type="Sprite" parent="CardMargin/BackgroundCard/RarenessMargin"]
+position = Vector2( 14, 14 )
+
+[node name="TypeMargin" type="MarginContainer" parent="CardMargin/BackgroundCard"]
+margin_left = 29.0
+margin_top = -120.0
+margin_right = 56.0
+margin_bottom = -93.0
+
+[node name="TypePhoto" type="Sprite" parent="CardMargin/BackgroundCard/TypeMargin"]
+position = Vector2( 13.5, 13.5 )
+
+[node name="Name" type="RichTextLabel" parent="CardMargin/BackgroundCard"]
+margin_left = -84.0
+margin_top = -120.0
+margin_right = 28.0
+margin_bottom = -93.0
+
+[node name="Lore" type="RichTextLabel" parent="CardMargin/BackgroundCard"]
+margin_left = -84.0
+margin_top = 36.0
+margin_right = 85.0
+margin_bottom = 61.0
+
+[node name="Effect" type="RichTextLabel" parent="CardMargin/BackgroundCard"]
+margin_left = -84.0
+margin_top = 61.0
+margin_right = 84.0
+margin_bottom = 105.0
+
+[node name="ClassCard" type="RichTextLabel" parent="CardMargin/BackgroundCard"]
+margin_left = -84.0
+margin_top = 106.0
+margin_right = -14.0
+margin_bottom = 121.0
+
+[node name="Attack" type="RichTextLabel" parent="CardMargin/BackgroundCard"]
+margin_left = 2.0
+margin_top = 106.0
+margin_right = 37.0
+margin_bottom = 121.0
+
+[node name="Life" type="RichTextLabel" parent="CardMargin/BackgroundCard"]
+margin_left = 51.0
+margin_top = 106.0
+margin_right = 84.0
+margin_bottom = 121.0
+
+[node name="SelectCard" type="Button" parent="CardMargin/BackgroundCard"]
+show_behind_parent = true
+margin_left = -85.0
+margin_top = -120.0
+margin_right = 85.0
+margin_bottom = 120.0
+
+[connection signal="pressed" from="CardMargin/BackgroundCard/SelectCard" to="." method="_on_SelectCard_pressed"]
