@@ -5,30 +5,29 @@ using System.Collections.Generic;
 
 public class Game : Node2D
 {
-    public PackedScene x;
-    public List<PlayerTemplate> Players { get; set; }
-    public bool deckpressed;
-    public bool notInstanced;
-    public bool readyforsummon;
-    public bool startgame;
-    public CardTemplate[] Cards;
-    public string PathToEnemyDeck { get; set; }
-    public int CardOnHandIndex { get; set; }
-    public bool communistside;
+    PackedScene NewNode;
+    List<PlayerTemplate> Players;
+    bool deckpressed;
+    //bool notInstanced;
+    bool readyforsummon;
+    bool startgame;
+    CardTemplate[] Cards;
+    string PathToEnemyDeck;
+    bool communistside;
     public static PlayerTemplate HumanPlayer;
     public static PlayerTemplate EnemyPlayer;
-    public static string attackedcard;
+    public static string AttackedCardName;
     public static bool readyforattack;
-    public static string selectedcard;
+    public static string SelectedCardName;
     public static bool readyforexecute;
-    public static bool SelectedCard;
-    public static string readytoSummon;
+    public static bool cardselected;
+    public static string ReadytoSummonCardName;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         var CardTexture = new ImageTexture();
-        CardTexture.Load(@"res://Textures//Card.jpg");
+        CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
         if (!startgame)
         {
             GetNode<TextureButton>("Board/EnemyField").Show();
@@ -39,7 +38,7 @@ public class Game : Node2D
             GetNode<Sprite>("Board/ShowMargin/BackgroundCard").Scale = GetNode<MarginContainer>("Board/ShowMargin").RectSize / CardTexture.GetSize();
 
             var PhotoCardTexture = new ImageTexture();
-            PhotoCardTexture.Load(@"res://Textures//foto-perfil-generica.jpg");
+            PhotoCardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/foto-perfil-generica.jpg");
             GetNode<Sprite>("Board/ShowMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Texture = PhotoCardTexture;
             GetNode<Sprite>("Board/ShowMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Scale = GetNode<MarginContainer>("Board/ShowMargin/BackgroundCard/PhotoCardMargin").RectSize / PhotoCardTexture.GetSize();
 
@@ -61,7 +60,7 @@ public class Game : Node2D
         if (deckpressed)
         {
             var CardTexture = new ImageTexture();
-            CardTexture.Load(@"res://Textures//Card.jpg");
+            CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
             PrintCardsinRange(HumanPlayer, GetNode<Position2D>("Board/Position2D17"), GetNode<Position2D>("Board/Position2D18"), 8);
             List<CardSupport> Deck = new List<CardSupport>();
             Deck = MakeDeck(CardTexture, PathToEnemyDeck, new List<CardSupport>());
@@ -88,8 +87,8 @@ public class Game : Node2D
         {
             Player.PlayerBoard.HandCards.Add(Player.PlayerBoard.Deck[i]);
             Player.PlayerBoard.Deck[i].GetNode<MarginContainer>("CardMargin").RectPosition = new Vector2((float)(Left.Position.x + i * CradWidth), Left.Position.y);
-            GetNode<Sprite>("Board").AddChild(Player.PlayerBoard.Deck[i]);
-            GetNode<Node2D>("Board/CardSupport").Name = Player.PlayerBoard.Deck[i].Name;
+            GetNode<Sprite>("Board").AddChild(Player.PlayerBoard.Deck[i], true);
+            GetNode<Node2D>("Board/CardSupport").Name = Player.PlayerBoard.Deck[i].CardName;
             Player.PlayerBoard.Deck.RemoveAt(i);
         }
     }
@@ -110,16 +109,16 @@ public class Game : Node2D
     public void _on_Capitalist_pressed()
     {
         communistside = false;
-        PathToEnemyDeck = "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop/Decks/Communist";
+        PathToEnemyDeck = System.IO.Directory.GetCurrentDirectory() + "/Decks/Communist";
     }
     public void _on_Communist_pressed()
     {
         communistside = true;
-        PathToEnemyDeck = "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop/Decks/Capitalist";
+        PathToEnemyDeck = System.IO.Directory.GetCurrentDirectory() + "/Decks/Capitalist";
     }
     public void _on_Summon_pressed()
     {
-        if (readytoSummon != null)
+        if (ReadytoSummonCardName != null)
         {
             readyforsummon = true;
             GetNode<RichTextLabel>("Board/ActionMessage").Text = "Ready for Summon";
@@ -153,8 +152,9 @@ public class Game : Node2D
     {
         for (int i = 0; i < Player.PlayerBoard.HandCards.Count; i++)
         {
-            if (Player.PlayerBoard.HandCards[i].Name == readytoSummon)
+            if (Player.PlayerBoard.HandCards[i].Name == ReadytoSummonCardName)
             {
+                Player.PlayerBoard.HandCards[i].summoned = true;
                 Player.PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = square.Position;
                 Player.PlayerBoard.CardsOnBoard.Add(Player.PlayerBoard.HandCards[i], square);
                 Player.PlayerBoard.HandCards.RemoveAt(i);
@@ -276,7 +276,7 @@ public class Game : Node2D
     }
     public void MakeCard(CardSupport Card)
     {
-        Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Name").Text = Card.Name;
+        Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Name").Text = Card.CardName;
 
         Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Lore").Text = Card.Lore;
 
@@ -292,13 +292,13 @@ public class Game : Node2D
         switch (Card.Type)
         {
             case "Unit":
-                typetexture.Load(@"res://Textures//Unit.png");
+                typetexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Unit.png");
                 break;
             case "Event":
-                typetexture.Load(@"res://Textures//Event.png");
+                typetexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Event.png");
                 break;
             case "Politic":
-                typetexture.Load(@"res://Textures//Politic.png");
+                typetexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Politic.png");
                 break;
         }
 
@@ -308,13 +308,13 @@ public class Game : Node2D
         switch (Card.Rareness)
         {
             case "Legendary":
-                rarenesstexture.Load(@"res://Textures//GoldenShield.png");
+                rarenesstexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/GoldenShield.png");
                 break;
             case "Rare":
-                rarenesstexture.Load(@"res://Textures//SilverShield.png");
+                rarenesstexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/SilverShield.png");
                 break;
             case "Common":
-                rarenesstexture.Load(@"res://Textures//BronzeShield.png");
+                rarenesstexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/BronzeShield.png");
                 break;
         }
         Card.GetNode<Sprite>("CardMargin/BackgroundCard/RarenessMargin/RarenessPhoto").Texture = rarenesstexture;
@@ -329,7 +329,7 @@ public class Game : Node2D
         }
         else
         {
-            phototexture.Load(@"res://Textures//foto-perfil-generica.jpg");
+            phototexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/foto-perfil-generica.jpg");
             Card.GetNode<Sprite>("CardMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Texture = phototexture;
             Card.GetNode<Sprite>("CardMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Scale = Card.GetNode<MarginContainer>("CardMargin/BackgroundCard/PhotoCardMargin").RectSize / phototexture.GetSize();
         }
@@ -347,12 +347,12 @@ public class Game : Node2D
         {
             Cards[i] = new CardTemplate(CardstoCreate[i].FullName);
 
-            x = (PackedScene)GD.Load("res://CardSupport.tscn");
-            Deck.Add((CardSupport)x.Instance());
+            NewNode = (PackedScene)GD.Load("res://CardSupport.tscn");
+            Deck.Add((CardSupport)NewNode.Instance());
             Deck[i].GetNode<Sprite>("CardMargin/BackgroundCard").Texture = CardTexture;
             Deck[i].GetNode<MarginContainer>("CardMargin").RectSize = GetNode<MarginContainer>("Board/CardOnBoardMargin").RectSize;
 
-            Deck[i].Name = Cards[i].Name;
+            Deck[i].CardName = Cards[i].CardName;
             Deck[i].Lore = Cards[i].Lore;
             Deck[i].ClassCard = Cards[i].ClassCard;
             Deck[i].Attack = Cards[i].Attack;
@@ -392,22 +392,23 @@ public class Game : Node2D
     }
     public void _on_AttackButton_pressed()
     {
-        if (SelectedCard)
+        if (cardselected)
         {
             readyforattack = true;
-            SelectedCard = false;
+            cardselected = false;
             GetNode<RichTextLabel>("Board/ActionMessage").Text = "Ready for Attack";
         }
     }
     public void Attack()
     {
-        if (GetNode<CardSupport>("Board/" + selectedcard).ClassCard != GetNode<CardSupport>("Board/" + attackedcard).ClassCard)
+        if (GetNode<CardSupport>("Board/" + SelectedCardName).ClassCard != GetNode<CardSupport>("Board/" + AttackedCardName).ClassCard)
         {
-            int attack = GetNode<CardSupport>("Board/" + selectedcard).Attack;
-            int life = GetNode<CardSupport>("Board/" + attackedcard).Life;
+            int attack = GetNode<CardSupport>("Board/" + SelectedCardName).Attack;
+            int life = GetNode<CardSupport>("Board/" + AttackedCardName).Life;
             life -= attack;
-            GetNode<CardSupport>("Board/" + attackedcard).Life = life;
-            GetNode<CardSupport>("Board/" + attackedcard).UpdateCardVisual();
+            GetNode<CardSupport>("Board/" + AttackedCardName).Life = life;
+            GetNode<CardSupport>("Board/" + AttackedCardName).UpdateCardVisual();
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = AttackedCardName + " has received " + attack + " damage";
             if (life <= 0)
             {
                 DestroyCard();
@@ -416,18 +417,20 @@ public class Game : Node2D
     }
     public void DestroyCard()
     {
-        GetNode<CardSupport>("Board/" + attackedcard).GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D18").Position;
-        if (HumanPlayer.name == attackedcard)
+        GetNode<CardSupport>("Board/" + AttackedCardName).GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D18").Position;
+        if (HumanPlayer.name == AttackedCardName)
         {
-            HumanPlayer.PlayerBoard.Graveyard.Add(GetNode<CardSupport>("Board/" + attackedcard));
-            HumanPlayer.PlayerBoard.CardsOnBoard.Remove(GetNode<CardSupport>("Board/" + attackedcard));
+            HumanPlayer.PlayerBoard.Graveyard.Add(GetNode<CardSupport>("Board/" + AttackedCardName));
+            HumanPlayer.PlayerBoard.CardsOnBoard.Remove(GetNode<CardSupport>("Board/" + AttackedCardName));
+            GetNode<CardSupport>("Board/" + AttackedCardName).summoned = false;
         }
         else
         {
-            EnemyPlayer.PlayerBoard.Graveyard.Add(GetNode<CardSupport>("Board/" + attackedcard));
-            EnemyPlayer.PlayerBoard.CardsOnBoard.Remove(GetNode<CardSupport>("Board/" + attackedcard));
+            EnemyPlayer.PlayerBoard.Graveyard.Add(GetNode<CardSupport>("Board/" + AttackedCardName));
+            EnemyPlayer.PlayerBoard.CardsOnBoard.Remove(GetNode<CardSupport>("Board/" + AttackedCardName));
+            GetNode<CardSupport>("Board/" + AttackedCardName).summoned = false;
         }
-        GetNode<RichTextLabel>("Board/ActionMessage").Text = attackedcard + " Destroyed";
+        GetNode<RichTextLabel>("Board/ActionMessage").Text = AttackedCardName + " Destroyed";
     }
     // public override void _Input(InputEvent @event)
     // {

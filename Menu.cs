@@ -6,15 +6,15 @@ using System;
 public class Menu : Node2D
 {
     // Declare member variables here. Examples:
-    public bool SelectedDeck { get; set; }
-    public PlayerTemplate HumanPlayer { get; set; }
-    public string PathToSelectedDeck { get; set; }
-    public CardTemplate[] Cards { get; set; }
-    public List<CardSupport> FinalDeck { get; set; }
-    public int CurrentCardIndex { get; set; }
-    public List<CardSupport> Deck { get; set; }
-    public static bool somecardselected { get; set; }
-    public PackedScene Temp;
+    bool SelectedDeck;
+    PlayerTemplate HumanPlayer;
+    string PathToSelectedDeck;
+    CardTemplate[] LogicCards;
+    List<CardSupport> FinalDeck;
+    int CurrentCardIndex;
+    List<CardSupport> Deck;
+    public static bool somecardselected;
+    PackedScene NewNode;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -22,7 +22,7 @@ public class Menu : Node2D
         {
             Deck = new List<CardSupport>();
             var CardTexture = new ImageTexture();
-            CardTexture.Load(@"res://Textures//Card.jpg");
+            CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
             Deck = MakeDeck(CardTexture, PathToSelectedDeck, new List<CardSupport>());
             FinalDeck = new List<CardSupport>();
             ShowCardsForSelection();
@@ -46,12 +46,12 @@ public class Menu : Node2D
     }
     public void _on_Communist_pressed()
     {
-        PathToSelectedDeck = "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop/Decks/Communist";
+        PathToSelectedDeck = System.IO.Directory.GetCurrentDirectory() + "/Decks/Communist";
         SelectedDeck = true;
     }
     public void _on_Capitalist_pressed()
     {
-        PathToSelectedDeck = "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop/Decks/Capitalist";
+        PathToSelectedDeck = System.IO.Directory.GetCurrentDirectory() + "/Decks/Capitalist";
         SelectedDeck = true;
     }
     public void _on_SelectCards_pressed()
@@ -66,7 +66,7 @@ public class Menu : Node2D
     public void _on_ReturnToDeckSelector_pressed()
     {
         Deck.Clear();
-        Array.Clear(Cards, 0, Cards.Length);
+        Array.Clear(LogicCards, 0, LogicCards.Length);
         FinalDeck.Clear();
         CurrentCardIndex = 0;
         somecardselected = false;
@@ -99,7 +99,7 @@ public class Menu : Node2D
     }
     public void MakeCard(CardSupport Card)
     {
-        Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Name").Text = Card.Name;
+        Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Name").Text = Card.CardName;
 
         Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Lore").Text = Card.Lore;
 
@@ -115,13 +115,13 @@ public class Menu : Node2D
         switch (Card.Type)
         {
             case "Unit":
-                typetexture.Load(@"res://Textures//Unit.png");
+                typetexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Unit.png");
                 break;
             case "Event":
-                typetexture.Load(@"res://Textures//Event.png");
+                typetexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Event.png");
                 break;
             case "Politic":
-                typetexture.Load(@"res://Textures//Politic.png");
+                typetexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Politic.png");
                 break;
         }
 
@@ -131,13 +131,13 @@ public class Menu : Node2D
         switch (Card.Rareness)
         {
             case "Legendary":
-                rarenesstexture.Load(@"res://Textures//GoldenShield.png");
+                rarenesstexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/GoldenShield.png");
                 break;
             case "Rare":
-                rarenesstexture.Load(@"res://Textures//SilverShield.png");
+                rarenesstexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/SilverShield.png");
                 break;
             case "Common":
-                rarenesstexture.Load(@"res://Textures//BronzeShield.png");
+                rarenesstexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/BronzeShield.png");
                 break;
         }
         Card.GetNode<Sprite>("CardMargin/BackgroundCard/RarenessMargin/RarenessPhoto").Texture = rarenesstexture;
@@ -153,7 +153,7 @@ public class Menu : Node2D
         }
         else
         {
-            phototexture.Load(@"res://Textures//foto-perfil-generica.jpg");
+            phototexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/foto-perfil-generica.jpg");
             Card.GetNode<Sprite>("CardMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Texture = phototexture;
             Card.GetNode<Sprite>("CardMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Scale = Card.GetNode<MarginContainer>("CardMargin/BackgroundCard/PhotoCardMargin").RectSize / phototexture.GetSize();
         }
@@ -166,31 +166,27 @@ public class Menu : Node2D
         {
             throw new ArgumentException();
         }
-        Cards = new CardTemplate[CardstoCreate.Length];
+        LogicCards = new CardTemplate[CardstoCreate.Length];
         for (int i = 0; i < CardstoCreate.Length; i++)
         {
-            Cards[i] = new CardTemplate(CardstoCreate[i].FullName);
+            LogicCards[i] = new CardTemplate(CardstoCreate[i].FullName);
 
-            Temp = (PackedScene)GD.Load("res://CardSupport.tscn");
-            Deck.Add((CardSupport)Temp.Instance());
+            NewNode = (PackedScene)GD.Load("res://CardSupport.tscn");
+            Deck.Add((CardSupport)NewNode.Instance());
             Deck[i].GetNode<Sprite>("CardMargin/BackgroundCard").Texture = CardTexture;
             Deck[i].GetNode<MarginContainer>("CardMargin").RectSize = GetNode<MarginContainer>("/root/Main/Game/Board/CardOnBoardMargin").RectSize;
 
-            Deck[i].Name = Cards[i].Name;
-            Deck[i].Lore = Cards[i].Lore;
-            Deck[i].ClassCard = Cards[i].ClassCard;
-            Deck[i].Attack = Cards[i].Attack;
-            Deck[i].Life = Cards[i].Life;
-            Deck[i].Effect = Cards[i].Effect;
-            Deck[i].Type = Cards[i].Type;
-            Deck[i].Rareness = Cards[i].Rareness;
-            Deck[i].PathToPhoto = Cards[i].PathToPhoto;
+            Deck[i].CardName = LogicCards[i].CardName;
+            Deck[i].Lore = LogicCards[i].Lore;
+            Deck[i].ClassCard = LogicCards[i].ClassCard;
+            Deck[i].Attack = LogicCards[i].Attack;
+            Deck[i].Life = LogicCards[i].Life;
+            Deck[i].Effect = LogicCards[i].Effect;
+            Deck[i].Type = LogicCards[i].Type;
+            Deck[i].Rareness = LogicCards[i].Rareness;
+            Deck[i].PathToPhoto = LogicCards[i].PathToPhoto;
 
             MakeCard(Deck[i]);
-
-            // Deck[i].GetNode<MarginContainer>("CardMargin").RectPosition = new Vector2(GetNode<Position2D>("SelectCards/Position2D").Position.x, GetNode<Position2D>("SelectCards/Position2D").Position.y);
-
-            // GetNode<Node2D>("SelectCards").AddChild(Deck[i]);
         }
         return Deck;
     }
@@ -218,21 +214,14 @@ public class Menu : Node2D
     }
     public void ShowCardsForSelection()
     {
-        // for (int i = 0; i < Deck.Count; i++)
-        // {
-        //     if (i != CurrentCardIndex)
-        //         Deck[i].GetNode<Sprite>("CardMargin/BackgroundCard").Hide();
-        //     else
-        //         Deck[i].GetNode<Sprite>("CardMargin/BackgroundCard").Show();
-        // }
         var CardTexture = new ImageTexture();
-        CardTexture.Load(@"res://Textures//Card.jpg");
+        CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
         GetNode<Sprite>("SelectCards/CardforSelection/BackgroundCard").Position = new Vector2(GetNode<MarginContainer>("SelectCards/CardforSelection").RectSize.x / 2, GetNode<MarginContainer>("SelectCards/CardforSelection").RectSize.y / 2);
         GetNode<Sprite>("SelectCards/CardforSelection/BackgroundCard").Texture = CardTexture;
         GetNode<Sprite>("SelectCards/CardforSelection/BackgroundCard").Scale = GetNode<MarginContainer>("SelectCards/CardforSelection").RectSize / CardTexture.GetSize();
 
 
-        GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Name").Text = Deck[CurrentCardIndex].Name;
+        GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Name").Text = Deck[CurrentCardIndex].CardName;
         GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Effect").Text = Deck[CurrentCardIndex].Effect;
         GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Lore").Text = Deck[CurrentCardIndex].Lore;
         GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Attack").Text = Deck[CurrentCardIndex].Attack.ToString();

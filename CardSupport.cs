@@ -3,7 +3,7 @@ using System;
 
 public class CardSupport : Node2D
 {
-    public string Name { get; set; }
+    public string CardName { get; set; }
     public string Lore { get; set; }
     public string ClassCard { get; set; }
     public int Attack { get; set; }
@@ -35,7 +35,7 @@ public class CardSupport : Node2D
     {
         //Hide();
         var CardTexture = new ImageTexture();
-        CardTexture.Load(@"res://Textures//Card.jpg");
+        CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
         GetNode<Sprite>("CardMargin/BackgroundCard").Position = new Vector2(GetNode<MarginContainer>("CardMargin").RectSize.x / 2, GetNode<MarginContainer>("CardMargin").RectSize.y / 2);
         GetNode<Sprite>("CardMargin/BackgroundCard").Texture = CardTexture;
         GetNode<Sprite>("CardMargin/BackgroundCard").Scale = GetNode<MarginContainer>("CardMargin").RectSize / CardTexture.GetSize();
@@ -47,28 +47,26 @@ public class CardSupport : Node2D
         {
             if (!Game.readyforattack)
             {
-                Game.selectedcard = this.Name;
-                Game.readytoSummon = this.Name;
-                Game.SelectedCard = true;
+                Game.SelectedCardName = this.CardName;
+                Game.ReadytoSummonCardName = this.CardName;
+                Game.cardselected = true;
             }
             else
             {
-                Game.attackedcard = this.Name;
+                Game.AttackedCardName = this.CardName;
                 Game.readyforattack = false;
                 Game.readyforexecute = true;
-
             }
         }
         else
         {
-            Game.readytoSummon = this.Name;
-            this.summoned = true;
+            Game.ReadytoSummonCardName = this.CardName;
         }
         GetNode<RichTextLabel>("/root/Main/Game/Board/ActionMessage").Text = "Card Selected";
     }
     public void UpdateCardVisual()
     {
-        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Name").Text = this.Name;
+        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Name").Text = this.CardName;
         GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Effect").Text = this.Effect;
         GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Lore").Text = this.Lore;
         GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Attack").Text = this.Attack.ToString();
