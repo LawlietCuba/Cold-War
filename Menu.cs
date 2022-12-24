@@ -69,7 +69,7 @@ public class Menu : Node2D
         Array.Clear(Cards, 0, Cards.Length);
         FinalDeck.Clear();
         CurrentCardIndex = 0;
-        somecardselected=false;
+        somecardselected = false;
         GetNode<Node2D>("SelectCards").Hide();
         GetNode<Node2D>("SelectDeck").Show();
     }
@@ -174,7 +174,7 @@ public class Menu : Node2D
             Temp = (PackedScene)GD.Load("res://CardSupport.tscn");
             Deck.Add((CardSupport)Temp.Instance());
             Deck[i].GetNode<Sprite>("CardMargin/BackgroundCard").Texture = CardTexture;
-            Deck[i].GetNode<MarginContainer>("CardMargin").RectSize = GetNode<MarginContainer>("SelectCards/CardforSelection").RectSize;
+            Deck[i].GetNode<MarginContainer>("CardMargin").RectSize = GetNode<MarginContainer>("/root/Main/Game/Board/CardOnBoardMargin").RectSize;
 
             Deck[i].Name = Cards[i].Name;
             Deck[i].Lore = Cards[i].Lore;
@@ -188,9 +188,9 @@ public class Menu : Node2D
 
             MakeCard(Deck[i]);
 
-            Deck[i].GetNode<MarginContainer>("CardMargin").RectPosition = new Vector2(GetNode<Position2D>("SelectCards/Position2D").Position.x, GetNode<Position2D>("SelectCards/Position2D").Position.y);
+            // Deck[i].GetNode<MarginContainer>("CardMargin").RectPosition = new Vector2(GetNode<Position2D>("SelectCards/Position2D").Position.x, GetNode<Position2D>("SelectCards/Position2D").Position.y);
 
-            GetNode<Node2D>("SelectCards").AddChild(Deck[i]);
+            // GetNode<Node2D>("SelectCards").AddChild(Deck[i]);
         }
         return Deck;
     }
@@ -218,12 +218,31 @@ public class Menu : Node2D
     }
     public void ShowCardsForSelection()
     {
-        for (int i = 0; i < Deck.Count; i++)
-        {
-            if (i != CurrentCardIndex)
-                Deck[i].GetNode<Sprite>("CardMargin/BackgroundCard").Hide();
-            else
-                Deck[i].GetNode<Sprite>("CardMargin/BackgroundCard").Show();
-        }
+        // for (int i = 0; i < Deck.Count; i++)
+        // {
+        //     if (i != CurrentCardIndex)
+        //         Deck[i].GetNode<Sprite>("CardMargin/BackgroundCard").Hide();
+        //     else
+        //         Deck[i].GetNode<Sprite>("CardMargin/BackgroundCard").Show();
+        // }
+        var CardTexture = new ImageTexture();
+        CardTexture.Load(@"res://Textures//Card.jpg");
+        GetNode<Sprite>("SelectCards/CardforSelection/BackgroundCard").Position = new Vector2(GetNode<MarginContainer>("SelectCards/CardforSelection").RectSize.x / 2, GetNode<MarginContainer>("SelectCards/CardforSelection").RectSize.y / 2);
+        GetNode<Sprite>("SelectCards/CardforSelection/BackgroundCard").Texture = CardTexture;
+        GetNode<Sprite>("SelectCards/CardforSelection/BackgroundCard").Scale = GetNode<MarginContainer>("SelectCards/CardforSelection").RectSize / CardTexture.GetSize();
+
+
+        GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Name").Text = Deck[CurrentCardIndex].Name;
+        GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Effect").Text = Deck[CurrentCardIndex].Effect;
+        GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Lore").Text = Deck[CurrentCardIndex].Lore;
+        GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Attack").Text = Deck[CurrentCardIndex].Attack.ToString();
+        GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Life").Text = Deck[CurrentCardIndex].Life.ToString();
+        GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/ClassCard").Text = Deck[CurrentCardIndex].ClassCard;
+        GetNode<Sprite>("SelectCards/CardforSelection/BackgroundCard/TypeMargin/TypePhoto").Texture = Deck[CurrentCardIndex].GetNode<Sprite>("CardMargin/BackgroundCard/TypeMargin/TypePhoto").Texture;
+        GetNode<Sprite>("SelectCards/CardforSelection/BackgroundCard/TypeMargin/TypePhoto").Scale = GetNode<MarginContainer>("SelectCards/CardforSelection/BackgroundCard/TypeMargin").RectSize / Deck[CurrentCardIndex].GetNode<Sprite>("CardMargin/BackgroundCard/TypeMargin/TypePhoto").Texture.GetSize();
+        GetNode<Sprite>("SelectCards/CardforSelection/BackgroundCard/RarenessMargin/RarenessPhoto").Texture = Deck[CurrentCardIndex].GetNode<Sprite>("CardMargin/BackgroundCard/RarenessMargin/RarenessPhoto").Texture;
+        GetNode<Sprite>("SelectCards/CardforSelection/BackgroundCard/RarenessMargin/RarenessPhoto").Scale = GetNode<MarginContainer>("SelectCards/CardforSelection/BackgroundCard/RarenessMargin").RectSize / Deck[CurrentCardIndex].GetNode<Sprite>("CardMargin/BackgroundCard/RarenessMargin/RarenessPhoto").Texture.GetSize();
+        GetNode<Sprite>("SelectCards/CardforSelection/BackgroundCard/PhotoCardMargin/PhotoCard").Texture = Deck[CurrentCardIndex].GetNode<Sprite>("CardMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Texture;
+        GetNode<Sprite>("SelectCards/CardforSelection/BackgroundCard/PhotoCardMargin/PhotoCard").Scale = GetNode<MarginContainer>("SelectCards/CardforSelection/BackgroundCard/PhotoCardMargin").RectSize / Deck[CurrentCardIndex].GetNode<Sprite>("CardMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Texture.GetSize();
     }
 }

@@ -12,11 +12,11 @@ public class Game : Node2D
     public bool readyforsummon;
     public bool startgame;
     public CardTemplate[] Cards;
-    public string PathToDeckPlayer1 { get; set; }
-    public string PathToDeckPlayer2 { get; set; }
+    public string PathToEnemyDeck { get; set; }
     public int CardOnHandIndex { get; set; }
     public bool communistside;
     public static PlayerTemplate HumanPlayer;
+    public static PlayerTemplate EnemyPlayer;
     public static string attackedcard;
     public static bool readyforattack;
     public static string selectedcard;
@@ -29,8 +29,11 @@ public class Game : Node2D
     {
         var CardTexture = new ImageTexture();
         CardTexture.Load(@"res://Textures//Card.jpg");
-        if (!deckpressed)
+        if (!startgame)
         {
+            GetNode<TextureButton>("Board/EnemyField").Show();
+            GetNode<TextureButton>("Board/HumanPlayerField").Hide();
+
             GetNode<Sprite>("Board/ShowMargin/BackgroundCard").Position = new Vector2(GetNode<MarginContainer>("Board/ShowMargin").RectSize.x / 2, GetNode<MarginContainer>("Board/ShowMargin").RectSize.y / 2);
             GetNode<Sprite>("Board/ShowMargin/BackgroundCard").Texture = CardTexture;
             GetNode<Sprite>("Board/ShowMargin/BackgroundCard").Scale = GetNode<MarginContainer>("Board/ShowMargin").RectSize / CardTexture.GetSize();
@@ -39,53 +42,46 @@ public class Game : Node2D
             PhotoCardTexture.Load(@"res://Textures//foto-perfil-generica.jpg");
             GetNode<Sprite>("Board/ShowMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Texture = PhotoCardTexture;
             GetNode<Sprite>("Board/ShowMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Scale = GetNode<MarginContainer>("Board/ShowMargin/BackgroundCard/PhotoCardMargin").RectSize / PhotoCardTexture.GetSize();
+
+            startgame = true;
         }
-        if (startgame)
-        {
-            startgame = false;
-            if (!notInstanced)
-            {
-                string[] Paths = new string[2];
-                Paths[0] = PathToDeckPlayer1;
-                Paths[1] = PathToDeckPlayer2;
-                Position2D[] Left = new Position2D[2];
-                Left[0] = GetNode<Position2D>("Board/Position2D17");
-                Left[1] = GetNode<Position2D>("Board/Position2D19");
-                Position2D[] Right = new Position2D[2];
-                Right[0] = GetNode<Position2D>("Board/Position2D18");
-                Right[1] = GetNode<Position2D>("Board/Position2D20");
-                Players = new List<PlayerTemplate>();
-                for (int i = 0; i < 2; i++)
-                {
-                    List<CardSupport> Deck = new List<CardSupport>();
-                    Deck = MakeDeck(CardTexture, Paths[i], new List<CardSupport>());
-                    Players.Add(new PlayerTemplate(Deck[0].ClassCard, new Board(Deck)));
-                    // if (deckpressed)
-                    // {
-                    int amount;
-                    if (Deck.Count >= 8) amount = 8;
-                    else amount = Deck.Count;
-                    int a = Players[i].PlayerBoard.Deck.Count;
-                    PrintCardsinRange(Players[i], Left[i], Right[i], amount);
-                    deckpressed = false;
-                    //}
-                }
-            }
-            notInstanced = true;
-        }
+        // else
+        // {
+        //     startgame = false;
+        //     if (!notInstanced)
+        //     {
+        //         notInstanced = true;
+        //     }
+        // }
     }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
+        if (deckpressed)
+        {
+            var CardTexture = new ImageTexture();
+            CardTexture.Load(@"res://Textures//Card.jpg");
+            PrintCardsinRange(HumanPlayer, GetNode<Position2D>("Board/Position2D17"), GetNode<Position2D>("Board/Position2D18"), 8);
+            List<CardSupport> Deck = new List<CardSupport>();
+            Deck = MakeDeck(CardTexture, PathToEnemyDeck, new List<CardSupport>());
+            EnemyPlayer = new PlayerTemplate(Deck[0].ClassCard, new Board(Deck));
+            PrintCardsinRange(EnemyPlayer, GetNode<Position2D>("Board/Position2D19"), GetNode<Position2D>("Board/Position2D20"), 8);
+            deckpressed = false;
+        }
         if (readyforexecute)
         {
             Attack();
             readyforexecute = false;
         }
     }
+
+
+
     public void PrintCardsinRange(PlayerTemplate Player, Position2D Left, Position2D Right, int amount)
     {
+        if (amount > Player.PlayerBoard.Deck.Count) amount = Player.PlayerBoard.Deck.Count;
+        else amount = 8;
         double length = Right.Position.x - Left.Position.x;
         double CradWidth = length / amount;
         for (int i = amount - 1; i >= 0; i--)
@@ -108,425 +104,174 @@ public class Game : Node2D
     public void _on_Deck_pressed()
     {
         deckpressed = true;
+        GetNode<RichTextLabel>("Board/ActionMessage").Text = "";
         _Ready();
+    }
+    public void _on_Capitalist_pressed()
+    {
+        communistside = false;
+        PathToEnemyDeck = "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop/Decks/Communist";
+    }
+    public void _on_Communist_pressed()
+    {
+        communistside = true;
+        PathToEnemyDeck = "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop/Decks/Capitalist";
     }
     public void _on_Summon_pressed()
     {
         if (readytoSummon != null)
         {
-            if (!communistside)
+            readyforsummon = true;
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = "Ready for Summon";
+        }
+    }
+    public void MakeSummon(Position2D square)
+    {
+        if (!communistside)
+        {
+            if (HumanPlayer.name == "Capitalist")
+                MakeSummonAfterCheckingConditionals(HumanPlayer, square);
+            else
             {
-                readyforsummon = true;
-                GetNode<RichTextLabel>("Board/ActionMessage").Text = "Ready for Summon";
+                MakeSummonAfterCheckingConditionals(EnemyPlayer, square);
+            }
+        }
+        else
+        {
+            if (HumanPlayer.name == "Communist")
+            {
+                MakeSummonAfterCheckingConditionals(HumanPlayer, square);
             }
             else
             {
-                readyforsummon = true;
-                GetNode<RichTextLabel>("Board/ActionMessage").Text = "Ready for Summon";
+                MakeSummonAfterCheckingConditionals(EnemyPlayer, square);
             }
         }
+        readyforsummon = false;
     }
-    public void _on_Capitalist_pressed()
+    public void MakeSummonAfterCheckingConditionals(PlayerTemplate Player, Position2D square)
     {
-        communistside = false;
-        PathToDeckPlayer1 = "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop/Decks/Capitalist";
-        PathToDeckPlayer2 = "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop/Decks/Communist";
-    }
-    public void _on_Communist_pressed()
-    {
-        communistside = true;
-        PathToDeckPlayer1 = "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop/Decks/Capitalist";
-        PathToDeckPlayer2 = "/home/daniel/Documents/Programacion/Proyecto Battle Cards/Subido a GitHub/Cold-War-Develop/Decks/Communist";
+        for (int i = 0; i < Player.PlayerBoard.HandCards.Count; i++)
+        {
+            if (Player.PlayerBoard.HandCards[i].Name == readytoSummon)
+            {
+                Player.PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = square.Position;
+                Player.PlayerBoard.CardsOnBoard.Add(Player.PlayerBoard.HandCards[i], square);
+                Player.PlayerBoard.HandCards.RemoveAt(i);
+                break;
+            }
+        }
     }
     public void _on_Button_pressed()
     {
         if (readyforsummon)
         {
-            if (!communistside)
-                for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D").Position;
-                        break;
-                    }
-                }
-            else
-                for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D").Position;
-                        break;
-                    }
-                }
-            readyforsummon = false;
+            MakeSummon(GetNode<Position2D>("Board/Position2D"));
         }
     }
     public void _on_Button2_pressed()
     {
         if (readyforsummon)
         {
-            if (!communistside)
-                for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D2").Position;
-                        break;
-                    }
-                }
-            else
-                for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D2").Position;
-                        break;
-                    }
-                }
-            readyforsummon = false;
+            MakeSummon(GetNode<Position2D>("Board/Position2D2"));
         }
     }
     public void _on_Button3_pressed()
     {
         if (readyforsummon)
         {
-            if (!communistside)
-                for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D3").Position;
-                        break;
-                    }
-                }
-            else
-                for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D3").Position;
-                        break;
-                    }
-                }
-            readyforsummon = false;
+            MakeSummon(GetNode<Position2D>("Board/Position2D3"));
         }
     }
     public void _on_Button4_pressed()
     {
         if (readyforsummon)
         {
-            if (!communistside)
-                for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D4").Position;
-                        break;
-                    }
-                }
-            else
-                for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D4").Position;
-                        break;
-                    }
-                }
-            readyforsummon = false;
+            MakeSummon(GetNode<Position2D>("Board/Position2D4"));
         }
     }
     public void _on_Button5_pressed()
     {
-        if (!communistside)
-            for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-            {
-                if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                {
-                    Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D5").Position;
-                    break;
-                }
-            }
-        else
-            for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-            {
-                if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                {
-                    Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D5").Position;
-                    break;
-                }
-            }
-        readyforsummon = false;
+        if (readyforsummon)
+        {
+            MakeSummon(GetNode<Position2D>("Board/Position2D5"));
+        }
     }
     public void _on_Button6_pressed()
     {
-        if (!communistside)
-            for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-            {
-                if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                {
-                    Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D6").Position;
-                    break;
-                }
-            }
-        else
-            for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-            {
-                if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                {
-                    Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D6").Position;
-                    break;
-                }
-            }
-        readyforsummon = false;
+        if (readyforsummon)
+        {
+            MakeSummon(GetNode<Position2D>("Board/Position2D6"));
+        }
     }
     public void _on_Button7_pressed()
     {
-        if (!communistside)
-            for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-            {
-                if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                {
-                    Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D7").Position;
-                    break;
-                }
-            }
-        else
-            for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-            {
-                if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                {
-                    Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D7").Position;
-                    break;
-                }
-            }
-        readyforsummon = false;
+        if (readyforsummon)
+        {
+            MakeSummon(GetNode<Position2D>("Board/Position2D7"));
+        }
     }
     public void _on_Button8_pressed()
     {
         if (readyforsummon)
         {
-            if (!communistside)
-                for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D8").Position;
-                        break;
-                    }
-                }
-            else
-                for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D8").Position;
-                        break;
-                    }
-                }
-            readyforsummon = false;
+            MakeSummon(GetNode<Position2D>("Board/Position2D8"));
         }
     }
     public void _on_Button9_pressed()
     {
         if (readyforsummon)
         {
-            if (!communistside)
-                for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D9").Position;
-                        break;
-                    }
-                }
-            else
-                for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D9").Position;
-                        break;
-                    }
-                }
-            readyforsummon = false;
+            MakeSummon(GetNode<Position2D>("Board/Position2D9"));
         }
     }
     public void _on_Button10_pressed()
     {
         if (readyforsummon)
         {
-            if (!communistside)
-                for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D10").Position;
-                        break;
-                    }
-                }
-            else
-                for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D10").Position;
-                        break;
-                    }
-                }
-            readyforsummon = false;
+            MakeSummon(GetNode<Position2D>("Board/Position2D10"));
         }
     }
     public void _on_Button11_pressed()
     {
         if (readyforsummon)
         {
-            if (!communistside)
-                for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D11").Position;
-                        break;
-                    }
-                }
-            else
-                for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D11").Position;
-                        break;
-                    }
-                }
-            readyforsummon = false;
+            MakeSummon(GetNode<Position2D>("Board/Position2D11"));
         }
     }
     public void _on_Button12_pressed()
     {
         if (readyforsummon)
         {
-            if (!communistside)
-                for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D12").Position;
-                        break;
-                    }
-                }
-            else
-                for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D12").Position;
-                        break;
-                    }
-                }
-            readyforsummon = false;
+            MakeSummon(GetNode<Position2D>("Board/Position2D12"));
         }
     }
     public void _on_Button13_pressed()
     {
         if (readyforsummon)
         {
-            if (!communistside)
-                for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D13").Position;
-                        break;
-                    }
-                }
-            else
-                for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D13").Position;
-                        break;
-                    }
-                }
-            readyforsummon = false;
+            MakeSummon(GetNode<Position2D>("Board/Position2D13"));
         }
     }
     public void _on_Button14_pressed()
     {
         if (readyforsummon)
         {
-            if (!communistside)
-                for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D14").Position;
-                        break;
-                    }
-                }
-            else
-                for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D14").Position;
-                        break;
-                    }
-                }
-            readyforsummon = false;
+            MakeSummon(GetNode<Position2D>("Board/Position2D14"));
         }
     }
     public void _on_Button15_pressed()
     {
         if (readyforsummon)
         {
-            if (!communistside)
-                for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D15").Position;
-                        break;
-                    }
-                }
-            else
-                for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D15").Position;
-                        break;
-                    }
-                }
-            readyforsummon = false;
+            MakeSummon(GetNode<Position2D>("Board/Position2D15"));
         }
     }
     public void _on_Button16_pressed()
     {
         if (readyforsummon)
         {
-            if (!communistside)
-                for (int i = 0; i < Players[0].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[0].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[0].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D16").Position;
-                        break;
-                    }
-                }
-            else
-                for (int i = 0; i < Players[1].PlayerBoard.HandCards.Count; i++)
-                {
-                    if (Players[1].PlayerBoard.HandCards[i].Name == readytoSummon)
-                    {
-                        Players[1].PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D16").Position;
-                        break;
-                    }
-                }
-            readyforsummon = false;
+            MakeSummon(GetNode<Position2D>("Board/Position2D16"));
         }
     }
     public void MakeCard(CardSupport Card)
@@ -578,7 +323,6 @@ public class Game : Node2D
         var phototexture = new ImageTexture();
         if (Card.PathToPhoto != null)
         {
-
             phototexture.Load(Card.PathToPhoto);
             Card.GetNode<Sprite>("CardMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Texture = phototexture;
             Card.GetNode<Sprite>("CardMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Scale = Card.GetNode<MarginContainer>("CardMargin/BackgroundCard/PhotoCardMargin").RectSize / phototexture.GetSize();
@@ -624,13 +368,26 @@ public class Game : Node2D
     }
     public void _on_ChangeSide_pressed()
     {
+        if (GetNode<TextureButton>("Board/EnemyField").Visible)
+        {
+            GetNode<TextureButton>("Board/EnemyField").Hide();
+            GetNode<TextureButton>("Board/HumanPlayerField").Show();
+        }
+        else
+        {
+            GetNode<TextureButton>("Board/EnemyField").Show();
+            GetNode<TextureButton>("Board/HumanPlayerField").Hide();
+        }
         if (communistside)
         {
             communistside = false;
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = "Capitalist Side";
+
         }
         else
         {
             communistside = true;
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = "Communist Side";
         }
     }
     public void _on_AttackButton_pressed()
@@ -639,14 +396,38 @@ public class Game : Node2D
         {
             readyforattack = true;
             SelectedCard = false;
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = "Ready for Attack";
         }
     }
     public void Attack()
     {
-        int attack = GetNode<CardSupport>("Board/" + selectedcard).Attack;
-        int life = GetNode<CardSupport>("Board/" + attackedcard).Life;
-        life -= attack;
-        GetNode<CardSupport>("Board/" + attackedcard).Life = life;
+        if (GetNode<CardSupport>("Board/" + selectedcard).ClassCard != GetNode<CardSupport>("Board/" + attackedcard).ClassCard)
+        {
+            int attack = GetNode<CardSupport>("Board/" + selectedcard).Attack;
+            int life = GetNode<CardSupport>("Board/" + attackedcard).Life;
+            life -= attack;
+            GetNode<CardSupport>("Board/" + attackedcard).Life = life;
+            GetNode<CardSupport>("Board/" + attackedcard).UpdateCardVisual();
+            if (life <= 0)
+            {
+                DestroyCard();
+            }
+        }
+    }
+    public void DestroyCard()
+    {
+        GetNode<CardSupport>("Board/" + attackedcard).GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D18").Position;
+        if (HumanPlayer.name == attackedcard)
+        {
+            HumanPlayer.PlayerBoard.Graveyard.Add(GetNode<CardSupport>("Board/" + attackedcard));
+            HumanPlayer.PlayerBoard.CardsOnBoard.Remove(GetNode<CardSupport>("Board/" + attackedcard));
+        }
+        else
+        {
+            EnemyPlayer.PlayerBoard.Graveyard.Add(GetNode<CardSupport>("Board/" + attackedcard));
+            EnemyPlayer.PlayerBoard.CardsOnBoard.Remove(GetNode<CardSupport>("Board/" + attackedcard));
+        }
+        GetNode<RichTextLabel>("Board/ActionMessage").Text = attackedcard + " Destroyed";
     }
     // public override void _Input(InputEvent @event)
     // {

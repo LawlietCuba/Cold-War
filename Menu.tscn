@@ -139,6 +139,73 @@ margin_top = 19.0
 margin_right = 663.0
 margin_bottom = 393.0
 
+[node name="BackgroundCard" type="Sprite" parent="SelectCards/CardforSelection"]
+position = Vector2( 168.5, 199 )
+scale = Vector2( 1.95245, 1.63416 )
+
+[node name="PhotoCardMargin" type="MarginContainer" parent="SelectCards/CardforSelection/BackgroundCard"]
+margin_left = -85.0
+margin_top = -93.0
+margin_right = 85.0
+margin_bottom = 36.0
+
+[node name="PhotoCard" type="Sprite" parent="SelectCards/CardforSelection/BackgroundCard/PhotoCardMargin"]
+position = Vector2( 85, 64.5 )
+
+[node name="RarenessMargin" type="MarginContainer" parent="SelectCards/CardforSelection/BackgroundCard"]
+margin_left = 57.0
+margin_top = -121.0
+margin_right = 85.0
+margin_bottom = -93.0
+
+[node name="RarenessPhoto" type="Sprite" parent="SelectCards/CardforSelection/BackgroundCard/RarenessMargin"]
+position = Vector2( 14, 14 )
+
+[node name="TypeMargin" type="MarginContainer" parent="SelectCards/CardforSelection/BackgroundCard"]
+margin_left = 29.0
+margin_top = -120.0
+margin_right = 56.0
+margin_bottom = -93.0
+
+[node name="TypePhoto" type="Sprite" parent="SelectCards/CardforSelection/BackgroundCard/TypeMargin"]
+position = Vector2( 13.5, 13.5 )
+
+[node name="Name" type="RichTextLabel" parent="SelectCards/CardforSelection/BackgroundCard"]
+margin_left = -84.0
+margin_top = -120.0
+margin_right = 28.0
+margin_bottom = -93.0
+
+[node name="Lore" type="RichTextLabel" parent="SelectCards/CardforSelection/BackgroundCard"]
+margin_left = -84.0
+margin_top = 36.0
+margin_right = 85.0
+margin_bottom = 61.0
+
+[node name="Effect" type="RichTextLabel" parent="SelectCards/CardforSelection/BackgroundCard"]
+margin_left = -84.0
+margin_top = 61.0
+margin_right = 84.0
+margin_bottom = 105.0
+
+[node name="ClassCard" type="RichTextLabel" parent="SelectCards/CardforSelection/BackgroundCard"]
+margin_left = -84.0
+margin_top = 106.0
+margin_right = -14.0
+margin_bottom = 121.0
+
+[node name="Attack" type="RichTextLabel" parent="SelectCards/CardforSelection/BackgroundCard"]
+margin_left = 2.0
+margin_top = 106.0
+margin_right = 37.0
+margin_bottom = 121.0
+
+[node name="Life" type="RichTextLabel" parent="SelectCards/CardforSelection/BackgroundCard"]
+margin_left = 51.0
+margin_top = 106.0
+margin_right = 84.0
+margin_bottom = 121.0
+
 [node name="Compiler" type="Node2D" parent="."]
 visible = false
 

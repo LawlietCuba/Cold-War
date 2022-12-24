@@ -42,19 +42,7 @@ public class CardSupport : Node2D
     }
     public void _on_SelectCard_pressed()
     {
-        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Name").Text = GetNode<RichTextLabel>("CardMargin/BackgroundCard/Name").Text;
-        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Effect").Text = GetNode<RichTextLabel>("CardMargin/BackgroundCard/Effect").Text;
-        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Lore").Text = GetNode<RichTextLabel>("CardMargin/BackgroundCard/Lore").Text;
-        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Attack").Text = GetNode<RichTextLabel>("CardMargin/BackgroundCard/Attack").Text;
-        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Life").Text = this.Life.ToString();
-        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/ClassCard").Text = GetNode<RichTextLabel>("CardMargin/BackgroundCard/ClassCard").Text;
-        GetNode<Sprite>("/root/Main/Game/Board/ShowMargin/BackgroundCard/TypeMargin/TypePhoto").Texture = GetNode<Sprite>("CardMargin/BackgroundCard/TypeMargin/TypePhoto").Texture;
-        GetNode<Sprite>("/root/Main/Game/Board/ShowMargin/BackgroundCard/TypeMargin/TypePhoto").Scale = GetNode<MarginContainer>("/root/Main/Game/Board/ShowMargin/BackgroundCard/TypeMargin").RectSize / GetNode<Sprite>("CardMargin/BackgroundCard/TypeMargin/TypePhoto").Texture.GetSize();
-        GetNode<Sprite>("/root/Main/Game/Board/ShowMargin/BackgroundCard/RarenessMargin/RarenessPhoto").Texture = GetNode<Sprite>("CardMargin/BackgroundCard/RarenessMargin/RarenessPhoto").Texture;
-        GetNode<Sprite>("/root/Main/Game/Board/ShowMargin/BackgroundCard/RarenessMargin/RarenessPhoto").Scale = GetNode<MarginContainer>("/root/Main/Game/Board/ShowMargin/BackgroundCard/RarenessMargin").RectSize / GetNode<Sprite>("CardMargin/BackgroundCard/RarenessMargin/RarenessPhoto").Texture.GetSize();
-        GetNode<Sprite>("/root/Main/Game/Board/ShowMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Texture = GetNode<Sprite>("CardMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Texture;
-        GetNode<Sprite>("/root/Main/Game/Board/ShowMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Scale = GetNode<MarginContainer>("/root/Main/Game/Board/ShowMargin/BackgroundCard/PhotoCardMargin").RectSize / GetNode<Sprite>("CardMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Texture.GetSize();
-
+        UpdateCardVisual();
         if (summoned)
         {
             if (!Game.readyforattack)
@@ -76,10 +64,22 @@ public class CardSupport : Node2D
             Game.readytoSummon = this.Name;
             this.summoned = true;
         }
-
         GetNode<RichTextLabel>("/root/Main/Game/Board/ActionMessage").Text = "Card Selected";
-
-
+    }
+    public void UpdateCardVisual()
+    {
+        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Name").Text = this.Name;
+        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Effect").Text = this.Effect;
+        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Lore").Text = this.Lore;
+        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Attack").Text = this.Attack.ToString();
+        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Life").Text = this.Life.ToString();
+        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/ClassCard").Text = this.ClassCard;
+        GetNode<Sprite>("/root/Main/Game/Board/ShowMargin/BackgroundCard/TypeMargin/TypePhoto").Texture = GetNode<Sprite>("CardMargin/BackgroundCard/TypeMargin/TypePhoto").Texture;
+        GetNode<Sprite>("/root/Main/Game/Board/ShowMargin/BackgroundCard/TypeMargin/TypePhoto").Scale = GetNode<MarginContainer>("/root/Main/Game/Board/ShowMargin/BackgroundCard/TypeMargin").RectSize / GetNode<Sprite>("CardMargin/BackgroundCard/TypeMargin/TypePhoto").Texture.GetSize();
+        GetNode<Sprite>("/root/Main/Game/Board/ShowMargin/BackgroundCard/RarenessMargin/RarenessPhoto").Texture = GetNode<Sprite>("CardMargin/BackgroundCard/RarenessMargin/RarenessPhoto").Texture;
+        GetNode<Sprite>("/root/Main/Game/Board/ShowMargin/BackgroundCard/RarenessMargin/RarenessPhoto").Scale = GetNode<MarginContainer>("/root/Main/Game/Board/ShowMargin/BackgroundCard/RarenessMargin").RectSize / GetNode<Sprite>("CardMargin/BackgroundCard/RarenessMargin/RarenessPhoto").Texture.GetSize();
+        GetNode<Sprite>("/root/Main/Game/Board/ShowMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Texture = GetNode<Sprite>("CardMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Texture;
+        GetNode<Sprite>("/root/Main/Game/Board/ShowMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Scale = GetNode<MarginContainer>("/root/Main/Game/Board/ShowMargin/BackgroundCard/PhotoCardMargin").RectSize / GetNode<Sprite>("CardMargin/BackgroundCard/PhotoCardMargin/PhotoCard").Texture.GetSize();
     }
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     //  public override void _Process(float delta)
