@@ -61,11 +61,11 @@ public class Game : Node2D
         {
             var CardTexture = new ImageTexture();
             CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
-            PrintCardsinRange(HumanPlayer, GetNode<Position2D>("Board/Position2D17"), GetNode<Position2D>("Board/Position2D18"), 8);
+            DrawCards(HumanPlayer, GetNode<Position2D>("Board/Position2D17"), GetNode<Position2D>("Board/Position2D18"), 8);
             List<CardSupport> Deck = new List<CardSupport>();
             Deck = MakeDeck(CardTexture, PathToEnemyDeck, new List<CardSupport>());
             EnemyPlayer = new PlayerTemplate(Deck[0].ClassCard, new Board(Deck));
-            PrintCardsinRange(EnemyPlayer, GetNode<Position2D>("Board/Position2D19"), GetNode<Position2D>("Board/Position2D20"), 8);
+            DrawCards(EnemyPlayer, GetNode<Position2D>("Board/Position2D19"), GetNode<Position2D>("Board/Position2D20"), 8);
             deckpressed = false;
         }
         if (readyforexecute)
@@ -77,19 +77,19 @@ public class Game : Node2D
 
 
 
-    public void PrintCardsinRange(PlayerTemplate Player, Position2D Left, Position2D Right, int amount)
+    public void PrintCardsinRange(List<CardSupport> CardsToPrint, Position2D Left, Position2D Right, int amount)
     {
-        if (amount > Player.PlayerBoard.Deck.Count) amount = Player.PlayerBoard.Deck.Count;
-        else amount = 8;
         double length = Right.Position.x - Left.Position.x;
         double CradWidth = length / amount;
-        for (int i = amount - 1; i >= 0; i--)
+        for (int i = 0; i < amount; i++)
         {
-            Player.PlayerBoard.HandCards.Add(Player.PlayerBoard.Deck[i]);
-            Player.PlayerBoard.Deck[i].GetNode<MarginContainer>("CardMargin").RectPosition = new Vector2((float)(Left.Position.x + i * CradWidth), Left.Position.y);
-            GetNode<Sprite>("Board").AddChild(Player.PlayerBoard.Deck[i], true);
-            GetNode<Node2D>("Board/CardSupport").Name = Player.PlayerBoard.Deck[i].CardName;
-            Player.PlayerBoard.Deck.RemoveAt(i);
+            CardsToPrint[i].GetNode<MarginContainer>("CardMargin").RectPosition = new Vector2((float)(Left.Position.x + i * CradWidth), Left.Position.y);
+            if (!CardsToPrint[i].hasParent)
+            {
+                GetNode<Sprite>("Board").AddChild(CardsToPrint[i], true);
+                GetNode<Node2D>("Board/CardSupport").Name = CardsToPrint[i].CardName;
+                CardsToPrint[i].hasParent = true;
+            }
         }
     }
     public void _on_Ready_pressed()
@@ -431,6 +431,26 @@ public class Game : Node2D
             Card.summoned = false;
         }
         GetNode<RichTextLabel>("Board/ActionMessage").Text = AttackedCardName + " Destroyed";
+    }
+    public void DrawCards(PlayerTemplate Player, Position2D Left, Position2D Right, int amount)
+    {
+        if (Player.PlayerBoard.Deck.Count > 0)
+        {
+            if (Player.PlayerBoard.Deck.Count < amount)
+            {
+                amount = Player.PlayerBoard.Deck.Count;
+            }
+            for (var i = amount - 1; i >= 0; i--)
+            {
+                Player.PlayerBoard.HandCards.Add(Player.PlayerBoard.Deck[i]);
+                Player.PlayerBoard.Deck.RemoveAt(i);
+            }
+            PrintCardsinRange(Player.PlayerBoard.HandCards, Left, Right, Player.PlayerBoard.HandCards.Count);
+        }
+        else
+        {
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = "No more cards to draw";
+        }
     }
     // public override void _Input(InputEvent @event)
     // {

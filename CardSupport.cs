@@ -13,6 +13,7 @@ public class CardSupport : Node2D
     public string Rareness { get; set; }
     public string PathToPhoto { get; set; }
     public bool summoned { get; set; }
+    public bool hasParent { get; set;}
     // Called when the node enters the scene tree for the first time.
 
     // public CardSupport(string name, string lore, string classcard, int attack, int Life, string effect, string type, string rareness, string pathtophoto)

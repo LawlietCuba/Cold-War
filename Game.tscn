@@ -377,6 +377,7 @@ margin_bottom = 172.0
 [connection signal="pressed" from="Board/DeckMargin/Deck" to="." method="_on_Deck_pressed"]
 [connection signal="pressed" from="Board/Summon" to="." method="_on_Summon_pressed"]
 [connection signal="pressed" from="Board/AttackButton" to="." method="_on_AttackButton_pressed"]
+[connection signal="pressed" from="Board/EffectButton" to="." method="_on_EffectButton_pressed"]
 [connection signal="pressed" from="Board/ChangeSide" to="." method="_on_ChangeSide_pressed"]
 [connection signal="pressed" from="Board/Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Board/Button2" to="." method="_on_Button2_pressed"]
