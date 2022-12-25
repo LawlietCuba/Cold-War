@@ -70,7 +70,7 @@ public class Game : Node2D
         }
         if (readyforexecute)
         {
-            Attack();
+            Attack(GetNode<CardSupport>("Board/" + SelectedCardName), GetNode<CardSupport>("Board/" + AttackedCardName));
             readyforexecute = false;
         }
     }
@@ -399,36 +399,36 @@ public class Game : Node2D
             GetNode<RichTextLabel>("Board/ActionMessage").Text = "Ready for Attack";
         }
     }
-    public void Attack()
+    public void Attack(CardSupport AttackingCard, CardSupport AttackedCard)
     {
-        if (GetNode<CardSupport>("Board/" + SelectedCardName).ClassCard != GetNode<CardSupport>("Board/" + AttackedCardName).ClassCard)
+        if (AttackingCard.ClassCard != AttackedCard.ClassCard)
         {
-            int attack = GetNode<CardSupport>("Board/" + SelectedCardName).Attack;
-            int life = GetNode<CardSupport>("Board/" + AttackedCardName).Life;
+            int attack = AttackingCard.Attack;
+            int life = AttackedCard.Life;
             life -= attack;
-            GetNode<CardSupport>("Board/" + AttackedCardName).Life = life;
-            GetNode<CardSupport>("Board/" + AttackedCardName).UpdateCardVisual();
-            GetNode<RichTextLabel>("Board/ActionMessage").Text = AttackedCardName + " has received " + attack + " damage";
+            AttackedCard.Life = life;
+            AttackedCard.UpdateCardVisual();
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = AttackedCard.CardName + " has received " + attack + " damage";
             if (life <= 0)
             {
-                DestroyCard();
+                DestroyCard(AttackedCard);
             }
         }
     }
-    public void DestroyCard()
+    public void DestroyCard(CardSupport Card)
     {
-        GetNode<CardSupport>("Board/" + AttackedCardName).GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D18").Position;
+        Card.GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D18").Position;
         if (HumanPlayer.name == AttackedCardName)
         {
-            HumanPlayer.PlayerBoard.Graveyard.Add(GetNode<CardSupport>("Board/" + AttackedCardName));
-            HumanPlayer.PlayerBoard.CardsOnBoard.Remove(GetNode<CardSupport>("Board/" + AttackedCardName));
-            GetNode<CardSupport>("Board/" + AttackedCardName).summoned = false;
+            HumanPlayer.PlayerBoard.Graveyard.Add(Card);
+            HumanPlayer.PlayerBoard.CardsOnBoard.Remove(Card);
+            Card.summoned = false;
         }
         else
         {
-            EnemyPlayer.PlayerBoard.Graveyard.Add(GetNode<CardSupport>("Board/" + AttackedCardName));
-            EnemyPlayer.PlayerBoard.CardsOnBoard.Remove(GetNode<CardSupport>("Board/" + AttackedCardName));
-            GetNode<CardSupport>("Board/" + AttackedCardName).summoned = false;
+            EnemyPlayer.PlayerBoard.Graveyard.Add(Card);
+            EnemyPlayer.PlayerBoard.CardsOnBoard.Remove(Card);
+            Card.summoned = false;
         }
         GetNode<RichTextLabel>("Board/ActionMessage").Text = AttackedCardName + " Destroyed";
     }
