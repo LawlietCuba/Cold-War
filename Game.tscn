@@ -10,15 +10,15 @@ size = 60
 font_data = ExtResource( 5 )
 
 [sub_resource type="DynamicFont" id=5]
-size = 50
+size = 30
 font_data = ExtResource( 5 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 43
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFont" id=3]
-size = 40
+[sub_resource type="DynamicFont" id=6]
+size = 43
 font_data = ExtResource( 5 )
 
 [node name="Game" type="Node2D"]
@@ -39,7 +39,7 @@ custom_colors/selection_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = SubResource( 4 )
-text = "First Turn"
+text = "First Round"
 
 [node name="ActionMessage" type="RichTextLabel" parent="Board"]
 margin_left = 428.0
@@ -182,13 +182,23 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
 text = "Effect"
 
-[node name="ChangeSide" type="Button" parent="Board"]
-margin_left = -33.0
+[node name="EndPhase" type="Button" parent="Board"]
+margin_left = -158.0
 margin_top = 171.0
-margin_right = 185.0
-margin_bottom = 227.0
-custom_fonts/font = SubResource( 3 )
-text = "Change Side"
+margin_right = 35.9999
+margin_bottom = 226.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "End Phase"
+
+[node name="PassTurn" type="Button" parent="Board"]
+margin_left = 52.3291
+margin_top = 171.417
+margin_right = 246.329
+margin_bottom = 226.417
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "Pass Turn"
 
 [node name="Position2D" type="Position2D" parent="Board"]
 position = Vector2( -738.588, -228.083 )
@@ -374,11 +384,14 @@ margin_top = -28.0
 margin_right = 397.0
 margin_bottom = 172.0
 
+[node name="Node2D" type="Node2D" parent="."]
+
 [connection signal="pressed" from="Board/DeckMargin/Deck" to="." method="_on_Deck_pressed"]
 [connection signal="pressed" from="Board/Summon" to="." method="_on_Summon_pressed"]
 [connection signal="pressed" from="Board/AttackButton" to="." method="_on_AttackButton_pressed"]
 [connection signal="pressed" from="Board/EffectButton" to="." method="_on_EffectButton_pressed"]
-[connection signal="pressed" from="Board/ChangeSide" to="." method="_on_ChangeSide_pressed"]
+[connection signal="pressed" from="Board/EndPhase" to="." method="_on_EndPhase_pressed"]
+[connection signal="pressed" from="Board/PassTurn" to="." method="_on_PassTurn_pressed"]
 [connection signal="pressed" from="Board/Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Board/Button2" to="." method="_on_Button2_pressed"]
 [connection signal="pressed" from="Board/Button3" to="." method="_on_Button3_pressed"]

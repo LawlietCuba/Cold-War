@@ -14,6 +14,10 @@ public class Game : Node2D
     CardTemplate[] Cards;
     string PathToEnemyDeck;
     bool communistside;
+    bool[] GamePhases = new bool[3];
+    bool PassTurnPressed;
+    bool endround;
+    bool gameready;
     public static PlayerTemplate HumanPlayer;
     public static PlayerTemplate EnemyPlayer;
     public static string AttackedCardName;
@@ -30,6 +34,12 @@ public class Game : Node2D
         CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
         if (!startgame)
         {
+            GetNode<Button>("Board/EffectButton").Disabled = true;
+            GetNode<Button>("Board/AttackButton").Disabled = true;
+            GetNode<Button>("Board/Summon").Disabled = true;
+            GetNode<Button>("Board/EndPhase").Disabled = true;
+            GetNode<Button>("Board/PassTurn").Disabled = true;
+
             GetNode<TextureButton>("Board/EnemyField").Show();
             GetNode<TextureButton>("Board/HumanPlayerField").Hide();
 
@@ -59,6 +69,9 @@ public class Game : Node2D
     {
         if (deckpressed)
         {
+            GamePhases[0] = true;
+            GetNode<Button>("Board/PassTurn").Disabled = false;
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = "Summon Phase";
             var CardTexture = new ImageTexture();
             CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
             DrawCards(HumanPlayer, GetNode<Position2D>("Board/Position2D17"), GetNode<Position2D>("Board/Position2D18"), 8);
@@ -67,11 +80,53 @@ public class Game : Node2D
             EnemyPlayer = new PlayerTemplate(Deck[0].ClassCard, new Board(Deck));
             DrawCards(EnemyPlayer, GetNode<Position2D>("Board/Position2D19"), GetNode<Position2D>("Board/Position2D20"), 8);
             deckpressed = false;
+            gameready = true;
         }
         if (readyforexecute)
         {
             Attack(GetNode<CardSupport>("Board/" + SelectedCardName), GetNode<CardSupport>("Board/" + AttackedCardName));
             readyforexecute = false;
+        }
+        if (!endround)
+        {
+            if (GamePhases[0])
+            {
+
+                //GetNode<Button>("Board/EffectButton").Disabled = true;
+                GetNode<Button>("Board/AttackButton").Disabled = true;
+                GetNode<Button>("Board/Summon").Disabled = false;
+                GetNode<Button>("Board/EndPhase").Disabled = false;
+            }
+            else if (GamePhases[1])
+            {
+                //GetNode<Button>("Board/EffectButton").Disabled = false;
+                GetNode<Button>("Board/AttackButton").Disabled = false;
+                GetNode<Button>("Board/Summon").Disabled = true;
+                GetNode<Button>("Board/EndPhase").Disabled = false;
+            }
+            else if (GamePhases[2])
+            {
+                //GetNode<Button>("Board/EffectButton").Disabled = false;
+                GetNode<Button>("Board/AttackButton").Disabled = true;
+                GetNode<Button>("Board/Summon").Disabled = false;
+                GetNode<Button>("Board/EndPhase").Disabled = false;
+            }
+            if (gameready)
+            {
+                if ((HumanPlayer.PlayerBoard.HandCards.Count == 0 && HumanPlayer.PlayerBoard.CardsOnBoard.Count == 0 && EnemyPlayer.PlayerBoard.HandCards.Count == 0) ||
+                (EnemyPlayer.PlayerBoard.HandCards.Count == 0 && EnemyPlayer.PlayerBoard.CardsOnBoard.Count == 0 && HumanPlayer.PlayerBoard.HandCards.Count == 0))
+                {
+                    EndRound();
+                }
+            }
+        }
+        else
+        {
+            GetNode<Button>("Board/EffectButton").Disabled = true;
+            GetNode<Button>("Board/AttackButton").Disabled = true;
+            GetNode<Button>("Board/Summon").Disabled = true;
+            GetNode<Button>("Board/EndPhase").Disabled = true;
+            GetNode<Button>("Board/PassTurn").Disabled = true;
         }
     }
 
@@ -118,6 +173,7 @@ public class Game : Node2D
     }
     public void _on_Summon_pressed()
     {
+        PassTurnPressed = false;
         if (ReadytoSummonCardName != null)
         {
             readyforsummon = true;
@@ -366,7 +422,7 @@ public class Game : Node2D
         }
         return Deck;
     }
-    public void _on_ChangeSide_pressed()
+    public void ChangeSide()
     {
         if (GetNode<TextureButton>("Board/EnemyField").Visible)
         {
@@ -392,11 +448,19 @@ public class Game : Node2D
     }
     public void _on_AttackButton_pressed()
     {
+        PassTurnPressed = true;
         if (cardselected)
         {
-            readyforattack = true;
-            cardselected = false;
-            GetNode<RichTextLabel>("Board/ActionMessage").Text = "Ready for Attack";
+            if (!GetNode<CardSupport>("Board/" + SelectedCardName).hasAttacked)
+            {
+                readyforattack = true;
+                cardselected = false;
+                GetNode<RichTextLabel>("Board/ActionMessage").Text = "Ready for Attack";
+            }
+            else
+            {
+                GetNode<RichTextLabel>("Board/ActionMessage").Text = SelectedCardName + " has already attacked";
+            }
         }
     }
     public void Attack(CardSupport AttackingCard, CardSupport AttackedCard)
@@ -409,6 +473,7 @@ public class Game : Node2D
             AttackedCard.Life = life;
             AttackedCard.UpdateCardVisual();
             GetNode<RichTextLabel>("Board/ActionMessage").Text = AttackedCard.CardName + " has received " + attack + " damage";
+            AttackingCard.hasAttacked = true;
             if (life <= 0)
             {
                 DestroyCard(AttackedCard);
@@ -418,7 +483,7 @@ public class Game : Node2D
     public void DestroyCard(CardSupport Card)
     {
         Card.GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D18").Position;
-        if (HumanPlayer.name == AttackedCardName)
+        if (HumanPlayer.name == GetNode<CardSupport>("Board/" + AttackedCardName).ClassCard)
         {
             HumanPlayer.PlayerBoard.Graveyard.Add(Card);
             HumanPlayer.PlayerBoard.CardsOnBoard.Remove(Card);
@@ -451,6 +516,115 @@ public class Game : Node2D
         {
             GetNode<RichTextLabel>("Board/ActionMessage").Text = "No more cards to draw";
         }
+    }
+    public void _on_EndPhase_pressed()
+    {
+        for (int i = 0; i < GamePhases.Length; i++)
+        {
+            if (GamePhases[i])
+            {
+                GamePhases[i] = false;
+                if (i != GamePhases.Length - 1)
+                {
+                    GamePhases[i + 1] = true;
+                    if (i == 0)
+                    {
+                        GetNode<RichTextLabel>("Board/ActionMessage").Text = "Battle Phase";
+                    }
+                    else if (i == 1)
+                    {
+                        UpdateCardAttackingStatus();
+                        GetNode<RichTextLabel>("Board/ActionMessage").Text = "Second Summon Phase";
+                    }
+                    break;
+                }
+                else
+                {
+                    GamePhases[0] = true;
+                    GetNode<RichTextLabel>("Board/ActionMessage").Text = "Summon Phase";
+                    ChangeSide();
+                }
+            }
+        }
+    }
+    public void UpdateCardAttackingStatus()
+    {
+        PlayerTemplate Player;
+        if (communistside)
+        {
+            if (HumanPlayer.name == "Communist")
+            {
+                Player = HumanPlayer;
+            }
+            else
+            {
+                Player = EnemyPlayer;
+            }
+        }
+        else
+        {
+            if (HumanPlayer.name == "Capitalist")
+            {
+                Player = HumanPlayer;
+            }
+            else
+            {
+                Player = EnemyPlayer;
+            }
+        }
+        foreach (CardSupport Card in Player.PlayerBoard.CardsOnBoard.Keys)
+        {
+            if (Card.hasAttacked)
+                Card.hasAttacked = false;
+        }
+    }
+    public void _on_PassTurn_pressed()
+    {
+        if (PassTurnPressed)
+        {
+            EndRound();
+        }
+        else
+        {
+
+            PassTurnPressed = true;
+            UpdateCardAttackingStatus();
+            for (int i = 0; i < GamePhases.Length; i++)
+            {
+                if (GamePhases[i])
+                {
+                    GamePhases[i] = false;
+                    GamePhases[0] = true;
+                }
+            }
+            ChangeSide();
+        }
+    }
+    public void EndRound()
+    {
+        int HumanPlayerPoints = 0;
+        int EnemyPlayerPoints = 0;
+        foreach (CardSupport Card in HumanPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            HumanPlayerPoints += Card.Life;
+        }
+        foreach (CardSupport Card in EnemyPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            EnemyPlayerPoints += Card.Life;
+        }
+        if (HumanPlayerPoints > EnemyPlayerPoints)
+        {
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = HumanPlayer.name + " Wins";
+        }
+        else if (HumanPlayerPoints < EnemyPlayerPoints)
+        {
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = EnemyPlayer.name + " Wins";
+        }
+        else
+        {
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = "Draw";
+        }
+        endround = true;
     }
     // public override void _Input(InputEvent @event)
     // {
