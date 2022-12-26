@@ -614,11 +614,11 @@ public class Game : Node2D
         }
         if (HumanPlayerPoints > EnemyPlayerPoints)
         {
-            GetNode<RichTextLabel>("Board/ActionMessage").Text = HumanPlayer.name + " Wins";
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = HumanPlayer.name + " Wins this Round";
         }
         else if (HumanPlayerPoints < EnemyPlayerPoints)
         {
-            GetNode<RichTextLabel>("Board/ActionMessage").Text = EnemyPlayer.name + " Wins";
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = EnemyPlayer.name + " Wins this Round";
         }
         else
         {
