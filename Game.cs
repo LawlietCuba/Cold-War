@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using System;
 using System.IO;
@@ -8,7 +9,7 @@ public class Game : Node2D
     PackedScene NewNode;
     List<PlayerTemplate> Players;
     bool deckpressed;
-    //bool notInstanced;
+    bool Instanced;
     bool readyforsummon;
     bool startgame;
     CardTemplate[] Cards;
@@ -18,6 +19,8 @@ public class Game : Node2D
     bool PassTurnPressed;
     bool endround;
     bool gameready;
+    Dictionary<string, PlayerTemplate> RoundWinner = new Dictionary<string, PlayerTemplate>();
+    int Round = 1;
     public static PlayerTemplate HumanPlayer;
     public static PlayerTemplate EnemyPlayer;
     public static string AttackedCardName;
@@ -32,6 +35,7 @@ public class Game : Node2D
     {
         var CardTexture = new ImageTexture();
         CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
+        GetNode<RichTextLabel>("Board/GameWinner").Hide();
         if (!startgame)
         {
             GetNode<Button>("Board/EffectButton").Disabled = true;
@@ -39,6 +43,7 @@ public class Game : Node2D
             GetNode<Button>("Board/Summon").Disabled = true;
             GetNode<Button>("Board/EndPhase").Disabled = true;
             GetNode<Button>("Board/PassTurn").Disabled = true;
+            GetNode<Button>("Board/NextRound").Disabled = true;
 
             GetNode<TextureButton>("Board/EnemyField").Show();
             GetNode<TextureButton>("Board/HumanPlayerField").Hide();
@@ -54,14 +59,13 @@ public class Game : Node2D
 
             startgame = true;
         }
-        // else
-        // {
-        //     startgame = false;
-        //     if (!notInstanced)
-        //     {
-        //         notInstanced = true;
-        //     }
-        // }
+        if (deckpressed && !Instanced)
+        {
+            Instanced = true;
+            List<CardSupport> Deck = new List<CardSupport>();
+            Deck = MakeDeck(CardTexture, PathToEnemyDeck, new List<CardSupport>());
+            EnemyPlayer = new PlayerTemplate(Deck[0].ClassCard, new Board(Deck));
+        }
     }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -69,15 +73,13 @@ public class Game : Node2D
     {
         if (deckpressed)
         {
+            endround = false;
             GamePhases[0] = true;
             GetNode<Button>("Board/PassTurn").Disabled = false;
             GetNode<RichTextLabel>("Board/ActionMessage").Text = "Summon Phase";
             var CardTexture = new ImageTexture();
             CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
             DrawCards(HumanPlayer, GetNode<Position2D>("Board/Position2D17"), GetNode<Position2D>("Board/Position2D18"), 8);
-            List<CardSupport> Deck = new List<CardSupport>();
-            Deck = MakeDeck(CardTexture, PathToEnemyDeck, new List<CardSupport>());
-            EnemyPlayer = new PlayerTemplate(Deck[0].ClassCard, new Board(Deck));
             DrawCards(EnemyPlayer, GetNode<Position2D>("Board/Position2D19"), GetNode<Position2D>("Board/Position2D20"), 8);
             deckpressed = false;
             gameready = true;
@@ -96,6 +98,8 @@ public class Game : Node2D
                 GetNode<Button>("Board/AttackButton").Disabled = true;
                 GetNode<Button>("Board/Summon").Disabled = false;
                 GetNode<Button>("Board/EndPhase").Disabled = false;
+                GetNode<Button>("Board/NextRound").Disabled = true;
+
             }
             else if (GamePhases[1])
             {
@@ -103,6 +107,7 @@ public class Game : Node2D
                 GetNode<Button>("Board/AttackButton").Disabled = false;
                 GetNode<Button>("Board/Summon").Disabled = true;
                 GetNode<Button>("Board/EndPhase").Disabled = false;
+                GetNode<Button>("Board/NextRound").Disabled = true;
             }
             else if (GamePhases[2])
             {
@@ -110,11 +115,12 @@ public class Game : Node2D
                 GetNode<Button>("Board/AttackButton").Disabled = true;
                 GetNode<Button>("Board/Summon").Disabled = false;
                 GetNode<Button>("Board/EndPhase").Disabled = false;
+                GetNode<Button>("Board/NextRound").Disabled = true;
             }
             if (gameready)
             {
-                if ((HumanPlayer.PlayerBoard.HandCards.Count == 0 && HumanPlayer.PlayerBoard.CardsOnBoard.Count == 0 && EnemyPlayer.PlayerBoard.HandCards.Count == 0) ||
-                (EnemyPlayer.PlayerBoard.HandCards.Count == 0 && EnemyPlayer.PlayerBoard.CardsOnBoard.Count == 0 && HumanPlayer.PlayerBoard.HandCards.Count == 0))
+                if ((HumanPlayer.PlayerBoard.HandCards.Count == 0 && HumanPlayer.PlayerBoard.CardsOnBoard.Count == 0) ||
+                (EnemyPlayer.PlayerBoard.HandCards.Count == 0 && EnemyPlayer.PlayerBoard.CardsOnBoard.Count == 0))
                 {
                     EndRound();
                 }
@@ -448,18 +454,21 @@ public class Game : Node2D
     }
     public void _on_AttackButton_pressed()
     {
-        PassTurnPressed = true;
+        PassTurnPressed = false;
         if (cardselected)
         {
-            if (!GetNode<CardSupport>("Board/" + SelectedCardName).hasAttacked)
+            if ((communistside && GetNode<CardSupport>("Board/" + SelectedCardName).ClassCard == "Communist") || (!communistside && GetNode<CardSupport>("Board/" + SelectedCardName).ClassCard == "Capitalist"))
             {
-                readyforattack = true;
-                cardselected = false;
-                GetNode<RichTextLabel>("Board/ActionMessage").Text = "Ready for Attack";
-            }
-            else
-            {
-                GetNode<RichTextLabel>("Board/ActionMessage").Text = SelectedCardName + " has already attacked";
+                if (!GetNode<CardSupport>("Board/" + SelectedCardName).hasAttacked)
+                {
+                    readyforattack = true;
+                    cardselected = false;
+                    GetNode<RichTextLabel>("Board/ActionMessage").Text = "Ready for Attack";
+                }
+                else
+                {
+                    GetNode<RichTextLabel>("Board/ActionMessage").Text = SelectedCardName + " has already attacked";
+                }
             }
         }
     }
@@ -483,7 +492,7 @@ public class Game : Node2D
     public void DestroyCard(CardSupport Card)
     {
         Card.GetNode<MarginContainer>("CardMargin").RectPosition = GetNode<Position2D>("Board/Position2D18").Position;
-        if (HumanPlayer.name == GetNode<CardSupport>("Board/" + AttackedCardName).ClassCard)
+        if (HumanPlayer.name == Card.ClassCard)
         {
             HumanPlayer.PlayerBoard.Graveyard.Add(Card);
             HumanPlayer.PlayerBoard.CardsOnBoard.Remove(Card);
@@ -495,7 +504,7 @@ public class Game : Node2D
             EnemyPlayer.PlayerBoard.CardsOnBoard.Remove(Card);
             Card.summoned = false;
         }
-        GetNode<RichTextLabel>("Board/ActionMessage").Text = AttackedCardName + " Destroyed";
+        GetNode<RichTextLabel>("Board/ActionMessage").Text = Card.CardName + " Destroyed";
     }
     public void DrawCards(PlayerTemplate Player, Position2D Left, Position2D Right, int amount)
     {
@@ -586,7 +595,6 @@ public class Game : Node2D
         }
         else
         {
-
             PassTurnPressed = true;
             UpdateCardAttackingStatus();
             for (int i = 0; i < GamePhases.Length; i++)
@@ -614,17 +622,76 @@ public class Game : Node2D
         }
         if (HumanPlayerPoints > EnemyPlayerPoints)
         {
-            GetNode<RichTextLabel>("Board/ActionMessage").Text = HumanPlayer.name + " Wins this Round";
+            if (Round != 3)
+            {
+                GetNode<RichTextLabel>("Board/ActionMessage").Text = HumanPlayer.name + " Wins this Round";
+                if (Round == 1) RoundWinner.Add("First", HumanPlayer);
+                else
+                {
+                    RoundWinner.Add("Second", HumanPlayer);
+                    if (RoundWinner["First"].name == HumanPlayer.name)
+                    {
+                        DeclareWinner(HumanPlayer);
+                    }
+                }
+                Round++;
+            }
+            else
+            {
+                DeclareWinner(HumanPlayer);
+            }
         }
         else if (HumanPlayerPoints < EnemyPlayerPoints)
         {
-            GetNode<RichTextLabel>("Board/ActionMessage").Text = EnemyPlayer.name + " Wins this Round";
+            if (Round != 3)
+            {
+                GetNode<RichTextLabel>("Board/ActionMessage").Text = EnemyPlayer.name + " Wins this Round";
+                if (Round == 1) RoundWinner.Add("First", EnemyPlayer);
+                else
+                {
+                    RoundWinner.Add("Second", EnemyPlayer);
+                    if (RoundWinner["First"].name == EnemyPlayer.name)
+                    {
+                        DeclareWinner(EnemyPlayer);
+                    }
+                }
+                Round++;
+            }
+            else
+            {
+                DeclareWinner(EnemyPlayer);
+            }
         }
         else
         {
-            GetNode<RichTextLabel>("Board/ActionMessage").Text = "Draw";
+            if (Round != 3)
+            {
+                GetNode<RichTextLabel>("Board/ActionMessage").Text = "Draw";
+
+            }
         }
         endround = true;
+        GetNode<Button>("Board/NextRound").Disabled = false;
+    }
+    public void _on_NextRound_pressed()
+    {
+        GamePhases[0] = false;
+        GamePhases[1] = false;
+        GamePhases[2] = false;
+        for (int i = HumanPlayer.PlayerBoard.CardsOnBoard.Keys.Count - 1; i >= 0; i--)
+        {
+            DestroyCard(HumanPlayer.PlayerBoard.CardsOnBoard.Keys.ElementAt(i));
+        }
+        for (int i = EnemyPlayer.PlayerBoard.CardsOnBoard.Keys.Count - 1; i >= 0; i--)
+        {
+            DestroyCard(EnemyPlayer.PlayerBoard.CardsOnBoard.Keys.ElementAt(i));
+        }
+    }
+    public void DeclareWinner(PlayerTemplate Player)
+    {
+        _on_NextRound_pressed();
+        GetNode<RichTextLabel>("Board/GameWinner").Text = Player.name + " Wins the Game";
+        GetNode<RichTextLabel>("Board/GameWinner").Show();
     }
     // public override void _Input(InputEvent @event)
     // {
