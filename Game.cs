@@ -65,6 +65,8 @@ public class Game : Node2D
             List<CardSupport> Deck = new List<CardSupport>();
             Deck = MakeDeck(CardTexture, PathToEnemyDeck, new List<CardSupport>());
             EnemyPlayer = new PlayerTemplate(Deck[0].ClassCard, new Board(Deck));
+            ShuffleCards(HumanPlayer.PlayerBoard.Deck);
+            ShuffleCards(EnemyPlayer.PlayerBoard.Deck);
         }
     }
 
@@ -666,7 +668,7 @@ public class Game : Node2D
         {
             if (Round != 3)
             {
-                GetNode<RichTextLabel>("Board/ActionMessage").Text = "Draw";
+                GetNode<RichTextLabel>("Board/ActionMessage").Text = "Tie";
 
             }
         }
@@ -692,6 +694,17 @@ public class Game : Node2D
         _on_NextRound_pressed();
         GetNode<RichTextLabel>("Board/GameWinner").Text = Player.name + " Wins the Game";
         GetNode<RichTextLabel>("Board/GameWinner").Show();
+    }
+    public void ShuffleCards(List<CardSupport> Cards)
+    {
+        Random rnd = new Random();
+        for (int i = Cards.Count - 1; i > 0; i--)
+        {
+            int j = rnd.Next(i + 1);
+            CardSupport temp = Cards[j];
+            Cards[j] = Cards[i];
+            Cards[i] = temp;
+        }
     }
     // public override void _Input(InputEvent @event)
     // {

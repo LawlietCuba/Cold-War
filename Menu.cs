@@ -75,7 +75,7 @@ public class Menu : Node2D
     }
     public void _on_Ready_pressed()
     {
-        if (somecardselected)
+       if (somecardselected)
         {
             HumanPlayer = new PlayerTemplate(FinalDeck[0].ClassCard, new Board(FinalDeck));
             Game.HumanPlayer = HumanPlayer;
