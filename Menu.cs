@@ -7,7 +7,6 @@ public class Menu : Node2D
 {
     // Declare member variables here. Examples:
     bool SelectedDeck;
-    
     PlayerTemplate HumanPlayer;
     string PathToSelectedDeck;
     CardTemplate[] LogicCards;
