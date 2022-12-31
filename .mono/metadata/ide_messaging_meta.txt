@@ -1,2 +1,2 @@
-﻿38435
-/home/rodrigo/Aplications/Godot_v3.5.1-stable_mono_x11_64/Godot_v3.5.1-stable_mono_x11.64
+﻿32877
+/home/rodrigo/Documents/Godot_v3.5.1-stable_mono_x11_64/Godot_v3.5.1-stable_mono_x11.64
