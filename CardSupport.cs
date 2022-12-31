@@ -50,7 +50,6 @@ public class CardSupport : Node2D
             if (!Game.readyforattack)
             {
                 Game.SelectedCardName = this.CardName;
-            //    Game.ReadytoSummonCardName = this.CardName;
                 Game.cardselected = true;
             }
             else
