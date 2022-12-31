@@ -1,0 +1,11 @@
+Card <Name>
+{
+    CardType = <type>;
+    Rareness = <rareness>;
+    Lore = <lore>;
+    Health = <double>;
+    Attack = <double>;
+    PoliticalCurrent = <political_current>;
+    PathToPhoto = <path_to_photo>;
+    Effect = <code string>;
+}

@@ -929,11 +929,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/Cold War Godot.csproj",
+      "projectUniqueName": "/home/rodrigo/Documents/Programming/Cold-War-Project/Cold War Godot.csproj",
       "projectName": "Cold War Godot",
-      "projectPath": "/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/Cold War Godot.csproj",
+      "projectPath": "/home/rodrigo/Documents/Programming/Cold-War-Project/Cold War Godot.csproj",
       "packagesPath": "/home/rodrigo/.nuget/packages/",
-      "outputPath": "/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/obj/",
+      "outputPath": "/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/rodrigo/.nuget/NuGet/NuGet.Config"

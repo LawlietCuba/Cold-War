@@ -116,7 +116,7 @@ public class Game : Node2D
             if (GamePhases[0])
             {
 
-                //GetNode<Button>("Board/EffectButton").Disabled = true;
+                GetNode<Button>("Board/EffectButton").Disabled = true;
                 GetNode<Button>("Board/AttackButton").Disabled = true;
                 GetNode<Button>("Board/Summon").Disabled = false;
                 GetNode<Button>("Board/EndPhase").Disabled = false;
@@ -125,7 +125,7 @@ public class Game : Node2D
             }
             else if (GamePhases[1])
             {
-                //GetNode<Button>("Board/EffectButton").Disabled = false;
+                GetNode<Button>("Board/EffectButton").Disabled = false;
                 GetNode<Button>("Board/AttackButton").Disabled = false;
                 GetNode<Button>("Board/Summon").Disabled = true;
                 GetNode<Button>("Board/EndPhase").Disabled = false;
@@ -133,7 +133,7 @@ public class Game : Node2D
             }
             else if (GamePhases[2])
             {
-                //GetNode<Button>("Board/EffectButton").Disabled = false;
+                GetNode<Button>("Board/EffectButton").Disabled = true;
                 GetNode<Button>("Board/AttackButton").Disabled = true;
                 GetNode<Button>("Board/Summon").Disabled = false;
                 GetNode<Button>("Board/EndPhase").Disabled = false;
@@ -507,6 +507,7 @@ public class Game : Node2D
             }
         }
     }
+
     public void Attack(CardSupport AttackingCard, CardSupport AttackedCard)
     {
         if (AttackingCard.political_current != AttackedCard.political_current)
@@ -793,6 +794,10 @@ public class Game : Node2D
         {
             _on_EndPhase_pressed();
         }
+    }
+    public void _on_EffectButton_pressed()
+    {
+        
     }
     public void OrderByAttack(List<CardSupport> Cards)
     {

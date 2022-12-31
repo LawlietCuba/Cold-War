@@ -57,3 +57,23 @@
 /home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/obj/Debug/Cold War Godot.csproj.CopyComplete
 /home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/obj/Debug/Cold War Godot.dll
 /home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/obj/Debug/Cold War Godot.pdb
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/bin/Debug/Cold War Godot.dll
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/bin/Debug/Cold War Godot.pdb
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/bin/Debug/Microsoft.Bcl.AsyncInterfaces.dll
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/bin/Debug/Newtonsoft.Json.dll
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/bin/Debug/System.Buffers.dll
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/bin/Debug/System.Memory.dll
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/bin/Debug/System.Numerics.Vectors.dll
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/bin/Debug/System.Runtime.CompilerServices.Unsafe.dll
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/bin/Debug/System.Text.Encodings.Web.dll
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/bin/Debug/System.Text.Json.dll
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/bin/Debug/System.Threading.Tasks.Extensions.dll
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/bin/Debug/System.ValueTuple.dll
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/obj/Debug/Cold War Godot.csproj.AssemblyReference.cache
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/obj/Debug/Cold War Godot.GeneratedMSBuildEditorConfig.editorconfig
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/obj/Debug/Cold War Godot.AssemblyInfoInputs.cache
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/obj/Debug/Cold War Godot.AssemblyInfo.cs
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/obj/Debug/Cold War Godot.csproj.CoreCompileInputs.cache
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/obj/Debug/Cold War Godot.csproj.CopyComplete
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/obj/Debug/Cold War Godot.dll
+/home/rodrigo/Documents/Programming/Cold-War-Project/.mono/temp/obj/Debug/Cold War Godot.pdb
