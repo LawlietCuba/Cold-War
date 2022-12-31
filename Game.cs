@@ -21,6 +21,8 @@ public class Game : Node2D
     bool gameready;
     Dictionary<string, PlayerTemplate> RoundWinner = new Dictionary<string, PlayerTemplate>();
     int Round = 1;
+    List<Position2D> HumanPlayerField = new List<Position2D>();
+    List<Position2D> EnemyPlayerField = new List<Position2D>();
     public static PlayerTemplate HumanPlayer;
     public static PlayerTemplate EnemyPlayer;
     public static string AttackedCardName;
@@ -38,6 +40,24 @@ public class Game : Node2D
         GetNode<RichTextLabel>("Board/GameWinner").Hide();
         if (!startgame)
         {
+            HumanPlayerField.Add(GetNode<Position2D>("Board/Position2D9"));
+            HumanPlayerField.Add(GetNode<Position2D>("Board/Position2D10"));
+            HumanPlayerField.Add(GetNode<Position2D>("Board/Position2D11"));
+            HumanPlayerField.Add(GetNode<Position2D>("Board/Position2D12"));
+            HumanPlayerField.Add(GetNode<Position2D>("Board/Position2D13"));
+            HumanPlayerField.Add(GetNode<Position2D>("Board/Position2D14"));
+            HumanPlayerField.Add(GetNode<Position2D>("Board/Position2D15"));
+            HumanPlayerField.Add(GetNode<Position2D>("Board/Position2D16"));
+
+            EnemyPlayerField.Add(GetNode<Position2D>("Board/Position2D"));
+            EnemyPlayerField.Add(GetNode<Position2D>("Board/Position2D2"));
+            EnemyPlayerField.Add(GetNode<Position2D>("Board/Position2D3"));
+            EnemyPlayerField.Add(GetNode<Position2D>("Board/Position2D4"));
+            EnemyPlayerField.Add(GetNode<Position2D>("Board/Position2D5"));
+            EnemyPlayerField.Add(GetNode<Position2D>("Board/Position2D6"));
+            EnemyPlayerField.Add(GetNode<Position2D>("Board/Position2D7"));
+            EnemyPlayerField.Add(GetNode<Position2D>("Board/Position2D8"));
+
             GetNode<Button>("Board/EffectButton").Disabled = true;
             GetNode<Button>("Board/AttackButton").Disabled = true;
             GetNode<Button>("Board/Summon").Disabled = true;
@@ -214,17 +234,25 @@ public class Game : Node2D
     }
     public void MakeSummonAfterCheckingConditionals(PlayerTemplate Player, Position2D square)
     {
-        for (int i = 0; i < Player.PlayerBoard.HandCards.Count; i++)
+        if (Player.PlayerBoard.HandCards.Contains(GetNode<CardSupport>("Board/" + ReadytoSummonCardName)))
         {
-            if (Player.PlayerBoard.HandCards[i].Name == ReadytoSummonCardName)
-            {
-                Player.PlayerBoard.HandCards[i].summoned = true;
-                Player.PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = square.Position;
-                Player.PlayerBoard.CardsOnBoard.Add(Player.PlayerBoard.HandCards[i], square);
-                Player.PlayerBoard.HandCards.RemoveAt(i);
-                break;
-            }
+            GetNode<CardSupport>("Board/" + ReadytoSummonCardName).summoned = true;
+            GetNode<CardSupport>("Board/" + ReadytoSummonCardName).GetNode<MarginContainer>("CardMargin").RectPosition = square.Position;
+            Player.PlayerBoard.CardsOnBoard.Add(GetNode<CardSupport>("Board/" + ReadytoSummonCardName), square);
+            Player.PlayerBoard.HandCards.Remove(GetNode<CardSupport>("Board/" + ReadytoSummonCardName));
         }
+
+        // for (int i = 0; i < Player.PlayerBoard.HandCards.Count; i++)
+        // {
+        //     if (Player.PlayerBoard.HandCards[i].Name == ReadytoSummonCardName)
+        //     {
+        //         Player.PlayerBoard.HandCards[i].summoned = true;
+        //         Player.PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = square.Position;
+        //         Player.PlayerBoard.CardsOnBoard.Add(Player.PlayerBoard.HandCards[i], square);
+        //         Player.PlayerBoard.HandCards.RemoveAt(i);
+        //         break;
+        //     }
+        // }
     }
     public void _on_Button_pressed()
     {
@@ -624,52 +652,26 @@ public class Game : Node2D
         }
         if (HumanPlayerPoints > EnemyPlayerPoints)
         {
-            if (Round != 3)
-            {
-                GetNode<RichTextLabel>("Board/ActionMessage").Text = HumanPlayer.name + " Wins this Round";
-                if (Round == 1) RoundWinner.Add("First", HumanPlayer);
-                else
-                {
-                    RoundWinner.Add("Second", HumanPlayer);
-                    if (RoundWinner["First"].name == HumanPlayer.name)
-                    {
-                        DeclareWinner(HumanPlayer);
-                    }
-                }
-                Round++;
-            }
-            else
-            {
-                DeclareWinner(HumanPlayer);
-            }
+            DeclareRoundWinner(HumanPlayer);
         }
         else if (HumanPlayerPoints < EnemyPlayerPoints)
         {
-            if (Round != 3)
-            {
-                GetNode<RichTextLabel>("Board/ActionMessage").Text = EnemyPlayer.name + " Wins this Round";
-                if (Round == 1) RoundWinner.Add("First", EnemyPlayer);
-                else
-                {
-                    RoundWinner.Add("Second", EnemyPlayer);
-                    if (RoundWinner["First"].name == EnemyPlayer.name)
-                    {
-                        DeclareWinner(EnemyPlayer);
-                    }
-                }
-                Round++;
-            }
-            else
-            {
-                DeclareWinner(EnemyPlayer);
-            }
+            DeclareRoundWinner(EnemyPlayer);
+        }
+        else if (PassTurnPressed)
+        {
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = "Tie";
+            PassTurnPressed = false;
         }
         else
         {
-            if (Round != 3)
+            if (HumanPlayer.PlayerBoard.HandCards.Count > 0)
             {
-                GetNode<RichTextLabel>("Board/ActionMessage").Text = "Tie";
-
+                DeclareRoundWinner(HumanPlayer);
+            }
+            else
+            {
+                DeclareRoundWinner(EnemyPlayer);
             }
         }
         endround = true;
@@ -695,6 +697,27 @@ public class Game : Node2D
         GetNode<RichTextLabel>("Board/GameWinner").Text = Player.name + " Wins the Game";
         GetNode<RichTextLabel>("Board/GameWinner").Show();
     }
+    public void DeclareRoundWinner(PlayerTemplate Player)
+    {
+        if (Round != 3)
+        {
+            GetNode<RichTextLabel>("Board/ActionMessage").Text = Player.name + " Wins this Round";
+            if (Round == 1) RoundWinner.Add("First", Player);
+            else
+            {
+                RoundWinner.Add("Second", Player);
+                if (RoundWinner["First"].name == Player.name)
+                {
+                    DeclareWinner(Player);
+                }
+            }
+            Round++;
+        }
+        else
+        {
+            DeclareWinner(Player);
+        }
+    }
     public void ShuffleCards(List<CardSupport> Cards)
     {
         Random rnd = new Random();
@@ -704,6 +727,75 @@ public class Game : Node2D
             CardSupport temp = Cards[j];
             Cards[j] = Cards[i];
             Cards[i] = temp;
+        }
+    }
+    public void PlayVirtualPlayer()
+    {
+        if (GamePhases[0])
+        {
+            if (EnemyPlayer.PlayerBoard.HandCards.Count > 0 && EnemyPlayer.PlayerBoard.CardsOnBoard.Count < 8)
+            {
+                int amounttosummon = 8 - EnemyPlayer.PlayerBoard.CardsOnBoard.Count;
+                if (amounttosummon > EnemyPlayer.PlayerBoard.HandCards.Count)
+                {
+                    amounttosummon = EnemyPlayer.PlayerBoard.HandCards.Count;
+                }
+                OrderByAttack(EnemyPlayer.PlayerBoard.HandCards);
+                List<Position2D> PossiblePositions = new List<Position2D>();
+                SetPossiblePositions(EnemyPlayer, EnemyPlayerField, PossiblePositions);
+                for (int i = 0; i < amounttosummon; i++)
+                {
+
+                }
+            }
+        }
+        if (GamePhases[1])
+        {
+
+        }
+        if (GamePhases[2])
+        {
+
+        }
+    }
+    public void OrderByAttack(List<CardSupport> Cards)
+    {
+        for (int i = 0; i < Cards.Count; i++)
+        {
+            for (int j = 0; j < Cards.Count; j++)
+            {
+                if (Cards[i].Attack > Cards[j].Attack)
+                {
+                    CardSupport temp = Cards[i];
+                    Cards[i] = Cards[j];
+                    Cards[j] = temp;
+                }
+            }
+        }
+    }
+    public void OrderByLife(List<CardSupport> Cards)
+    {
+        for (int i = 0; i < Cards.Count; i++)
+        {
+            for (int j = 0; j < Cards.Count; j++)
+            {
+                if (Cards[i].Life > Cards[j].Life)
+                {
+                    CardSupport temp = Cards[i];
+                    Cards[i] = Cards[j];
+                    Cards[j] = temp;
+                }
+            }
+        }
+    }
+    public void SetPossiblePositions(PlayerTemplate Player, List<Position2D> PlayerField, List<Position2D> PossiblePositions)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            if (!Player.PlayerBoard.CardsOnBoard.ContainsValue(PlayerField.ElementAt(i)))
+            {
+                PossiblePositions.Add(PlayerField.ElementAt(i));
+            }
         }
     }
     // public override void _Input(InputEvent @event)

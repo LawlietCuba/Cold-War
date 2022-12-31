@@ -1,2 +1,2 @@
-﻿40417
+﻿37165
 /home/daniel/Documents/Programacion/Proyecto Battle Cards/Godot/Godot_v3.5.1-stable_mono_x11_64/Godot_v3.5.1-stable_mono_x11.64
