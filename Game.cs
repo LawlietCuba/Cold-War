@@ -146,6 +146,20 @@ public class Game : Node2D
                 {
                     EndRound();
                 }
+                if (EnemyPlayer.name == "Communist")
+                {
+                    if (communistside)
+                    {
+                        PlayVirtualPlayer();
+                    }
+                }
+                else
+                {
+                    if (!communistside)
+                    {
+                        PlayVirtualPlayer();
+                    }
+                }
             }
         }
         else
@@ -241,18 +255,6 @@ public class Game : Node2D
             Player.PlayerBoard.CardsOnBoard.Add(GetNode<CardSupport>("Board/" + ReadytoSummonCardName), square);
             Player.PlayerBoard.HandCards.Remove(GetNode<CardSupport>("Board/" + ReadytoSummonCardName));
         }
-
-        // for (int i = 0; i < Player.PlayerBoard.HandCards.Count; i++)
-        // {
-        //     if (Player.PlayerBoard.HandCards[i].Name == ReadytoSummonCardName)
-        //     {
-        //         Player.PlayerBoard.HandCards[i].summoned = true;
-        //         Player.PlayerBoard.HandCards[i].GetNode<MarginContainer>("CardMargin").RectPosition = square.Position;
-        //         Player.PlayerBoard.CardsOnBoard.Add(Player.PlayerBoard.HandCards[i], square);
-        //         Player.PlayerBoard.HandCards.RemoveAt(i);
-        //         break;
-        //     }
-        // }
     }
     public void _on_Button_pressed()
     {
@@ -743,19 +745,50 @@ public class Game : Node2D
                 OrderByAttack(EnemyPlayer.PlayerBoard.HandCards);
                 List<Position2D> PossiblePositions = new List<Position2D>();
                 SetPossiblePositions(EnemyPlayer, EnemyPlayerField, PossiblePositions);
-                for (int i = 0; i < amounttosummon; i++)
+                for (int i = amounttosummon - 1; i >= 0; i--)
                 {
-
+                    ReadytoSummonCardName = EnemyPlayer.PlayerBoard.HandCards[i].CardName;
+                    MakeSummon(PossiblePositions[i]);
                 }
             }
+            _on_EndPhase_pressed();
         }
         if (GamePhases[1])
         {
-
+            if (HumanPlayer.PlayerBoard.CardsOnBoard.Count > 0 && EnemyPlayer.PlayerBoard.CardsOnBoard.Count > 0)
+            {
+                List<CardSupport> HumanCardsOnBoard = new List<CardSupport>();
+                foreach (CardSupport Card in HumanPlayer.PlayerBoard.CardsOnBoard.Keys)
+                {
+                    HumanCardsOnBoard.Add(Card);
+                }
+                OrderByLife(HumanCardsOnBoard);
+                List<CardSupport> EnemyCardsOnBoard = new List<CardSupport>();
+                foreach (CardSupport Card in EnemyPlayer.PlayerBoard.CardsOnBoard.Keys)
+                {
+                    EnemyCardsOnBoard.Add(Card);
+                }
+                OrderByAttack(EnemyCardsOnBoard);
+                int i = 0;
+                do
+                {
+                    SelectedCardName = EnemyCardsOnBoard[i].CardName;
+                    _on_AttackButton_pressed();
+                    AttackedCardName = HumanCardsOnBoard[0].CardName;
+                    Attack(GetNode<CardSupport>("Board/" + SelectedCardName), GetNode<CardSupport>("Board/" + AttackedCardName));
+                    if (HumanPlayer.PlayerBoard.Graveyard.Contains(GetNode<CardSupport>("Board/" + AttackedCardName)))
+                    {
+                        HumanCardsOnBoard.Remove(GetNode<CardSupport>("Board/" + AttackedCardName));
+                    }
+                    i++;
+                }
+                while (HumanPlayer.PlayerBoard.CardsOnBoard.Count > 0 && i < EnemyCardsOnBoard.Count);
+            }
+            _on_EndPhase_pressed();
         }
         if (GamePhases[2])
         {
-
+            _on_EndPhase_pressed();
         }
     }
     public void OrderByAttack(List<CardSupport> Cards)
