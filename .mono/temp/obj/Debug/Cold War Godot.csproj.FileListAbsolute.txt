@@ -1,0 +1,59 @@
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/bin/Debug/Cold War Godot.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/bin/Debug/Cold War Godot.pdb
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.csproj.AssemblyReference.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.AssemblyInfoInputs.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.AssemblyInfo.cs
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.csproj.CoreCompileInputs.cache
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.pdb
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/bin/Debug/Cold War Godot.dll
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/bin/Debug/Cold War Godot.pdb
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.csproj.AssemblyReference.cache
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.GeneratedMSBuildEditorConfig.editorconfig
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.AssemblyInfoInputs.cache
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.AssemblyInfo.cs
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.csproj.CoreCompileInputs.cache
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.dll
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.pdb
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/bin/Debug/Microsoft.Bcl.AsyncInterfaces.dll
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/bin/Debug/Newtonsoft.Json.dll
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/bin/Debug/System.Buffers.dll
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/bin/Debug/System.Memory.dll
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/bin/Debug/System.Numerics.Vectors.dll
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/bin/Debug/System.Runtime.CompilerServices.Unsafe.dll
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/bin/Debug/System.Text.Encodings.Web.dll
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/bin/Debug/System.Text.Json.dll
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/bin/Debug/System.Threading.Tasks.Extensions.dll
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/bin/Debug/System.ValueTuple.dll
+/media/rodrigo/DANIELHardDrive/Proyecto/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.csproj.CopyComplete
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/bin/Debug/Microsoft.Bcl.AsyncInterfaces.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/bin/Debug/Newtonsoft.Json.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/bin/Debug/System.Buffers.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/bin/Debug/System.Memory.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/bin/Debug/System.Numerics.Vectors.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/bin/Debug/System.Runtime.CompilerServices.Unsafe.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/bin/Debug/System.Text.Encodings.Web.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/bin/Debug/System.Text.Json.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/bin/Debug/System.Threading.Tasks.Extensions.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/bin/Debug/System.ValueTuple.dll
+/home/daniel/Documents/Programacion/Proyecto Battle Cards/ColdWarGodot/.mono/temp/obj/Debug/Cold War Godot.csproj.CopyComplete
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/bin/Debug/Cold War Godot.dll
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/bin/Debug/Cold War Godot.pdb
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/bin/Debug/Microsoft.Bcl.AsyncInterfaces.dll
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/bin/Debug/Newtonsoft.Json.dll
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/bin/Debug/System.Buffers.dll
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/bin/Debug/System.Memory.dll
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/bin/Debug/System.Numerics.Vectors.dll
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/bin/Debug/System.Runtime.CompilerServices.Unsafe.dll
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/bin/Debug/System.Text.Encodings.Web.dll
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/bin/Debug/System.Text.Json.dll
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/bin/Debug/System.Threading.Tasks.Extensions.dll
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/bin/Debug/System.ValueTuple.dll
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/obj/Debug/Cold War Godot.csproj.AssemblyReference.cache
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/obj/Debug/Cold War Godot.GeneratedMSBuildEditorConfig.editorconfig
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/obj/Debug/Cold War Godot.AssemblyInfoInputs.cache
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/obj/Debug/Cold War Godot.AssemblyInfo.cs
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/obj/Debug/Cold War Godot.csproj.CoreCompileInputs.cache
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/obj/Debug/Cold War Godot.csproj.CopyComplete
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/obj/Debug/Cold War Godot.dll
+/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/obj/Debug/Cold War Godot.pdb

@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/Cold War Godot.csproj": {}
+  },
+  "projects": {
+    "/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/Cold War Godot.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/Cold War Godot.csproj",
+        "projectName": "Cold War Godot",
+        "projectPath": "/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/Cold War Godot.csproj",
+        "packagesPath": "/home/rodrigo/.nuget/packages/",
+        "outputPath": "/home/rodrigo/Documents/Programming/Cold-War-VisualGodot/.mono/temp/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/rodrigo/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.2, )",
+              "autoReferenced": true
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.2, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[7.0.1, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/6.0.111/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

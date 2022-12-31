@@ -1,0 +1,108 @@
+import Decks;
+
+Card FriederichHayek
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Liberal writer and Nobel's Economic Prize Winner";
+    Health = 700;
+    Attack = 1300;
+    political_current = Capitalist;
+    PathToPhoto = "Hayek";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To Soviets");
+    }]
+}
+
+Card AgrarianReform
+{
+    CardType = Politic;
+    Rareness = Legendary;
+    Lore = "Agrarian Reform";
+    Health = 0;
+    Attack = 0;
+    political_current = Communist;
+    PathToPhoto = ;
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To Soviets");
+    }]
+}
+
+Card FidelCastroRuz
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Commander in Chief of the Cuban Revolution";
+    Health = 1300;
+    Attack = 1300;
+    political_current = Communist;
+    PathToPhoto = "fidel";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To Soviets");
+    }]
+}
+
+Card FriederichEngels
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "German philosopher, political theorist and revolutionary socialist";
+    Health = 600;
+    Attack = 1700;
+    political_current = Communist;
+    PathToPhoto = "Engels";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To Soviets");
+    }]
+}
+
+Card KarlMarx
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "German philosoher. Father of Scientist Comunism";
+    Health = 700;
+    Attack = 1300;
+    political_current = Communist;
+    PathToPhoto = "Marx.jpg";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To Soviets");
+    }]
+}
+
+Card OctoberSocialistRevolution
+{
+    CardType = Event;
+    Rareness = Legendary;
+    Lore = "October Socialist Revolution";
+    Health = 0;
+    Attack = 0;
+    political_current = Communist;
+    PathToPhoto = ;
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To Soviets");
+    }]
+}
+
+Card VladimirLenin
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Marxist leader of the Russian Revolution";
+    Health = 400;
+    Attack = 2000;
+    political_current = Communist;
+    PathToPhoto = "lenin";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To Soviets");
+    }]
+}
+
+
