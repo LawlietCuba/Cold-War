@@ -17,7 +17,7 @@ public class Game : Node2D
     bool communistside;
     bool[] GamePhases = new bool[3];
     bool PassTurnPressed;
-    bool endround;
+    bool endround = true;
     bool gameready;
     Dictionary<string, PlayerTemplate> RoundWinner = new Dictionary<string, PlayerTemplate>();
     int Round = 1;
@@ -199,7 +199,10 @@ public class Game : Node2D
     }
     public void _on_Deck_pressed()
     {
-        deckpressed = true;
+        if (endround)
+        {
+            deckpressed = true;
+        }
         GetNode<RichTextLabel>("Board/ActionMessage").Text = "";
         _Ready();
     }
