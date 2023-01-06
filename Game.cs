@@ -109,8 +109,8 @@ public class Game : Node2D
             GetNode<RichTextLabel>("Board/ActionMessage").Text = "Summon Phase";
             var CardTexture = new ImageTexture();
             CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
-            DrawCards(HumanPlayer, GetNode<Position2D>("Board/Position2D17"), GetNode<Position2D>("Board/Position2D18"), 5);
-            DrawCards(EnemyPlayer, GetNode<Position2D>("Board/Position2D19"), GetNode<Position2D>("Board/Position2D20"), 5);
+            DrawCards(HumanPlayer, GetNode<Position2D>("Board/Position2D17"), GetNode<Position2D>("Board/Position2D18"), 8);
+            DrawCards(EnemyPlayer, GetNode<Position2D>("Board/Position2D19"), GetNode<Position2D>("Board/Position2D20"), 8);
             deckpressed = false;
             gameready = true;
         }
