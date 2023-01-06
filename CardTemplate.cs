@@ -16,9 +16,10 @@ public class CardTemplate
     public int Attack { get; set; }
     public string political_current { get; set; }     // Comunista; capitalista
     public string PathToPhoto { get; set; }
+    public string EffectText{get;set;}
     public List<Token> Effect { get; set; }
 
-    public CardTemplate(string CardName, string cardtype, string Rareness, string Lore, int Health, int Attack, string political_current, string PathToPhoto, List<Token> Effect)
+    public CardTemplate(string CardName, string cardtype, string Rareness, string Lore, int Health, int Attack, string political_current, string PathToPhoto, string EffectText, List<Token> Effect)
     {
         this.CardName = CardName;
         this.cardtype = cardtype;
@@ -27,10 +28,11 @@ public class CardTemplate
         this.Health = Health;
         this.Attack = Attack;
         this.political_current = political_current;
-        this.Effect = Effect;
         this.PathToPhoto = PathToPhoto;
+        this.EffectText = EffectText;
+        this.Effect = Effect;
     }
-    public CardTemplate(string cardtype, string Rareness, string CardName, string Lore, int Health, int Attack, string political_current, List<Token> Effect)
+    public CardTemplate(string cardtype, string Rareness, string CardName, string Lore, int Health, int Attack, string political_current, string EffectText, List<Token> Effect)
     {
         this.cardtype = cardtype;
         this.Rareness = Rareness;
@@ -40,6 +42,7 @@ public class CardTemplate
         this.Attack = Attack;
         this.political_current = political_current;
         this.PathToPhoto = null;
+        this.EffectText = EffectText;
         this.Effect = Effect;
     }
 
@@ -58,6 +61,7 @@ public class CardTemplate
                 this.Rareness = nCard.Rareness;
                 this.Health = nCard.Health;
                 this.Attack = nCard.Attack;
+                this.EffectText = nCard.EffectText;
                 this.Effect = nCard.Effect;
                 this.political_current = nCard.political_current;
                 this.PathToPhoto = nCard.PathToPhoto;
@@ -75,7 +79,6 @@ public class CardTemplate
         string path = "Decks" + "/" + political_current.ToString();
 
         string FileName = CreateJsonDirection(path, this.CardName);
-        GD.Print(FileName);
 
         if(System.IO.File.Exists(FileName) == false) {
             System.IO.File.WriteAllText(FileName, ConvertToJson);
@@ -95,46 +98,7 @@ public class CardTemplate
         return String.Format("CardName: {0} \n\t CardType: {1} \n\t Rareness: {2} \n\t Lore: {3} \n\t Health: {4}, Attack: {5} \n\t PolitcalCurrent: {6} \n\t PathToPhoto: {7} \n\t Effect: {8}", CardName, cardtype, Rareness, Lore, Health, Attack, political_current, PathToPhoto, Effect);
     }
 
-    // public void DoEffect()
-    // {
-    //     if(this.Effect != null)
-    //     {
-    //         TokenStream effect_stream = new TokenStream(this.Effect);
-    //         Parser effect_parser = new Parser(effect_stream);
-    //         List<CompilingError> effect_errors = new List<CompilingError>();
-    //         ColdWarProgram effect_program = effect_parser.ParseProgram(effect_errors);
-
-    //         if (effect_errors.Count > 0)
-    //         {
-    //             foreach (CompilingError error in effect_errors)
-    //             {
-    //                 Console.WriteLine("{0}, {1}, {2}", error.Location.Line, error.Code, error.Argument);
-    //             }
-    //         }
-    //         else
-    //         {
-    //             Context context = new Context();
-    //             Scope scope = new Scope();
-
-    //             effect_program.CheckSemantic(context, scope, effect_errors);
-
-    //             if (effect_errors.Count > 0)
-    //             {
-    //                 foreach (CompilingError error in effect_errors)
-    //                 {
-    //                     Console.WriteLine("{0}, {1}, {2}", error.Location.Line, error.Code, error.Argument);
-    //                 }
-    //             }
-    //             else
-    //             {
-    //                 effect_program.Evaluate();
-
-    //                 Console.WriteLine(effect_program);
-    //             }
-    //         } 
-    //     }
-    // }
-
+    
     //parche
     public CardTemplate()
     {

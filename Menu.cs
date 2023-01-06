@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.IO;
 using Godot;
@@ -16,19 +15,10 @@ public class Menu : Node2D
     List<CardSupport> Deck;
     public static bool somecardselected;
     PackedScene NewNode;
-    int numberofcardsselected;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        // Just a test----------------------------------------------------
-        // List<string> results = new List<string>();
-        // System.IO.DirectoryInfo rootDir = new DirectoryInfo(System.IO.Directory.GetCurrentDirectory());
-        // RecursiveFileSearch.WalkDirectoryTreeString(rootDir, "Hayek", results);
-
-        // if (results.Count > 0)
-        //     GD.Print("Exactly what I was looking for");
-
-        //ReadCode();
+        ReadCode();
 
         if (SelectedDeck)
         {
@@ -41,42 +31,29 @@ public class Menu : Node2D
         }
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(float delta)
-    {
-        GetNode<RichTextLabel>("SelectCards/NumberSelected").Text = $"{numberofcardsselected}";
-        if (numberofcardsselected >= 24)
-        {
-            GetNode<Button>("SelectCards/Ready").Disabled = false;
-        }
-        else
-        {
-            GetNode<Button>("SelectCards/Ready").Disabled = true;
-        }
-    }
+    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
+    //  public override void _Process(float delta)
+    //  {
+
+    //  }
     public void _on_PlayGame_pressed()
     {
-        ReadCode();
-        GetNode<Button>("SelectDeck/SelectCards").Disabled = true;
         GetNode<Node2D>("MainMenu").Hide();
         GetNode<Node2D>("SelectDeck").Show();
     }
     public void _on_ReturnToMainMenu_pressed()
     {
-        GetNode<Button>("SelectDeck/SelectCards").Disabled = true;
         GetNode<Node2D>("SelectDeck").Hide();
         GetNode<Node2D>("MainMenu").Show();
     }
     public void _on_Communist_pressed()
     {
         PathToSelectedDeck = System.IO.Directory.GetCurrentDirectory() + "/Decks/Communist";
-        GetNode<Button>("SelectDeck/SelectCards").Disabled = false;
         SelectedDeck = true;
     }
     public void _on_Capitalist_pressed()
     {
         PathToSelectedDeck = System.IO.Directory.GetCurrentDirectory() + "/Decks/Capitalist";
-        GetNode<Button>("SelectDeck/SelectCards").Disabled = false;
         SelectedDeck = true;
     }
     public void _on_SelectCards_pressed()
@@ -95,7 +72,6 @@ public class Menu : Node2D
         FinalDeck.Clear();
         CurrentCardIndex = 0;
         somecardselected = false;
-        numberofcardsselected = 0;
         GetNode<Node2D>("SelectCards").Hide();
         GetNode<Node2D>("SelectDeck").Show();
     }
@@ -111,9 +87,13 @@ public class Menu : Node2D
     }
     public void _on_CreateCards_pressed()
     {
-        ProcessStartInfo psi = new ProcessStartInfo("code.txt");
-        psi.UseShellExecute = true;
-        Process.Start(psi);
+        GetNode<Node2D>("MainMenu").Hide();
+        GetNode<Node2D>("Compiler").Show();
+    }
+    public void _on_ReturnToMainMenuFromCompiler_pressed()
+    {
+        GetNode<Node2D>("Compiler").Hide();
+        GetNode<Node2D>("MainMenu").Show();
     }
     public void _on_Exit_pressed()
     {
@@ -131,7 +111,7 @@ public class Menu : Node2D
 
         Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Life").Text = $"{Card.Health}";
 
-        Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Effect").Text = "An amazing effect";
+        Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Effect").Text = Card.EffectText;
 
         var typetexture = new ImageTexture();
         switch (Card.cardtype)
@@ -203,6 +183,7 @@ public class Menu : Node2D
             Deck[i].political_current = LogicCards[i].political_current;
             Deck[i].Attack = LogicCards[i].Attack;
             Deck[i].Health = LogicCards[i].Health;
+            Deck[i].EffectText = LogicCards[i].EffectText;
             Deck[i].Effect = LogicCards[i].Effect;
             Deck[i].cardtype = LogicCards[i].cardtype;
             Deck[i].Rareness = LogicCards[i].Rareness;
@@ -232,10 +213,7 @@ public class Menu : Node2D
     {
         somecardselected = true;
         if (!FinalDeck.Contains(Deck[CurrentCardIndex]))
-        {
             FinalDeck.Add(Deck[CurrentCardIndex]);
-            numberofcardsselected++;
-        }
     }
     public void ShowCardsForSelection()
     {
@@ -247,7 +225,7 @@ public class Menu : Node2D
 
 
         GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Name").Text = Deck[CurrentCardIndex].CardName;
-        GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Effect").Text = "An amazing effect";
+        GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Effect").Text = Deck[CurrentCardIndex].EffectText;
         GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Lore").Text = Deck[CurrentCardIndex].Lore;
         GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Attack").Text = Deck[CurrentCardIndex].Attack.ToString();
         GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Life").Text = Deck[CurrentCardIndex].Health.ToString();
@@ -262,8 +240,6 @@ public class Menu : Node2D
 
     public void ReadCode()
     {
-        GD.Print("Comienza el programa");
-
         LexicalAnalyzer lex = Compiling.Lexical;
 
         string text = System.IO.File.ReadAllText(@"code.txt");
@@ -287,7 +263,7 @@ public class Menu : Node2D
         {
             foreach (CompilingError error in errors)
             {
-                GD.Print(error.Location.Line, " ", error.Code, " ", error.Argument);
+                GD.Print(error.Location.Line + " " + error.Code + " " + error.Argument);
             }
         }
         else
@@ -301,7 +277,7 @@ public class Menu : Node2D
             {
                 foreach (CompilingError error in errors)
                 {
-                    GD.Print(error.Location.Line, " ", error.Code, " ", error.Argument);
+                    GD.Print(error.Location.Line + " " + error.Code + " " + error.Argument);
                 }
             }
             else
@@ -310,7 +286,7 @@ public class Menu : Node2D
 
                 // GD.Print(program);
 
-                foreach (Card ncard in program.Cards.Values)
+                foreach(Card ncard in program.Cards.Values)
                 {
                     ncard.AddToTheDeckAsCardTemplate();
                 }

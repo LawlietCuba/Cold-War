@@ -18,9 +18,7 @@ public class Game : Node2D
     bool[] GamePhases = new bool[3];
     bool PassTurnPressed;
     bool endround = true;
-    bool endgame;
     bool gameready;
-    bool nextroundpressed = true;
     Dictionary<string, PlayerTemplate> RoundWinner = new Dictionary<string, PlayerTemplate>();
     int Round = 1;
     List<Position2D> HumanPlayerField = new List<Position2D>();
@@ -29,10 +27,16 @@ public class Game : Node2D
     public static PlayerTemplate EnemyPlayer;
     public static string AttackedCardName;
     public static bool readyforattack;
+    public static bool ReadyForEffect;
     public static string SelectedCardName;
     public static bool readyforexecute;
+    public static bool readyforexecuteeffect;
     public static bool cardselected;
     public static string ReadytoSummonCardName;
+    public static string EffectObjetive;
+    public static string Effect;
+    public static int TempAmount;
+    public static bool AutomaticEffect;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -92,8 +96,8 @@ public class Game : Node2D
         }
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(float delta)
+    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(float delta = 1/10)
     {
         if (deckpressed)
         {
@@ -103,8 +107,8 @@ public class Game : Node2D
             GetNode<RichTextLabel>("Board/ActionMessage").Text = "Summon Phase";
             var CardTexture = new ImageTexture();
             CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
-            DrawCards(HumanPlayer, GetNode<Position2D>("Board/Position2D17"), GetNode<Position2D>("Board/Position2D18"), 8);
-            DrawCards(EnemyPlayer, GetNode<Position2D>("Board/Position2D19"), GetNode<Position2D>("Board/Position2D20"), 8);
+            DrawCards(HumanPlayer, GetNode<Position2D>("Board/Position2D17"), GetNode<Position2D>("Board/Position2D18"), 5);
+            DrawCards(EnemyPlayer, GetNode<Position2D>("Board/Position2D19"), GetNode<Position2D>("Board/Position2D20"), 5);
             deckpressed = false;
             gameready = true;
         }
@@ -112,6 +116,37 @@ public class Game : Node2D
         {
             Attack(GetNode<CardSupport>("Board/" + SelectedCardName), GetNode<CardSupport>("Board/" + AttackedCardName));
             readyforexecute = false;
+        }
+        if(readyforexecuteeffect)
+        {
+            switch(Effect)
+            {
+                case TokenValues.DestroyCard:
+                    DestroyCard(GetNode<CardSupport>("Board/" + EffectObjetive));
+                    break;
+                case TokenValues.DrawCards:
+                    break;
+                case TokenValues.DecreaseHealth:
+                    if(CanDoTheEffect()) DecreaseHealth(GetNode<CardSupport>("Board/" + EffectObjetive));
+                    else GetNode<RichTextLabel>("Board/ActionMessage").Text = "This effect can't effect Event and Politic Types";
+                    break;
+                case TokenValues.DecreaseAttack:
+                    if(CanDoTheEffect())DecreaseAttack(GetNode<CardSupport>("Board/" + EffectObjetive));
+                    else GetNode<RichTextLabel>("Board/ActionMessage").Text = "This effect can't effect Event and Politic Types";
+                    break;
+                case TokenValues.IncreaseHealth:
+                    if(CanDoTheEffect()) IncreaseHealth(GetNode<CardSupport>("Board/" + EffectObjetive));
+                    else GetNode<RichTextLabel>("Board/ActionMessage").Text = "This effect can't effect Event and Politic Types";
+                    break;
+                case TokenValues.IncreaseAttack:
+                    if(CanDoTheEffect())IncreaseAttack(GetNode<CardSupport>("Board/" + EffectObjetive));
+                    else GetNode<RichTextLabel>("Board/ActionMessage").Text = "This effect can't effect Event and Politic Types";
+                    break;
+                default:
+                    break;
+            }
+            readyforexecuteeffect = false;
+            AutomaticEffect = false;
         }
         if (!endround)
         {
@@ -174,15 +209,27 @@ public class Game : Node2D
         }
     }
 
+    private bool CanDoTheEffect()
+    {
+        if(GetNode<CardSupport>("Board/"+EffectObjetive).cardtype == TokenValues.Event || GetNode<CardSupport>("Board/"+EffectObjetive).cardtype == TokenValues.Politic)
+            return false;
+        return true;
+    }
 
+    private bool CanDoTheEffect(string CardName)
+    {
+        if(GetNode<CardSupport>("Board/"+CardName).cardtype == TokenValues.Event || GetNode<CardSupport>("Board/"+CardName).cardtype == TokenValues.Politic)
+            return false;
+        return true;
+    }
 
     public void PrintCardsinRange(List<CardSupport> CardsToPrint, Position2D Left, Position2D Right, int amount)
     {
         double length = Right.Position.x - Left.Position.x;
-        double CardWidth = length / amount;
+        double CradWidth = length / amount;
         for (int i = 0; i < amount; i++)
         {
-            CardsToPrint[i].GetNode<MarginContainer>("CardMargin").RectPosition = new Vector2((float)(Left.Position.x + i * CardWidth), Left.Position.y);
+            CardsToPrint[i].GetNode<MarginContainer>("CardMargin").RectPosition = new Vector2((float)(Left.Position.x + i * CradWidth), Left.Position.y);
             if (!CardsToPrint[i].hasParent)
             {
                 GetNode<Sprite>("Board").AddChild(CardsToPrint[i], true);
@@ -201,20 +248,12 @@ public class Game : Node2D
     }
     public void _on_Deck_pressed()
     {
-        if (endgame)
+        if (endround)
         {
-            GetTree().Quit();
+            deckpressed = true;
         }
-        else
-        {
-            if (nextroundpressed)
-            {
-                nextroundpressed = false;
-                deckpressed = true;
-            }
-            GetNode<RichTextLabel>("Board/ActionMessage").Text = "";
-            _Ready();
-        }
+        GetNode<RichTextLabel>("Board/ActionMessage").Text = "";
+        _Ready();
     }
     public void _on_Capitalist_pressed()
     {
@@ -393,7 +432,7 @@ public class Game : Node2D
 
         Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Life").Text = $"{Card.Health}";
 
-        Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Effect").Text = "An amazing effect";
+        Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Effect").Text = Card.EffectText;
 
         var typetexture = new ImageTexture();
         switch (Card.cardtype)
@@ -517,6 +556,7 @@ public class Game : Node2D
             }
         }
     }
+
     public void Attack(CardSupport AttackingCard, CardSupport AttackedCard)
     {
         if (AttackingCard.political_current != AttackedCard.political_current)
@@ -531,10 +571,6 @@ public class Game : Node2D
             if (Health <= 0)
             {
                 DestroyCard(AttackedCard);
-            }
-            else
-            {
-                DestroyCard(AttackingCard);
             }
         }
     }
@@ -591,7 +627,7 @@ public class Game : Node2D
                     }
                     else if (i == 1)
                     {
-                        UpdateCardAttackingStatus();
+                        UpdateCardStatus();
                         GetNode<RichTextLabel>("Board/ActionMessage").Text = "Second Summon Phase";
                     }
                     break;
@@ -605,7 +641,8 @@ public class Game : Node2D
             }
         }
     }
-    public void UpdateCardAttackingStatus()
+
+    public void UpdateCardStatus()
     {
         PlayerTemplate Player;
         if (communistside)
@@ -634,6 +671,8 @@ public class Game : Node2D
         {
             if (Card.hasAttacked)
                 Card.hasAttacked = false;
+            if(Card.hasActivatedEffect)
+                Card.hasActivatedEffect = false;
         }
     }
     public void _on_PassTurn_pressed()
@@ -645,7 +684,7 @@ public class Game : Node2D
         else
         {
             PassTurnPressed = true;
-            UpdateCardAttackingStatus();
+            UpdateCardStatus();
             for (int i = 0; i < GamePhases.Length; i++)
             {
                 if (GamePhases[i])
@@ -688,20 +727,13 @@ public class Game : Node2D
             {
                 DeclareRoundWinner(HumanPlayer);
             }
-            else if (EnemyPlayer.PlayerBoard.HandCards.Count > 0)
+            else
             {
                 DeclareRoundWinner(EnemyPlayer);
             }
-            else
-            {
-                GetNode<RichTextLabel>("Board/ActionMessage").Text = "Tie";
-            }
         }
         endround = true;
-        if (!endgame)
-        {
-            GetNode<Button>("Board/NextRound").Disabled = false;
-        }
+        GetNode<Button>("Board/NextRound").Disabled = false;
     }
     public void _on_NextRound_pressed()
     {
@@ -716,19 +748,12 @@ public class Game : Node2D
         {
             DestroyCard(EnemyPlayer.PlayerBoard.CardsOnBoard.Keys.ElementAt(i));
         }
-        GetNode<RichTextLabel>("Board/ActionMessage").Text = "Press Deck";
-        if (Round == 2) GetNode<RichTextLabel>("Board/Round").Text = "Second Round";
-        else if (Round == 3) GetNode<RichTextLabel>("Board/Round").Text = "Third Round";
-        nextroundpressed = true;
     }
     public void DeclareWinner(PlayerTemplate Player)
     {
         _on_NextRound_pressed();
-        endgame = true;
-        GetNode<Button>("Board/NextRound").Disabled = true;
         GetNode<RichTextLabel>("Board/GameWinner").Text = Player.name + " Wins the Game";
         GetNode<RichTextLabel>("Board/GameWinner").Show();
-        GetNode<RichTextLabel>("Board/ActionMessage").Text = "Press Deck to Exit";
     }
     public void DeclareRoundWinner(PlayerTemplate Player)
     {
@@ -768,29 +793,18 @@ public class Game : Node2D
         {
             if (EnemyPlayer.PlayerBoard.HandCards.Count > 0 && EnemyPlayer.PlayerBoard.CardsOnBoard.Count < 8)
             {
-                if (HumanPlayer.PlayerBoard.CardsOnBoard.Count > 0)
+                int amounttosummon = 8 - EnemyPlayer.PlayerBoard.CardsOnBoard.Count;
+                if (amounttosummon > EnemyPlayer.PlayerBoard.HandCards.Count)
                 {
-                    SummonAllVirtualPlayer();
+                    amounttosummon = EnemyPlayer.PlayerBoard.HandCards.Count;
                 }
-                else
+                OrderByAttack(EnemyPlayer.PlayerBoard.HandCards);
+                List<Position2D> PossiblePositions = new List<Position2D>();
+                SetPossiblePositions(EnemyPlayer, EnemyPlayerField, PossiblePositions);
+                for (int i = amounttosummon - 1; i >= 0; i--)
                 {
-                    int amounttosummon = 4;
-                    if (amounttosummon > EnemyPlayer.PlayerBoard.HandCards.Count)
-                    {
-                        amounttosummon = EnemyPlayer.PlayerBoard.HandCards.Count;
-                    }
-                    SortAscendingByLife(EnemyPlayer.PlayerBoard.HandCards);
-                    for (int i = 0; i < EnemyPlayer.PlayerBoard.HandCards.Count; i++)
-                    {
-                        GD.Print(EnemyPlayer.PlayerBoard.HandCards[i].CardName + " " + EnemyPlayer.PlayerBoard.HandCards[i].Health);
-                    }
-                    List<Position2D> PossiblePositions = new List<Position2D>();
-                    SetPossiblePositions(EnemyPlayer, EnemyPlayerField, PossiblePositions);
-                    for (int i = amounttosummon - 1; i >= 0; i--)
-                    {
-                        ReadytoSummonCardName = EnemyPlayer.PlayerBoard.HandCards[i].CardName;
-                        MakeSummon(PossiblePositions[i]);
-                    }
+                    ReadytoSummonCardName = EnemyPlayer.PlayerBoard.HandCards[i].CardName;
+                    MakeSummon(PossiblePositions[i]);
                 }
             }
             _on_EndPhase_pressed();
@@ -804,35 +818,23 @@ public class Game : Node2D
                 {
                     HumanCardsOnBoard.Add(Card);
                 }
-                SortAscendingByLife(HumanCardsOnBoard);
+                OrderByLife(HumanCardsOnBoard);
                 List<CardSupport> EnemyCardsOnBoard = new List<CardSupport>();
                 foreach (CardSupport Card in EnemyPlayer.PlayerBoard.CardsOnBoard.Keys)
                 {
                     EnemyCardsOnBoard.Add(Card);
                 }
-                SortAscendingByAttack(EnemyCardsOnBoard);
+                OrderByAttack(EnemyCardsOnBoard);
                 int i = 0;
                 do
                 {
-                    if (EnemyCardsOnBoard[i].Attack > HumanCardsOnBoard[0].Health)
-                    {
-                        SelectedCardName = EnemyCardsOnBoard[i].CardName;
-                    }
-                    else
-                    {
-                        SelectedCardName = EnemyCardsOnBoard[EnemyCardsOnBoard.Count - 1].CardName;
-                        i--;
-                    }
+                    SelectedCardName = EnemyCardsOnBoard[i].CardName;
                     _on_AttackButton_pressed();
                     AttackedCardName = HumanCardsOnBoard[0].CardName;
                     Attack(GetNode<CardSupport>("Board/" + SelectedCardName), GetNode<CardSupport>("Board/" + AttackedCardName));
                     if (HumanPlayer.PlayerBoard.Graveyard.Contains(GetNode<CardSupport>("Board/" + AttackedCardName)))
                     {
                         HumanCardsOnBoard.Remove(GetNode<CardSupport>("Board/" + AttackedCardName));
-                    }
-                    if (EnemyPlayer.PlayerBoard.Graveyard.Contains(GetNode<CardSupport>("Board/" + SelectedCardName)))
-                    {
-                        EnemyCardsOnBoard.Remove(GetNode<CardSupport>("Board/" + SelectedCardName));
                     }
                     i++;
                 }
@@ -842,33 +844,74 @@ public class Game : Node2D
         }
         if (GamePhases[2])
         {
-            if (EnemyPlayer.PlayerBoard.HandCards.Count > 0 && EnemyPlayer.PlayerBoard.CardsOnBoard.Count < 8 && HumanPlayer.PlayerBoard.CardsOnBoard.Count > 0)
-            {
-                SummonAllVirtualPlayer();
-            }
             _on_EndPhase_pressed();
         }
     }
     public void _on_EffectButton_pressed()
     {
+        PassTurnPressed = false;
 
-    }
-    public void SortDescendingByAttack(List<CardSupport> Cards)
-    {
-        for (int i = 0; i < Cards.Count; i++)
+        if(cardselected)
         {
-            for (int j = 0; j < Cards.Count; j++)
+
+            if ((communistside && GetNode<CardSupport>("Board/" + SelectedCardName).political_current == "Communist") || (!communistside && GetNode<CardSupport>("Board/" + SelectedCardName).political_current == "Capitalist"))
             {
-                if (Cards[i].Attack < Cards[j].Attack)
+                if (!GetNode<CardSupport>("Board/" + SelectedCardName).hasActivatedEffect)
                 {
-                    CardSupport temp = Cards[i];
-                    Cards[i] = Cards[j];
-                    Cards[j] = temp;
+                    cardselected = false;
+                    GetNode<RichTextLabel>("Board/ActionMessage").Text = "Ready for activate effect";
+
+                    List<EffectExpression> Effects = GetNode<CardSupport>("Board/" + SelectedCardName).DoEffect();
+                    if(Effects != null)
+                    {
+                        foreach(EffectExpression eff in Effects)
+                        {
+                            switch(eff.GetValue().ToString())
+                            {
+                                case TokenValues.DrawCards:
+                                    TempAmount = Convert.ToInt32( eff.Amount.GetValue());
+                                    DrawCards(HumanPlayer, GetNode<Position2D>("Board/Position2D17"), GetNode<Position2D>("Board/Position2D18"), TempAmount);
+                                    break;
+                                case TokenValues.DestroyCard:
+                                    Effect = eff.GetValue().ToString();
+                                    checkEffectConditional(eff);
+                                    if(AutomaticEffect) readyforexecuteeffect = true;
+                                    else ReadyForEffect = true;
+                                    break;
+                                case TokenValues.DecreaseAttack:
+                                case TokenValues.DecreaseHealth:
+                                case TokenValues.IncreaseAttack:
+                                case TokenValues.IncreaseHealth:
+                                    Effect = eff.GetValue().ToString();
+                                    TempAmount = Convert.ToInt32(eff.Amount.GetValue());
+                                    checkEffectConditional(eff);
+                                    if(AutomaticEffect) readyforexecuteeffect = true;
+                                    else ReadyForEffect = true;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+                        if(GetNode<CardSupport>("Board/" + SelectedCardName).cardtype == "Event" || GetNode<CardSupport>("Board/" + SelectedCardName).cardtype == "Politic")
+                        {
+                            DestroyCard(GetNode<CardSupport>("Board/"+SelectedCardName));
+                        }
+                    } 
+
+                    GetNode<CardSupport>("Board/" + SelectedCardName).hasActivatedEffect = true;
+                }
+                else
+                {
+                    GetNode<RichTextLabel>("Board/ActionMessage").Text = SelectedCardName + " has already activated effect";
                 }
             }
+
+            
         }
     }
-    public void SortAscendingByAttack(List<CardSupport> Cards)
+
+    public void OrderByAttack(List<CardSupport> Cards)
     {
         for (int i = 0; i < Cards.Count; i++)
         {
@@ -883,22 +926,7 @@ public class Game : Node2D
             }
         }
     }
-    public void SortDescendingByLife(List<CardSupport> Cards)
-    {
-        for (int i = 0; i < Cards.Count; i++)
-        {
-            for (int j = 0; j < Cards.Count; j++)
-            {
-                if (Cards[i].Health < Cards[j].Health)
-                {
-                    CardSupport temp = Cards[i];
-                    Cards[i] = Cards[j];
-                    Cards[j] = temp;
-                }
-            }
-        }
-    }
-    public void SortAscendingByLife(List<CardSupport> Cards)
+    public void OrderByLife(List<CardSupport> Cards)
     {
         for (int i = 0; i < Cards.Count; i++)
         {
@@ -923,20 +951,153 @@ public class Game : Node2D
             }
         }
     }
-    public void SummonAllVirtualPlayer()
+
+    public void DecreaseHealth(CardSupport Card)
     {
-        int amounttosummon = 8 - EnemyPlayer.PlayerBoard.CardsOnBoard.Count;
-        if (amounttosummon > EnemyPlayer.PlayerBoard.HandCards.Count)
+        Card.Health-=TempAmount;
+        GetNode<RichTextLabel>("Board/ActionMessage").Text = Card.CardName + " has lost " + TempAmount + "of points of health";
+    }
+
+    public void DecreaseAttack(CardSupport Card)
+    {
+        Card.Attack-=TempAmount;
+        GetNode<RichTextLabel>("Board/ActionMessage").Text = Card.CardName + " has lost " + TempAmount + "of points of attack";
+    }
+    public void IncreaseHealth(CardSupport Card)
+    {
+
+        Card.Health+=TempAmount;
+        GetNode<RichTextLabel>("Board/ActionMessage").Text = Card.CardName + " has gain " + TempAmount + "of points of health";
+    }
+    public void IncreaseAttack(CardSupport Card)
+    {
+        Card.Attack+=TempAmount;
+        GetNode<RichTextLabel>("Board/ActionMessage").Text = Card.CardName + " has gain " + TempAmount + "of points of attack";
+    }
+
+    public void checkEffectConditional(EffectExpression effexp)
+    {   
+        if(effexp.EffectConditional != null)
         {
-            amounttosummon = EnemyPlayer.PlayerBoard.HandCards.Count;
-        }
-        SortDescendingByAttack(EnemyPlayer.PlayerBoard.HandCards);
-        List<Position2D> PossiblePositions = new List<Position2D>();
-        SetPossiblePositions(EnemyPlayer, EnemyPlayerField, PossiblePositions);
-        for (int i = amounttosummon - 1; i >= 0; i--)
-        {
-            ReadytoSummonCardName = EnemyPlayer.PlayerBoard.HandCards[i].CardName;
-            MakeSummon(PossiblePositions[i]);
+            AutomaticEffect = true;
+            if(EffectObjetive == null)
+            {
+                var randomCard = SearchRandomCardOnBoard();
+                EffectObjetive = randomCard.CardName;
+            }
+
+            switch(effexp.EffectConditional)
+            {
+                case TokenValues.minHealth:
+                    minHealth();
+                    break;
+                case TokenValues.minAttack:
+                    minAttack();
+                    break;
+                case TokenValues.maxHealth:
+                    maxHealth();
+                    break;
+                case TokenValues.maxAttack:
+                    maxAttack();
+                    break;
+                default:
+                    return;
+            }
         }
     }
+
+    public void minHealth()
+    {
+        foreach(CardSupport cardSupport in EnemyPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            if(cardSupport.Health<=GetNode<CardSupport>("Board/"+EffectObjetive).Health && CanDoTheEffect(cardSupport.CardName))
+            {
+                EffectObjetive = cardSupport.CardName;
+            }
+        }
+
+        foreach(CardSupport cardSupport in HumanPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            if(cardSupport.Health<=GetNode<CardSupport>("Board/"+EffectObjetive).Health && CanDoTheEffect(cardSupport.CardName))
+            {
+                EffectObjetive = cardSupport.CardName;
+            }
+        }
+    }
+    public void minAttack()
+    {
+        foreach(CardSupport cardSupport in EnemyPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            if(cardSupport.Attack<=GetNode<CardSupport>("Board/"+EffectObjetive).Attack && CanDoTheEffect(cardSupport.CardName))
+            {
+                EffectObjetive = cardSupport.CardName;
+            }
+        }
+
+        foreach(CardSupport cardSupport in HumanPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            if(cardSupport.Attack<=GetNode<CardSupport>("Board/"+EffectObjetive).Attack && CanDoTheEffect(cardSupport.CardName))
+            {
+                EffectObjetive = cardSupport.CardName;
+            }
+        }
+    }
+    public void maxHealth()
+    {
+        foreach(CardSupport cardSupport in EnemyPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            if(cardSupport.Health>=GetNode<CardSupport>("Board/"+EffectObjetive).Health && CanDoTheEffect(cardSupport.CardName))
+            {
+                EffectObjetive = cardSupport.CardName;
+            }
+        }
+
+        foreach(CardSupport cardSupport in HumanPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            if(cardSupport.Health>=GetNode<CardSupport>("Board/"+EffectObjetive).Health && CanDoTheEffect(cardSupport.CardName))
+            {
+                EffectObjetive = cardSupport.CardName;
+            }
+        }
+    }
+    public void maxAttack()
+    {
+        foreach(CardSupport cardSupport in EnemyPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            if(cardSupport.Attack>=GetNode<CardSupport>("Board/"+EffectObjetive).Attack && CanDoTheEffect(cardSupport.CardName))
+            {
+                EffectObjetive = cardSupport.CardName;
+            }
+        }
+
+        foreach(CardSupport cardSupport in HumanPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            if(cardSupport.Attack>=GetNode<CardSupport>("Board/"+EffectObjetive).Attack && CanDoTheEffect(cardSupport.CardName))
+            {
+                EffectObjetive = cardSupport.CardName;
+            }
+        }
+    }
+
+    public CardSupport SearchRandomCardOnBoard()
+    {
+        foreach(CardSupport cardSupport in EnemyPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            return cardSupport;
+        }
+        foreach(CardSupport cardSupport in HumanPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            return cardSupport;
+        }
+
+        return null;
+    }
+    
+    // public override void _Input(InputEvent @event)
+    // {
+    //     if(@event is InputEventMouseButton eventMouseButton)
+    //     GD.Print(eventMouseButton.Position);
+    //     GD.Print("Viewport Resolution is: ", GetViewportRect().Size);   
+    //     GD.Print("Mouse Position", GetViewport().GetMousePosition());
+    // }
 }

@@ -9,6 +9,7 @@ public class ColdWarProgram : ASTNode
     public Dictionary<string, PoliticalCurrent> political_currents {get; set;}
     public Dictionary<string, Card> Cards {get; set;}
     public List<Expression> PrintingList {get; set;}
+    public List<EffectExpression> Effects{get;set;}
 
     public ColdWarProgram(CodeLocation location) : base (location)
     {
@@ -16,6 +17,7 @@ public class ColdWarProgram : ASTNode
         political_currents = new Dictionary<string, PoliticalCurrent>();
         Cards = new Dictionary<string, Card>();
         PrintingList = new List<Expression>();
+        Effects = new List<EffectExpression>();
     }
     
     /* To check a program semantic we sould first collect all the existing PoliticalCurrents and store them in the context.
@@ -50,27 +52,21 @@ public class ColdWarProgram : ASTNode
 
         foreach (Expression exp in PrintingList)
         {
-            // This prints the if's
             GD.Print(exp);
         }
     }
 
     public override string ToString()
     {
-        GD.Print("Presente en el ToString de ColdWarProgram");
         string s = "";
         foreach (PoliticalCurrent PoliticalCurrent in political_currents.Values)
         {
             s = s + "\n" + PoliticalCurrent.ToString();
         }
-        GD.Print(Cards.Count);
         foreach (Card card in Cards.Values)
         {
-            GD.Print("Inside cards");
-            GD.Print(card);
             s += "\n" + card.ToString();
         }
-        GD.Print(s);
         return s;
     }
 }

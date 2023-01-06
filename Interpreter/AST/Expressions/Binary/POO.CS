@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Godot;
+
 public class POObject : BinaryExpression
 {
      public override ExpressionType Type{get;set;}
@@ -40,40 +42,45 @@ public class POObject : BinaryExpression
     }
     public override void Evaluate()
     {
-        this.SetValue(10.01);
-        this.Type = ExpressionType.Number;
+
+        Evaluate(true);
     }
 
     public void Evaluate(bool OnGame)
     {
         if(OnGame)
         {
-            this.SetValue(10.0);
-            this.Type = ExpressionType.Number;
+            foreach(CardSupport cardSupport in Game.HumanPlayer.PlayerBoard.CardsOnBoard.Keys)
+            {
+                if(SeparatedName(Left.GetValue().ToString()) == cardSupport.CardName)
+                {
+                    switchRight(cardSupport);
+                }
+            }
         }
         else
         {
             if(Left != null && Left.GetValue() != null)
             {
-                CardTemplate scard = Card.SearchCardTemplate(Left.GetValue().ToString());
-                if(scard != null)
+                CardTemplate cardSupport = Card.SearchCardTemplate(Left.GetValue().ToString());
+                if(cardSupport != null)
                 {
                     switch(Right.GetValue().ToString())
                     {
                         case TokenValues.Health:
-                            this.SetValue(scard.Health);
+                            this.SetValue(cardSupport.Health);
                             this.Type = ExpressionType.Number;
                             break;
                         case TokenValues.Attack:
-                            this.SetValue(scard.Attack);
+                            this.SetValue(cardSupport.Attack);
                             this.Type = ExpressionType.Number;
                             break;
                         case TokenValues.Rareness:
-                            this.SetValue(scard.Rareness);
+                            this.SetValue(cardSupport.Rareness);
                             this.Type = ExpressionType.Text;
                             break;
                         case TokenValues.political_current:
-                            this.SetValue(scard.political_current);
+                            this.SetValue(cardSupport.political_current);
                             this.Type = ExpressionType.Text;
                             break;
                         case TokenValues.CardType:
@@ -94,9 +101,52 @@ public class POObject : BinaryExpression
         }
     }
 
+    protected void switchRight(CardSupport cardSupport)
+    {
+        switch(Right.GetValue().ToString())
+        {
+            case TokenValues.Health:
+                this.SetValue(cardSupport.Health);
+                this.Type = ExpressionType.Number;
+                break;
+            case TokenValues.Attack:
+                this.SetValue(cardSupport.Attack);
+                this.Type = ExpressionType.Number;
+                break;
+            case TokenValues.Rareness:
+                this.SetValue(cardSupport.Rareness);
+                this.Type = ExpressionType.Text;
+                break;
+            case TokenValues.political_current:
+                this.SetValue(cardSupport.political_current);
+                this.Type = ExpressionType.Text;
+                break;
+            case TokenValues.CardType:
+                this.SetValue(ExpressionType.Text);
+                this.Type = ExpressionType.Text;
+                break;
+            default:
+                this.SetValue(-1);
+                this.Type = ExpressionType.Number;
+                break;
+        }
+    }
+
     public override string ToString()
     {
-        return String.Format(Left.GetValue().ToString() + " and " + Right.GetValue().ToString());
+        return String.Format(GetValue().ToString());
+    }
+
+    protected string SeparatedName(string name)
+    {
+        string nname = "";
+        for(int i=0; i<name.Length; i++)
+        {
+            if(Char.IsUpper(name[i]) && i!=0) nname+=" ";
+            nname+=name[i];
+        }
+
+        return nname;
     }
 
     private List<string> CardAttributes = new List<string>(){TokenValues.CardType, TokenValues.Rareness, TokenValues.Attack, TokenValues.Health, TokenValues.political_current};
