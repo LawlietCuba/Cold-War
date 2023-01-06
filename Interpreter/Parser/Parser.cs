@@ -7,13 +7,13 @@ using System.Linq;
 using Godot;
 public class Parser
 {
-    public TokenStream Stream { get; protected set; }
+    public TokenStream Stream { get; private set; }
     public Parser(TokenStream stream)
     {
         Stream = stream;
     }
 
-    public virtual ColdWarProgram ParseProgram(List<CompilingError> errors)
+    public ColdWarProgram ParseProgram(List<CompilingError> errors)
     {
         ColdWarProgram program = new ColdWarProgram(new CodeLocation());
 
@@ -56,28 +56,19 @@ public class Parser
 
                     expr.Evaluate();
 
+
                     // Analize the code in the if
 
                     TokenStream sub_if_stream = Sub_Stream(TokenValues.OpenCurlyBraces, TokenValues.ClosedCurlyBraces, errors);
 
-                    if (sub_if_stream == null) break;
+                    if (sub_if_stream == null)
+                    {
+                        break;
+                    }
 
                     Parser sub_if_parser = new Parser(sub_if_stream);
                     ColdWarProgram sub_if_program = sub_if_parser.ParseProgram(errors);
 
-                    TokenStream sub_else_stream = null;
-                    Parser sub_else_parser = null;
-                    ColdWarProgram sub_else_program = null;
-                    if (Stream.Next(TokenValues.Else))
-                    {
-                        sub_else_stream = Sub_Stream(TokenValues.OpenCurlyBraces, TokenValues.ClosedCurlyBraces, errors);
-                        if (sub_else_stream == null)
-                        {
-                            break;
-                        }
-                        sub_else_parser = new Parser(sub_else_stream);
-                        sub_else_program = sub_else_parser.ParseProgram(errors);
-                    }
 
                     if ((bool)expr.GetValue())
                     {
@@ -90,12 +81,24 @@ public class Parser
                     }
                     else
                     {
-                        foreach(KeyValuePair<string,Card> else_cards in sub_else_program.Cards)                        
-                            program.Cards.Add(else_cards.Key, else_cards.Value);
-                        foreach(KeyValuePair<string,PoliticalCurrent> else_political_currents in sub_else_program.political_currents)                        
-                            program.political_currents.Add(else_political_currents.Key, else_political_currents.Value);
-                        foreach(Expression exp in sub_else_program.PrintingList)
-                            program.PrintingList.Add(exp);
+                        TokenStream sub_else_stream = null;
+                        if (Stream.Next(TokenValues.Else))
+                        {
+                            sub_else_stream = Sub_Stream(TokenValues.OpenCurlyBraces, TokenValues.ClosedCurlyBraces, errors);
+                            if (sub_else_stream == null)
+                            {
+                                break;
+                            }
+                            Parser sub_else_parser = new Parser(sub_else_stream);
+                            ColdWarProgram sub_else_program = sub_else_parser.ParseProgram(errors);
+
+                            foreach(KeyValuePair<string,Card> else_cards in sub_else_program.Cards)                        
+                                program.Cards.Add(else_cards.Key, else_cards.Value);
+                            foreach(KeyValuePair<string,PoliticalCurrent> else_political_currents in sub_else_program.political_currents)                        
+                                program.political_currents.Add(else_political_currents.Key, else_political_currents.Value);
+                            foreach(Expression exp in sub_else_program.PrintingList)
+                                program.PrintingList.Add(exp);
+                        }
                     }
 
                     break;
@@ -104,9 +107,6 @@ public class Parser
                     if (to_print != null)
                         program.PrintingList.Add(to_print);
                     break;
-                // case TokenValues.id:
-                //     ParseTheIdentifier();
-                //     break;
                 case TokenValues.StatementSeparator:
                     break;
                 default:
@@ -121,12 +121,12 @@ public class Parser
         return program;
     }
 
-    protected static List<string>.Enumerator NewMethod(List<string> polishNotationTokens)
+    private static List<string>.Enumerator NewMethod(List<string> polishNotationTokens)
     {
         return polishNotationTokens.GetEnumerator();
     }
 
-    protected List<string> TransformToPolishNotation(List<CompilingError> errors)
+    List<string> TransformToPolishNotation(List<CompilingError> errors)
     {
         List<string> polishNotationTokens = new List<string>();
 
@@ -202,7 +202,7 @@ public class Parser
         return outputQueue.Reverse().ToList();
     }
 
-    protected BoolExpr Make(ref List<string>.Enumerator polishNotationTokensEnumerator, List<CompilingError> errors)
+    private BoolExpr Make(ref List<string>.Enumerator polishNotationTokensEnumerator, List<CompilingError> errors)
     {
         if (polishNotationTokensEnumerator.Current == TokenValues.BooleanValueFalse || polishNotationTokensEnumerator.Current == TokenValues.BooleanValueTrue)
         {
@@ -240,7 +240,7 @@ public class Parser
         return null;
     }
 
-    protected BoolExpr CreateBoolVar(string value)
+    private BoolExpr CreateBoolVar(string value)
     {
         if(value == TokenValues.BooleanValueTrue)
             return new BoolExpr(TokenValues.BooleanValueTrue, Stream.LookAhead().Location);
@@ -250,15 +250,15 @@ public class Parser
             return null;
     }
 
-    protected BoolExpr CreateNot(BoolExpr child)
+    private BoolExpr CreateNot(BoolExpr child)
     {
         return new BoolExpr(BOP.NOT, child, null, Stream.LookAhead().Location);
     }
-    protected BoolExpr CreateAnd(BoolExpr left, BoolExpr right)
+    private BoolExpr CreateAnd(BoolExpr left, BoolExpr right)
     {
         return new BoolExpr(BOP.AND, left, right, Stream.LookAhead().Location);
     }
-    protected BoolExpr CreateOr(BoolExpr left, BoolExpr right)
+    private BoolExpr CreateOr(BoolExpr left, BoolExpr right)
     {
         return new BoolExpr(BOP.OR, left, right, Stream.LookAhead().Location);
     }
@@ -362,50 +362,41 @@ public class Parser
             return card;
         }
 
-        if(card.cardtype.GetValue().ToString() == TokenValues.Unit)
+        // Health---------------------------------------
+
+        if (!SimpleParse(TokenValues.Health, errors)) return card;
+
+        exp = ParseExpression();
+        if (exp == null)
         {
-            // Health---------------------------------------
-
-            if (!SimpleParse(TokenValues.Health, errors)) return card;
-
-            exp = ParseExpression();
-            if (exp == null)
-            {
-                errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Invalid, "Bad expression"));
-                return card;
-            }
-            card.Health = exp;
-
-            if (!Stream.Next(TokenValues.StatementSeparator))
-            {
-                errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Expected, "; expected"));
-                return card;
-            }
-
-            // ATTACK-------------------------------------
-
-            if (!SimpleParse(TokenValues.Attack, errors)) return card;
-
-            exp = ParseExpression();
-            if (exp == null)
-            {
-                errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Invalid, "Bad expression"));
-                return card;
-            }
-            card.Attack = exp;
-
-            if (!Stream.Next(TokenValues.StatementSeparator))
-            {
-                errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Expected, "; expected"));
-                return card;
-            }
+            errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Invalid, "Bad expression"));
+            return card;
         }
-        else
+        card.Health = exp;
+
+        if (!Stream.Next(TokenValues.StatementSeparator))
         {
-            card.Health = new Number(0, Stream.LookAhead().Location);
-            card.Attack = new Number(0, Stream.LookAhead().Location);
+            errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Expected, "; expected"));
+            return card;
         }
 
+        // ATTACK-------------------------------------
+
+        if (!SimpleParse(TokenValues.Attack, errors)) return card;
+
+        exp = ParseExpression();
+        if (exp == null)
+        {
+            errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Invalid, "Bad expression"));
+            return card;
+        }
+        card.Attack = exp;
+
+        if (!Stream.Next(TokenValues.StatementSeparator))
+        {
+            errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Expected, "; expected"));
+            return card;
+        }
 
         // POLITICAL_CURRENT
 
@@ -456,33 +447,6 @@ public class Parser
             return card;
         }
 
-        // Effect Text ----------------------------------------------------
-
-        if(Stream.Next(TokenValues.EffectText))
-        {
-            Stream.MoveBack(1);
-            if(!SimpleParse(TokenValues.EffectText, errors)) return card;
-            exp = ParseExpression();
-            if (exp != null)
-            {
-                card.EffectText = exp;  
-            }
-            else
-            {
-                card.EffectText = new Text("", Stream.LookAhead().Location);
-            }
-
-            if (!Stream.Next(TokenValues.StatementSeparator))
-            {
-                errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Expected, "; expected"));
-                return card;
-            }  
-        }
-        else
-        {
-            card.EffectText = new Text("", Stream.LookAhead().Location);
-        }
-
         // Effect ------------------------------------------------
 
         if(Stream.Next(TokenValues.Effect))
@@ -517,7 +481,7 @@ public class Parser
         return card;
     }
 
-    protected Expression ParsePrint(List<CompilingError> errors)
+    private Expression ParsePrint(List<CompilingError> errors)
     {
         if (!Stream.Next(TokenValues.OpenBracket))
         {
@@ -549,7 +513,7 @@ public class Parser
         return exp;
     }
 
-    protected bool SimpleParse(string token_type, List<CompilingError> errors)
+    private bool SimpleParse(string token_type, List<CompilingError> errors)
     {
         if (!Stream.Next(token_type))
         {
@@ -569,7 +533,7 @@ public class Parser
     {
         List<string> DecksImported = new List<string>();
 
-        if (Stream.Next(TokenValues.Decks))
+        if (Stream.Next(TokenType.Identifier))
         {
             string path = Stream.tokens[Stream.Position].Value;
             string[] decks = System.IO.Directory.GetDirectories(path);
@@ -587,7 +551,7 @@ public class Parser
         return DecksImported;
     }
 
-    protected List<Token> ParseEffect(List<CompilingError> errors)
+    private List<Token> ParseEffect(List<CompilingError> errors)
     {
         if(!Stream.Next(TokenValues.OpenSquareBracket))
         {
@@ -614,19 +578,19 @@ public class Parser
 
     /* Turbidity. You should have been in the conference to understand this part. 
     If you still lost, contact to @Rodrigo43 via Telegram and i will try to explain it again */
-    protected Expression ParseExpression()
+    private Expression ParseExpression()
     {
         return ParseExpressionLv1(null);
     }
 
-    protected Expression ParseExpressionLv1(Expression left)
+    private Expression ParseExpressionLv1(Expression left)
     {
         Expression newLeft = ParseExpressionLv2(left);
         Expression exp = ParseExpressionLv1_(newLeft);
         return exp;
     }
 
-    protected Expression ParseExpressionLv1_(Expression left)
+    private Expression ParseExpressionLv1_(Expression left)
     {
         Expression exp = ParseAdd(left);
         if (exp != null)
@@ -642,7 +606,7 @@ public class Parser
         return left;
     }
 
-    protected POObject ParseExpressionLv1__(POObject left)
+    private POObject ParseExpressionLv1__(POObject left)
     {
         if(Stream.Next(TokenType.Identifier))
         {
@@ -656,12 +620,12 @@ public class Parser
         return left;
     }
 
-    protected Expression ParseExpressionLv2(Expression left)
+    private Expression ParseExpressionLv2(Expression left)
     {
         Expression newLeft = ParseExpressionLv3(left);
         return ParseExpressionLv2_(newLeft);
     }
-    protected Expression ParseExpressionLv2_(Expression left)
+    private Expression ParseExpressionLv2_(Expression left)
     {
         Expression exp = ParseMul(left);
         if (exp != null)
@@ -676,7 +640,7 @@ public class Parser
         return left;
     }
 
-    protected Expression ParseExpressionLv3(Expression left)
+    private Expression ParseExpressionLv3(Expression left)
     {
         Expression exp = ParseNumber();
         if (exp != null)
@@ -701,7 +665,7 @@ public class Parser
     }
 
 
-    protected Expression ParseAdd(Expression left)
+    private Expression ParseAdd(Expression left)
     {
         Add sum = new Add(Stream.LookAhead().Location);
 
@@ -721,7 +685,7 @@ public class Parser
         return ParseExpressionLv1_(sum);
     }
 
-    protected Expression ParseSub(Expression left)
+    private Expression ParseSub(Expression left)
     {
         Sub sub = new Sub(Stream.LookAhead().Location);
 
@@ -741,7 +705,7 @@ public class Parser
         return ParseExpressionLv1_(sub);
     }
 
-    protected Expression ParseMul(Expression left)
+    private Expression ParseMul(Expression left)
     {
         Mul mul = new Mul(Stream.LookAhead().Location);
 
@@ -761,7 +725,7 @@ public class Parser
         return ParseExpressionLv2_(mul);
     }
 
-    protected Expression ParseDiv(Expression left)
+    private Expression ParseDiv(Expression left)
     {
         Div div = new Div(Stream.LookAhead().Location);
 
@@ -781,33 +745,33 @@ public class Parser
         return ParseExpressionLv2_(div);
     }
 
-    protected Expression ParseNumber()
+    private Expression ParseNumber()
     {
         if (!Stream.Next(TokenType.Number))
             return null;
         return new Number(double.Parse(Stream.LookAhead().Value), Stream.LookAhead().Location);
     }
 
-    protected Expression ParseText()
+    private Expression ParseText()
     {
         if (!Stream.Next(TokenType.Text))
             return null;
         return new Text(Stream.LookAhead().Value, Stream.LookAhead().Location);
     }
-    protected Expression ParseId()
+    private Expression ParseId()
     {
         if(!Stream.Next(TokenType.Identifier))
             return null;
         return new Text(Stream.LookAhead().Value, Stream.LookAhead().Location);
     }
-    protected Expression ParseKeyword()
+    private Expression ParseKeyword()
     {
         if(!Stream.Next(TokenType.Keyword))
             return null;
         return new Text(Stream.LookAhead().Value, Stream.LookAhead().Location);
     }
 
-    protected POObject ParsePOOExpression()
+    private POObject ParsePOOExpression()
     {
         POObject poo = new POObject(Stream.LookAhead().Location);
 
@@ -835,7 +799,7 @@ public class Parser
     }
 
 
-    protected Expression ParseComparativeBool(List<CompilingError> errors)
+    private Expression ParseComparativeBool(List<CompilingError> errors)
     {
         BoolComparer nblc = new BoolComparer(Stream.LookAhead().Location);
 
@@ -875,7 +839,7 @@ public class Parser
         return new Boolean(result, Stream.LookAhead().Location);
     }
 
-    protected TokenStream Sub_Stream(string OpenSymbol, string CloseSymbol, List<CompilingError> errors)
+    TokenStream Sub_Stream(string OpenSymbol, string CloseSymbol, List<CompilingError> errors)
     {
         TokenStream sub_stream = new TokenStream();
 

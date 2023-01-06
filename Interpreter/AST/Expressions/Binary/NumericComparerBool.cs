@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Godot;
-
 public class BoolComparer : BinaryExpression
 {
     public string op_comparer;
@@ -31,24 +29,22 @@ public class BoolComparer : BinaryExpression
 
         if(Right.Type == ExpressionType.Number && Left.Type == ExpressionType.Number)
         {
-            int EvalLeft = int.Parse(Left.GetValue().ToString());
-            int EvalRight = int.Parse(Right.GetValue().ToString());
             switch(op_comparer.ToString())
             {
                 case TokenValues.BooleanGreather:
-                    SetValue(EvalLeft - EvalRight > 0);
+                    SetValue((double)Left.GetValue() - (double)Right.GetValue() > 0);
                     break;
                 case TokenValues.BooleanGreatherEqual:
-                    SetValue(EvalLeft - EvalRight >= 0);
+                    SetValue((double)Left.GetValue() - (double)Right.GetValue() >= 0);
                     break;
                 case TokenValues.BooleanSmaller:
-                    SetValue(EvalLeft - EvalRight < 0);
+                    SetValue((double)Left.GetValue() - (double)Right.GetValue() < 0);
                     break;
                 case TokenValues.BooleanSmallerEqual:
-                    SetValue(EvalLeft - EvalRight <= 0);
+                    SetValue((double)Left.GetValue() - (double)Right.GetValue() <= 0);
                     break;
                 case TokenValues.BooleanEqual:
-                    SetValue(EvalLeft - EvalRight == 0);
+                    SetValue((double)Left.GetValue() - (double)Right.GetValue() == 0);
                     break;
                 default:
                     throw new ArgumentException("Da fack with this Numerica Bool Comparer");

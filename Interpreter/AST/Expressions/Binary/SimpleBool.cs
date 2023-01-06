@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-public class BoolExpr : BinaryExpression
+class BoolExpr : BinaryExpression
 {
 
     private BOP op_bool{ get; set;}

@@ -14,7 +14,6 @@ public class Card : ASTNode
     public Expression Attack{get;set;}
     public Expression political_current{get;set;}  
     public Expression PathToPhoto{get;set;}
-    public Expression EffectText{get;set;}
     public List<Token> Effect{get;set;}
 
     public Card(string Id, CodeLocation location) : base(location) {
@@ -59,18 +58,8 @@ public class Card : ASTNode
         if(PathToPhoto.Type != ExpressionType.Text) {
             errors.Add(new CompilingError(Location, ErrorCode.Invalid, "The Path must be a string"));
         }
-
-        bool checkEffectText = true;
-        if(EffectText != null)
-        {
-            checkEffectText = EffectText.CheckSemantic(context,scope,errors);
-            if(EffectText.Type != ExpressionType.Text)
-            {
-                errors.Add(new CompilingError(Location, ErrorCode.Invalid, "The effect text must be a string"));
-            }
-        }
         
-        return checkCardType && checkRareness && checkLore && checkHealth && checkAttack && checkpolitical_currents && checkPathToPhoto && checkEffectText;
+        return checkCardType && checkRareness && checkLore && checkHealth && checkAttack && checkpolitical_currents && checkPathToPhoto;
     }
 
     public void Evaluate()
@@ -103,12 +92,7 @@ public class Card : ASTNode
     }
 
     public void AddToTheDeckAsCardTemplate() {
-        string nName = "";
-        for(int i=0; i<Id.Length; i++)
-        {
-            if(Char.IsUpper(Id[i]) && i!=0) nName+=" ";
-            nName += Id[i];
-        }
+        string nName = this.Id;
         string ncardtype = this.cardtype.GetValue().ToString();
         string nRareness = this.Rareness.GetValue().ToString();
         string nLore = this.Lore.GetValue().ToString();
@@ -128,12 +112,11 @@ public class Card : ASTNode
             {
                 Random rand = new Random();
                 nPathToPhoto = results[0];
+                GD.Print(nPathToPhoto);
             }
         }
-
-        string nEffectText = this.EffectText.GetValue().ToString();
         
-        CardTemplate card_template = new CardTemplate(nName, ncardtype, nRareness, nLore, nHealth, nAttack, npolitcal_current, nPathToPhoto, nEffectText, this.Effect);
+        CardTemplate card_template = new CardTemplate(nName, ncardtype, nRareness, nLore, nHealth, nAttack, npolitcal_current, nPathToPhoto, this.Effect);
     
         card_template.CreateJson();
     }
