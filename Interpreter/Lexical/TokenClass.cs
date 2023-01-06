@@ -109,6 +109,7 @@ public class  TokenValues
     public const string IncreaseHealth = "IncreaseHealth";
     public const string DecreaseAttack = "DecreaseAttack";
     public const string IncreaseAttack = "IncreaseAttack";
+    public const string ReboundAttack = "ReboundAttack";
 
     // Effects Conditionals--------------------------------------
     public const string minHealth = "minHealth";
