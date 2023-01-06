@@ -131,7 +131,7 @@ public class Menu : Node2D
 
         Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Life").Text = $"{Card.Health}";
 
-        Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Effect").Text = "An amazing effect";
+        Card.GetNode<RichTextLabel>("CardMargin/BackgroundCard/Effect").Text = Card.EffectText;
 
         var typetexture = new ImageTexture();
         switch (Card.cardtype)
@@ -203,6 +203,7 @@ public class Menu : Node2D
             Deck[i].political_current = LogicCards[i].political_current;
             Deck[i].Attack = LogicCards[i].Attack;
             Deck[i].Health = LogicCards[i].Health;
+            Deck[i].EffectText = LogicCards[i].EffectText;
             Deck[i].Effect = LogicCards[i].Effect;
             Deck[i].cardtype = LogicCards[i].cardtype;
             Deck[i].Rareness = LogicCards[i].Rareness;
@@ -247,7 +248,7 @@ public class Menu : Node2D
 
 
         GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Name").Text = Deck[CurrentCardIndex].CardName;
-        GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Effect").Text = "An amazing effect";
+        GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Effect").Text = Deck[CurrentCardIndex].EffectText;
         GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Lore").Text = Deck[CurrentCardIndex].Lore;
         GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Attack").Text = Deck[CurrentCardIndex].Attack.ToString();
         GetNode<RichTextLabel>("SelectCards/CardforSelection/BackgroundCard/Life").Text = Deck[CurrentCardIndex].Health.ToString();
@@ -262,8 +263,6 @@ public class Menu : Node2D
 
     public void ReadCode()
     {
-        GD.Print("Comienza el programa");
-
         LexicalAnalyzer lex = Compiling.Lexical;
 
         string text = System.IO.File.ReadAllText(@"code.txt");

@@ -63,12 +63,27 @@ public class Compiling
 
                 __LexicalProcess.RegisterKeyword("PoliticalCurrent", TokenValues.PoliticalCurrent);
                 __LexicalProcess.RegisterKeyword("PathToPhoto", TokenValues.PathToPhoto);
+                __LexicalProcess.RegisterKeyword("EffectText", TokenValues.EffectText);
                 __LexicalProcess.RegisterKeyword("Effect", TokenValues.Effect);
-                /*  */
+
                 __LexicalProcess.RegisterText("\"", "\"");
 
                 __LexicalProcess.RegisterKeyword("if", TokenValues.If);
                 __LexicalProcess.RegisterKeyword("else", TokenValues.Else);
+
+                // Effects ------------------------------------------------
+                __LexicalProcess.RegisterKeyword("DrawCards", TokenValues.DrawCards);
+                __LexicalProcess.RegisterKeyword("DestroyCard", TokenValues.DestroyCard);
+                __LexicalProcess.RegisterKeyword("DecreaseHealth", TokenValues.DecreaseHealth);
+                __LexicalProcess.RegisterKeyword("IncreaseHealth", TokenValues.IncreaseHealth);
+                __LexicalProcess.RegisterKeyword("DecreaseAttack", TokenValues.DecreaseAttack);
+                __LexicalProcess.RegisterKeyword("IncreaseAttack", TokenValues.IncreaseAttack);
+
+                // Effects Conditionals ----------------------------------------
+                __LexicalProcess.RegisterKeyword("minHealth", TokenValues.minHealth);
+                __LexicalProcess.RegisterKeyword("minAttack", TokenValues.minAttack);
+                __LexicalProcess.RegisterKeyword("maxHealth", TokenValues.maxHealth);
+                __LexicalProcess.RegisterKeyword("maxAttack", TokenValues.maxAttack);
             }
 
             return __LexicalProcess;

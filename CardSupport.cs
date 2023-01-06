@@ -10,12 +10,14 @@ public class CardSupport : Node2D
     public string Lore { get; set; }
     public int Attack { get; set; }
     public int Health { get; set; }
+    public string EffectText{get;set;}
     public List<Token> Effect { get; set; }
     public string political_current { get; set; }
     public string PathToPhoto { get; set; }
     public bool summoned { get; set; }
     public bool hasParent { get; set; }
     public bool hasAttacked { get; set; }
+    public bool hasActivatedEffect { get; set; }
     // Called when the node enters the scene tree for the first time.
 
     // public CardSupport(string name, string lore, string classcard, int attack, int Life, string effect, string type, string rareness, string pathtophoto)
@@ -30,6 +32,48 @@ public class CardSupport : Node2D
     //     this.Rareness = rareness;
     //     this.PathToPhoto = pathtophoto;
     // }
+
+    public List<EffectExpression> DoEffect()
+    {
+        if(this.Effect != null)
+        {
+            TokenStream effect_stream = new TokenStream(this.Effect);
+            EffectParser effect_parser = new EffectParser(effect_stream);
+            List<CompilingError> effect_errors = new List<CompilingError>();
+            ColdWarProgram effect_program = effect_parser.ParseProgram(effect_errors);
+
+            if (effect_errors.Count > 0)
+            {
+                foreach (CompilingError error in effect_errors)
+                {
+                    GD.Print(error.Location.Line + " " + error.Code + " " + error.Argument);
+                }
+            }
+            else
+            {
+                Context context = new Context();
+                Scope scope = new Scope();
+
+                effect_program.CheckSemantic(context, scope, effect_errors);
+
+                if (effect_errors.Count > 0)
+                {
+                    foreach (CompilingError error in effect_errors)
+                    {
+                        GD.Print( error.Location.Line + " " + error.Code + " " + error.Argument);
+                    }
+                }
+                else
+                {
+                    effect_program.Evaluate();
+
+                    return effect_program.Effects;
+                }
+            } 
+        }
+        return null;
+    }
+
     public CardSupport()
     {
 
@@ -60,6 +104,18 @@ public class CardSupport : Node2D
                 Game.readyforattack = false;
                 Game.readyforexecute = true;
             }
+
+            if(Game.ReadyForEffect)
+            {
+                Game.EffectObjetive = this.CardName;
+                Game.ReadyForEffect = false;
+                Game.readyforexecuteeffect = true;
+            }
+            // else
+            // {
+            //     Game.SelectedCardName = this.CardName;
+            //     Game.cardselected = true;
+            // }
         }
         else
         {
@@ -70,7 +126,7 @@ public class CardSupport : Node2D
     public void UpdateCardVisual()
     {
         GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Name").Text = this.CardName;
-        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Effect").Text = "An amazing effect";
+        GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Effect").Text = EffectText;
         GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Lore").Text = this.Lore;
         GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Attack").Text = this.Attack.ToString();
         GetNode<RichTextLabel>("/root/Main/Game/Board/ShowMargin/BackgroundCard/Life").Text = this.Health.ToString();
