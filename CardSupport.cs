@@ -14,7 +14,7 @@ public class CardSupport : Node2D
     public string political_current { get; set; }
     public string PathToPhoto { get; set; }
     public bool summoned { get; set; }
-    public bool hasParent { get; set;}
+    public bool hasParent { get; set; }
     public bool hasAttacked { get; set; }
     // Called when the node enters the scene tree for the first time.
 

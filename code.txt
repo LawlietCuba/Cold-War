@@ -4,17 +4,380 @@ Card FriederichHayek
 {
     CardType = Unit;
     Rareness = Legendary;
-    Lore = "Liberal writer and Nobel's Economic Prize Winner";
-    Health = 700+12*5;
-    Attack = 1300;
+    Lore = "Austrian-British economist, legal theorist and philosopher who is best known for his defense of classical liberalism. Hayek shared the 1974 Nobel Memorial Prize in Economic Sciences with Gunnar Myrdal for their work on money and economic fluctuations, and the interdependence of economic, social and institutional phenomena.";
+    Health = 4226;
+    Attack = 4232;
     political_current = Capitalist;
     PathToPhoto = "Hayek";
     Effect = [if(FriederichHayek.Health>600)
     {
-        print("Death To Soviets");
+        print("Death To the Soviets");
     }]
 }
-
+Card AdamSmith
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Scottish economist and philosopher who was a pioneer in the thinking of political economy and key figure during the Scottish Enlightenment. Seen by some as The Father of Economics or The Father of Capitalism, he wrote two classic works, The Theory of Moral Sentiments (1759) and An Inquiry into the Nature and Causes of the Wealth of Nations (1776).";
+    Health = 2391;
+    Attack = 3937;
+    political_current = Capitalist;
+    PathToPhoto = "adam-smith";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card AntonioEscohotado
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Spanish philosopher, jurist, essayistand university professor. His life's work primarily focused on law, philosophy and sociology, yet extended to many other disciplines.";
+    Health = 2342;
+    Attack = 4341;
+    political_current = Capitalist;
+    PathToPhoto = "antonio escohotado";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card DavidRicardo
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "British political economist. He was one of the most influential of the classical economists. Ricardo was also a politician, and a member of the Parliament of Great Britain and Ireland.";
+    Health = 1972;
+    Attack = 1483;
+    political_current = Capitalist;
+    PathToPhoto = "david ricardo";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card DonaldTrump
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "American politician, media personality, and businessman. Former Republican President of the Unated States. Far Right";
+    Health = 6543;
+    Attack = 8764;
+    political_current = Capitalist;
+    PathToPhoto = "trump";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card ElonMusk
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Business Magnate and Investor. He is the founder, CEO and chief engineer of SpaceX; angel investor, CEO and product architect of Tesla, Inc.; owner and CEO of Twitter, Inc.; founder of The Boring Company; co-founder of Neuralink and OpenAI; and president of the philanthropic Musk Foundation.";
+    Health = 3000;
+    Attack = 3000;
+    political_current = Capitalist;
+    PathToPhoto = "elon musk";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card GeorgeSoros
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Hungarian-American businessman and philanthropist. Soros formulated the General Theory of Reflexivity for capital markets, which he says renders a clear picture of asset bubbles and fundamental/market value of securities, as well as value discrepancies used for shorting and swapping stocks.";
+    Health = 3472;
+    Attack = 4280;
+    political_current = Capitalist;
+    PathToPhoto = "George Soros";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card JairBolsonaro
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Brazilian politician and retired military officer. Former President of Brazil. Neoliberal and Fundamentalist. He was elected in 2018 as a member of the Social Liberal Party, which he turned into a conservative party, before cutting ties with it. In 2021, he joined the Liberal Party.";
+    Health = 4654;
+    Attack = 4565;
+    political_current = Capitalist;
+    PathToPhoto = "bolsonaro";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card JavierMilei
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Argentine politician, businessman and economist currently serving as a federal deputy of Buenos Aires. Milei is supportive of the Austrian School of economic thought and considers himself to be a short-term minarchist, although philosophically an anarcho-capitalist.";
+    Health = 3459;
+    Attack = 3269   ;
+    political_current = Capitalist;
+    PathToPhoto = "javier milei";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card JosephMcCarthy
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "American politician who served as a Republican U.S. Senator from the state of Wisconsin. Beginning in 1950, McCarthy became the most visible public face of a period in the United States in which Cold War tensions fueled fears of widespread co He is known for alleging that numerous communists and Soviet spies and sympathizers had infiltrated the United States federal government, universities, film industry, and elsewhere. The term McCarthyism, coined in 1950 in reference to McCarthy's practices, was soon applied to similar anti-communist activities.";
+    Health = 4000;
+    Attack = 6000   ;
+    political_current = Capitalist;
+    PathToPhoto = "Joseph_McCarthy";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card LudwigvonMises
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Austrian School economist, historian, logician, and sociologist. Mises wrote and lectured extensively on the societal contributions of classical liberalism. He is best known for his work on praxeology studies comparing communism and capitalism. He is considered one of the most influential economic and political thinkers of the 20th century.";
+    Health = 4235;
+    Attack = 6372   ;
+    political_current = Capitalist;
+    PathToPhoto = "Ludwig_von_Mises";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card LuisLacallePou
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Uruguayan politician and lawyer. Current President of Uruguay. Liberal.";
+    Health = 3111;
+    Attack = 3921   ;
+    political_current = Capitalist;
+    PathToPhoto = "lacalle";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card MargaretTatcher
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Former Prime Minister of the United Kingdom. The Iron Lady. She implemented economic policies that became known as Thatcherism.";
+    Health = 5226;
+    Attack = 6212   ;
+    political_current = Capitalist;
+    PathToPhoto = "margaret tatcher";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card MarioVargasLlosa
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Peruvian novelist, journalist, essayist and former politician. Vargas Llosa has been politically active throughout his career. While he initially supported the Cuban revolutionary government of Fidel Castro, he later became disenchanted with its policies and now identifies as a liberal.";
+    Health = 1276;
+    Attack = 1276   ;
+    political_current = Capitalist;
+    PathToPhoto = "Vargas Llosa";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card MiltonFriedman
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "One of the greatest Liberal thinkers of the last century. American economist and statistician who received the 1976 Nobel Memorial Prize in Economic Sciences for his research on consumption analysis, monetary history and theory and the complexity of stabilization policy. With George Stigler and others, Friedman was among the intellectual leaders of the Chicago school of economics, a neoclassical school of economic thought associated with the work of the faculty at the University of Chicago that rejected Keynesianism in favor of monetarism until the mid-1970s, when it turned to new classical macroeconomics heavily based on the concept of rational expectations.";
+    Health = 2342;
+    Attack = 5324   ;
+    political_current = Capitalist;
+    PathToPhoto = "milton-friedman";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card RonaldReagan
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "American politician, actor, and union leader who served as the 40th president of the United States. Republican.";
+    Health = 4000;
+    Attack = 4000;
+    political_current = Capitalist;
+    PathToPhoto = "ronald reagan";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card WarrenBuffet
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "American business magnate, investor, and philanthropist. He is currently the chairman and CEO of Berkshire Hathaway. He is one of the most successful investors in the world.";
+    Health = 4826;
+    Attack = 5462;
+    political_current = Capitalist;
+    PathToPhoto = "warren buffett";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card JeanBaptisteSay
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Liberal French economist and businessman who argued in favor of competition, free trade and lifting restraints on business. He is best known for Say's law—also known as the law of markets—which he popularized. Scholars disagree on the surprisingly subtle question of Moreover, he was one of the first economists to study entrepreneurship and conceptualized entrepreneurs as organizers and leaders of the economy.";
+    Health = 3869;
+    Attack = 5925;
+    political_current = Capitalist;
+    PathToPhoto = "Jean-Baptiste_Say";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card ThomasMalthus
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "English cleric, scholar and influential economist in the fields of political economy and demography. In his 1798 book An Essay on the Principle of Population, Malthus observed that an increase in a nation's food production improved the well-being of the population, but the improvement was temporary because it led to population growth, which in turn restored the original per capita production level.";
+    Health = 2835;
+    Attack = 4283;
+    political_current = Capitalist;
+    PathToPhoto = "malthus";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card FrédéricBastiat
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "French economist, writer and a prominent member of the French Liberal School. A member of the French National Assembly, Bastiat developed the economic concept of opportunity cost and introduced the parable of the broken window. He was described as the most brilliant economic journalist who ever lived by economic theorist Joseph Schumpeter.As an advocate of classical economics and the economics of Adam Smith, his views favored a free market and influenced the Austrian School.";
+    Health = 3845;
+    Attack = 6294;
+    political_current = Capitalist;
+    PathToPhoto = "bastiat";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card JohnLocke
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "English philosopher and physician, widely regarded as one of the most influential of Enlightenment thinkers and commonly known as tfather of liberalism. Considered one of the first of the British empiricists, following the tradition of Francis Bacon, Locke is equally important to social contract theory. His work greatly affected the development of epistemology and political philosophy. His writings influenced Voltaire and Jean-Jacques Rousseau, and many Scottish Enlightenment thinkers, as well as the American Revolutionaries. His contributions to classical republicanism and liberal theory are reflected in the United States Declaration of Independence.";
+    Health = 6230;
+    Attack = 7205;
+    political_current = Capitalist;
+    PathToPhoto = "locke";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card WilliamGrahamSumner
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "American clergyman, social scientist, and classical liberal. He taught social sciences at Yale University—where he held the nation's first professorship in sociology—and became one of the most influential teachers at any other major school. Sumner wrote extensively on the social sciences, penning numerous books and essays on ethics, American history, economic history, political theory, sociology, and anthropology. He supported laissez-faire economics, free markets, and the gold standard, in addition to coining the term ethnocentrism to identify the roots of imperialism, which he strongly oforgotten man of the middle class—a term he coined. He had a prolonged influence on American conservatism.";
+    Health = 6562;
+    Attack = 7892;
+    political_current = Capitalist;
+    PathToPhoto = "William Graham Sumner";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card IsaiahBerlin
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Russian-British social and political theorist, philosopher, and historian of ideas. Berlin's work on liberal theory and on value pluralism, as well as his opposition to Marxism and communism, has had a lasting influence.";
+    Health = 4722;
+    Attack = 4129;
+    political_current = Capitalist;
+    PathToPhoto = "berlin";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card RaymondAron
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "French philosopher, sociologist, political scientist, historian and journalist, one of France's most prominent thinkers of the 20th century. Aron is best known for his 1955 book The Opium of the Intellectuals, the title of which inverts Karl Marx's claim that religion was the opium of the people; he argues that Marxism was the opium of the intellectuals in post-war France. In the book, Aron chastised French intellectuals for what he described as their harsh criticism of capitalism and democracy and their simultaneous defense of Marxist oppression, atrocities and intolerance.";
+    Health = 6294;
+    Attack = 3581;
+    political_current = Capitalist;
+    PathToPhoto = "raymond";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card FrancisFukuyama
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "American political scientist, political economist, international relations scholar and writer. Fukuyama is known for his book The End of History and the Last Man (1992), which argues that the worldwide spread of liberal democracies and free-market capitalism of the West and its lifestyle may signal the end point of humanity's sociocultural evolution and political struggle and become the final form of human government, an assessment met with criticisms.";
+    Health = 5294;
+    Attack = 2845;
+    political_current = Capitalist;
+    PathToPhoto = "fukuyama";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card JoséOrtegayGasset
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Spanish philosopher and essayist. He worked during the first half of the 20th century, while Spain oscillated between monarchy, republicanism, and dictatorship. The Revolt of the Masses is Ortega's best known work. In this book he defends the values of meritocratic liberalism reminiscent of John Stuart Mill against attacks from both communists and right-wing populists.";
+    Health = 6935;
+    Attack = 5391;
+    political_current = Capitalist;
+    PathToPhoto = "ortegaygasset";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
+Card KarlPopper
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Austrian-British philosopher, academic and social commentator. One of the 20th century's most influential philosophers of science, Popper is known for his rejection of the classical inductivist views on the scientific method in favour of empirical falsification. In political discourse, he is known for his vigorous defence of liberal democracy and the principles of social criticism that he believed made a flourishing open society possible. His political philosophy embraced ideas from major democratic political ideologies, including socialism/social democracy, libertarianism/classical liberalism and conservatism, and attempted to reconcile them.";
+    Health = 5182;
+    Attack = 6037;
+    political_current = Capitalist;
+    PathToPhoto = "popper";
+    Effect = [if(FriederichHayek.Health>600)
+    {
+        print("Death To the Soviets");
+    }]
+}
 Card AgrarianReform
 {
     CardType = Politic;
@@ -26,7 +389,7 @@ Card AgrarianReform
     PathToPhoto = ;
     Effect = [if(FriederichHayek.Health>6)
     {
-        print("Death To Soviets");
+        print("Death To the Bourgeoisie");
     }]
 }
 
@@ -34,47 +397,29 @@ Card FidelCastroRuz
 {
     CardType = Unit;
     Rareness = Legendary;
-    Lore = "Commander in Chief of the Cuban Revolution";
-    Health = 1300;
-    Attack = 1300;
+    Lore = "Commander in Chief of the Cuban Revolution. Ideologically a Marxist-Leninist, he also served as the first secretary of the Communist Party of Cuba.";
+    Health = 9000;
+    Attack = 7000;
     political_current = Communist;
     PathToPhoto = "fidel";
     Effect = [if(FriederichHayek.Health>6)
     {
-        print("Death To Soviets");
+        print("Death To the Bourgeoisie");
     }]
-}
-
-if(7<10 && true || (8 == 7))
-{
-    Card Che
-    {
-        CardType = Unit;
-        Rareness = Legendary;
-        Lore = "The Heroic Guerrilla";
-        Health = 900;
-        Attack = 2100+30;
-        political_current = Communist;
-        PathToPhoto = "che.jpg";
-        Effect = [if(Che.Attack>600)
-        {
-            print("Death To Soviets");
-        }]
-    }
 }
 
 Card FriederichEngels
 {
     CardType = Unit;
     Rareness = Legendary;
-    Lore = "German philosopher, political theorist and revolutionary socialist";
-    Health = 600;
-    Attack = 1700;
+    Lore = "German philosopher, critic of political economy, historian, political theorist and revolutionary socialist. He was also a businessman, journalist and political activist.Engels developed what is now known as Marxism together with Karl Marx. In 1845, he published The Condition of the Working Class in England, based on personal observations and research in English cities. In 1848, Engels co-authored The Communist Manifesto with Marx. Later, Engels supported Marx financially, allowing him to do research and write Das Kapital. After Marx's death, Engels edited the second and third volumes of Das Kapital. In 1884, he published The Origin of the Family, Private Property and the State on the basis of Marx's ethnographic research.";
+    Health = 7654;
+    Attack = 5235;
     political_current = Communist;
     PathToPhoto = "Engels";
     Effect = [if(FriederichHayek.Health>6)
     {
-        print("Death To Soviets");
+        print("Death To the Bourgeoisie");
     }]
 }
 
@@ -82,14 +427,14 @@ Card KarlMarx
 {
     CardType = Unit;
     Rareness = Legendary;
-    Lore = "German philosoher. Father of Scientist Comunism";
-    Health = 700;
-    Attack = 1300;
+    Lore = "German philosopher, economist, historian, sociologist, political theorist, journalist, critic of political economy, and socialist revolutionary. His best-known titles are the 1848 pamphlet The Communist Manifesto and the four-volume Das Kapital (1867–1883). Marx's political and philosophical thought had enormous influence on subsequent intellectual, economic, and political history. His name has been used as an adjective, a noun, and a school of social theory. Father of Scientist Comunism";
+    Health = 5567;
+    Attack = 6430;
     political_current = Communist;
     PathToPhoto = "Marx.jpg";
     Effect = [if(FriederichHayek.Health>6)
     {
-        print("Death To Soviets");
+        print("Death To the Bourgeoisie");
     }]
 }
 
@@ -104,7 +449,7 @@ Card OctoberSocialistRevolution
     PathToPhoto = ;
     Effect = [if(FriederichHayek.Health>6)
     {
-        print("Death To Soviets");
+        print("Death To the Bourgeoisie");
     }]
 }
 
@@ -112,15 +457,349 @@ Card VladimirLenin
 {
     CardType = Unit;
     Rareness = Legendary;
-    Lore = "Marxist leader of the Russian Revolution";
-    Health = 400;
-    Attack = 2000;
+    Lore = "Russian revolutionary, politician, and political theorist. Leader of the Russian Revolution. He served as the first and founding head of government of Soviet Russia from 1917 to 1924 and of the Soviet Union from 1922 to 1924. Under his administration, Russia, and later the Soviet Union, became a one-party socialist state governed by the Communist Party. Ideologically a Marxist, his developments to the ideology are called Leninism.";
+    Health = 1123;
+    Attack = 6987;
     political_current = Communist;
     PathToPhoto = "lenin";
     Effect = [if(FriederichHayek.Health>6)
     {
-        print("Death To Soviets");
+        print("Death To the Bourgeoisie");
     }]
 }
-
-
+Card JulioAntonioMella
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Cuban political activist and one of the founders of the original Communist Party of Cuba.";
+    Health = 2700;
+    Attack = 5200;
+    political_current = Communist;
+    PathToPhoto = "mella";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card CharlesFourier
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "French philosopher, an influential early socialist thinker and one of the founders of utopian socialism.";
+    Health = 1834;
+    Attack = 1704;
+    political_current = Communist;
+    PathToPhoto = "Charles Fourier";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card CheGuevara
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Argentine Marxist revolutionary. A major figure of the Cuban Revolution, his stylized visage has become a ubiquitous countercultural symbol of rebellion and global insignia in popular culture. His experiences and studying of Marxism-Leninism led him to posit that the Third World's underdevelopment and dependence was an intrinsic result of imperialism, neocolonialism, and monopoly capitalism, with the only remedies being proletarian internationalism and world revolution.";
+    Health = 6962;
+    Attack = 7352;
+    political_current = Communist;
+    PathToPhoto = "che";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card ÉtienneCabet
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "French philosopher and utopian socialist who founded the Icarian movement.";
+    Health = 2453;
+    Attack = 2930;
+    political_current = Communist;
+    PathToPhoto = "Etienne Cabet";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card EvoMorales
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Leader of the Movement for Socialism party and former president of Bolivia.";
+    Health = 3456;
+    Attack = 6543;
+    political_current = Communist;
+    PathToPhoto = "Evo-Morales";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card GeorgyZhukov
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Marshal of the Soviet Union. He also served as Chief of the General Staff, Minister of Defence, and was a member of the Presidium of the Communist Party (later Politburo). During World War II, Zhukov oversaw some of the Red Army's most decisive victories.";
+    Health = 5639;
+    Attack = 8252;
+    political_current = Communist;
+    PathToPhoto = "Zhukov";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card HoChiMinh
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Vietnamese revolutionary and statesman. Ideologically a Marxist-Leninist, he served as Chairman and First Secretary of the Worker's Party of Vietnam.";
+    Health = 3882;
+    Attack = 4926;
+    political_current = Communist;
+    PathToPhoto = "Ho Chi Minh";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card HugoChávez
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Leader of the United Socialist Party of Venezuela and former president of this country.";
+    Health = 3456;
+    Attack = 5678;
+    political_current = Communist;
+    PathToPhoto = "Hugo Chavez";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card IósifStalin
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Georgian revolutionary and Soviet political leader who led the Soviet Union. Ideologically adhering to the Leninist interpretation of Marxism, he formalised these ideas as Marxism–Leninism, while his own policies are called Stalinism. Led the soviet army to victory in the Great Patriotic War.";
+    Health = 7993;
+    Attack = 8973;
+    political_current = Communist;
+    PathToPhoto = "Stalin";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card JoséCarlosMariátegui
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Peruvian writer, journalist, politician and Marxist-Leninist philosopher. He was the founder of the Peruvian Socialist Party in 1928 (which, after his death, would be renamed the Peruvian Communist Party), a political force that, according to its founding act, would have Marxism-Leninism as its axial tool, and of the General Confederation of Workers of Peru, in 1929.";
+    Health = 3825;
+    Attack = 5580;
+    political_current = Communist;
+    PathToPhoto = "mariategui";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card JosipBrozTito
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Yugoslav communist revolutionary and statesman.Heserved as the president of the Socialist Federal Republic of Yugoslavia.";
+    Health = 3825;
+    Attack = 5580;
+    political_current = Communist;
+    PathToPhoto = "tito";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card LeonTrotsky
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Russian Marxist revolutionary, political theorist and politician. Ideologically a Marxist, his developments to the ideology are called Trotskyism.";
+    Health = 2579;
+    Attack = 3986;
+    political_current = Communist;
+    PathToPhoto = "Trotsky";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card MaoZedong
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Chinese communist revolutionary who was the founder of the People's Republic of China (PRC), which he led as the chairman of the Chinese Communist Party from the establishment of the PRC in 1949. Ideologically a Marxist-Leninist, his theories, military strategies, and political policies are collectively known as Maoism.";
+    Health = 5827;
+    Attack = 4501;
+    political_current = Communist;
+    PathToPhoto = "mao";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card RobertOwen
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Welsh textile manufacturer, philanthropist and social reformer, and a founder of utopian socialism and the cooperative movement.";
+    Health = 1796;
+    Attack = 3575;
+    political_current = Communist;
+    PathToPhoto = "Robert Owen";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card RosaLuxemburg
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Polish and naturalised-German revolutionary socialist, Marxist philosopher and anti-war activist. Successively, she was a member of the Proletariat party, the Social Democracy of the Kingdom of Poland and Lithuania (SDKPiL), the Social Democratic Party of Germany (SPD), the Independent Social Democratic Party (USPD), the Spartacus League (Spartakusbund), and the Communist Party of Germany (KPD).";
+    Health = 4352;
+    Attack = 5629;
+    political_current = Communist;
+    PathToPhoto = "Rosa_Luxemburg";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card RubénMartínezVillena
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Cuban writer and revolutionary leader. After meeting Julio Antonio Mella, founder of the Communist Party of Cuba, he got more involved in the social struggle, against what was seen at the time as neocolonial governments subdued to the United States interests.";
+    Health = 1426;
+    Attack = 4986;
+    political_current = Communist;
+    PathToPhoto = "villena";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card SlavojZizek
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Slovenian philosopher, cultural theorist and public intellectual.He primarily works on continental philosophy (particularly Hegelianism, psychoanalysis and Marxism) and political theory, as well as film criticism and theology.";
+    Health = 3453;
+    Attack = 2343;
+    political_current = Communist;
+    PathToPhoto = "slavojzizek";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card ThomasSankara
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Burkinab military officer, Marxist-Leninist revolutionary, and Pan-Africanist, who served as Presid. Viewed by supporters as a charismatic and iconic figure of revolution, he is commonly referred to as Africa's Che Guevara.";
+    Health = 1347;
+    Attack = 2045;
+    political_current = Communist;
+    PathToPhoto = "Thomas_Sankara";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card AntonioGramsci
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Italian Marxist philosopher, journalist, linguist, writer, and politician. He wrote on philosophy, political theory, sociology, history, and linguistics. He was a founding member and one-time leader of the Italian Communist Party.";
+    Health = 2846;
+    Attack = 4200;
+    political_current = Communist;
+    PathToPhoto = "AntonioGramsci";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card ÁlvaroGarcíaLinera
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Bolivian politician, sociologist, marxist theoretician, and former guerilla. A member of the Movement for Socialism, in the early 1990s he was a leader of the Túpac Katari Guerrilla Army.";
+    Health = 3825;
+    Attack = 4825;
+    political_current = Communist;
+    PathToPhoto = "linera";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card NoamChomsky
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "American public intellectual: a linguist, philosopher, cognitive scientist, historian, social critic, and political activist. Sometimes calledthe father of modern linguistics, Chomsky is also a major figure in analytic philosophy and one of the founders of the field of cognitive science. Ideologically, he aligns with anarcho-syndicalism and libertarian socialism.";
+    Health = 6381;
+    Attack = 6307;
+    political_current = Communist;
+    PathToPhoto = "chomsky";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card AtilioBorón
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Argentine Marxist sociologist. He worked as a Professor of Political Science at the Latin American Social Sciences Institute and at the University of Buenos Aires.He has called the United States a terrorist threat to world peace. He has also been critical of Israel's systemic racism. He has voiced his disapproval of the American handling of Julian Assange. Borón has also condemned Barack Obama for ordering the murder of Muammar Gaddafi.In 2009 he received the International José Martí Prize from UNESCO for his contribution to integration of Latin American and Caribbean countries.";
+    Health = 4277;
+    Attack = 4204;
+    political_current = Communist;
+    PathToPhoto = "atilio";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card FernandoMartínezHeredia
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Prominent Cuban revolutionary thinker and politician. Martínez was a founding member of the Cuban Communist Party, and as a member of the July 26 Movement, he took part in the Revolution which overthrow the Batista dictatorship. Professor of Philosophy at the University of Havana and director of its Department of Philosophy, from where he directed the magazine Pensamiento Crítico until its disappearance.";
+    Health = 4277;
+    Attack = 4204;
+    political_current = Communist;
+    PathToPhoto = "martinezheredia";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}
+Card JeanLucMélenchon
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "French politician who was a member of the National Assembly for the 4th constituency of Bouches-du-Rhône from 2017 to 2022. He led the La France Insoumise group in the National Assembly from 2017 to 2021. Mélenchon is a socialist republican and historical materialist, inspired primarily by Jean Jaurès (the founder of French republican socialism).";
+    Health = 1348;
+    Attack = 1946;
+    political_current = Communist;
+    PathToPhoto = "melechon";
+    Effect = [if(FriederichHayek.Health>6)
+    {
+        print("Death To the Bourgeoisie");
+    }]
+}

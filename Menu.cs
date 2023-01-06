@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.IO;
 using Godot;
@@ -15,6 +16,7 @@ public class Menu : Node2D
     List<CardSupport> Deck;
     public static bool somecardselected;
     PackedScene NewNode;
+    int numberofcardsselected;
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -26,7 +28,7 @@ public class Menu : Node2D
         // if (results.Count > 0)
         //     GD.Print("Exactly what I was looking for");
 
-        ReadCode();
+        //ReadCode();
 
         if (SelectedDeck)
         {
@@ -39,29 +41,42 @@ public class Menu : Node2D
         }
     }
 
-    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    //  public override void _Process(float delta)
-    //  {
-
-    //  }
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(float delta)
+    {
+        GetNode<RichTextLabel>("SelectCards/NumberSelected").Text = $"{numberofcardsselected}";
+        if (numberofcardsselected >= 24)
+        {
+            GetNode<Button>("SelectCards/Ready").Disabled = false;
+        }
+        else
+        {
+            GetNode<Button>("SelectCards/Ready").Disabled = true;
+        }
+    }
     public void _on_PlayGame_pressed()
     {
+        ReadCode();
+        GetNode<Button>("SelectDeck/SelectCards").Disabled = true;
         GetNode<Node2D>("MainMenu").Hide();
         GetNode<Node2D>("SelectDeck").Show();
     }
     public void _on_ReturnToMainMenu_pressed()
     {
+        GetNode<Button>("SelectDeck/SelectCards").Disabled = true;
         GetNode<Node2D>("SelectDeck").Hide();
         GetNode<Node2D>("MainMenu").Show();
     }
     public void _on_Communist_pressed()
     {
         PathToSelectedDeck = System.IO.Directory.GetCurrentDirectory() + "/Decks/Communist";
+        GetNode<Button>("SelectDeck/SelectCards").Disabled = false;
         SelectedDeck = true;
     }
     public void _on_Capitalist_pressed()
     {
         PathToSelectedDeck = System.IO.Directory.GetCurrentDirectory() + "/Decks/Capitalist";
+        GetNode<Button>("SelectDeck/SelectCards").Disabled = false;
         SelectedDeck = true;
     }
     public void _on_SelectCards_pressed()
@@ -80,6 +95,7 @@ public class Menu : Node2D
         FinalDeck.Clear();
         CurrentCardIndex = 0;
         somecardselected = false;
+        numberofcardsselected = 0;
         GetNode<Node2D>("SelectCards").Hide();
         GetNode<Node2D>("SelectDeck").Show();
     }
@@ -95,13 +111,9 @@ public class Menu : Node2D
     }
     public void _on_CreateCards_pressed()
     {
-        GetNode<Node2D>("MainMenu").Hide();
-        GetNode<Node2D>("Compiler").Show();
-    }
-    public void _on_ReturnToMainMenuFromCompiler_pressed()
-    {
-        GetNode<Node2D>("Compiler").Hide();
-        GetNode<Node2D>("MainMenu").Show();
+        ProcessStartInfo psi = new ProcessStartInfo("code.txt");
+        psi.UseShellExecute = true;
+        Process.Start(psi);
     }
     public void _on_Exit_pressed()
     {
@@ -220,7 +232,10 @@ public class Menu : Node2D
     {
         somecardselected = true;
         if (!FinalDeck.Contains(Deck[CurrentCardIndex]))
+        {
             FinalDeck.Add(Deck[CurrentCardIndex]);
+            numberofcardsselected++;
+        }
     }
     public void ShowCardsForSelection()
     {
@@ -272,7 +287,7 @@ public class Menu : Node2D
         {
             foreach (CompilingError error in errors)
             {
-                GD.Print("{0}, {1}, {2}", error.Location.Line, error.Code, error.Argument);
+                GD.Print(error.Location.Line, " ", error.Code, " ", error.Argument);
             }
         }
         else
@@ -286,7 +301,7 @@ public class Menu : Node2D
             {
                 foreach (CompilingError error in errors)
                 {
-                    GD.Print("{0}, {1}, {2}", error.Location.Line, error.Code, error.Argument);
+                    GD.Print(error.Location.Line, " ", error.Code, " ", error.Argument);
                 }
             }
             else
@@ -295,7 +310,7 @@ public class Menu : Node2D
 
                 // GD.Print(program);
 
-                foreach(Card ncard in program.Cards.Values)
+                foreach (Card ncard in program.Cards.Values)
                 {
                     ncard.AddToTheDeckAsCardTemplate();
                 }
