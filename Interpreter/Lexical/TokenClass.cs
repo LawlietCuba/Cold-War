@@ -75,6 +75,8 @@ public class  TokenValues
     public const string BooleanValueFalse = "false"; // false
 
     public const string import = "import"; // using
+    public const string Decks = "Decks";
+    public const string AllCards = "AllCards";
     public const string print = "print"; // Console.WriteLine()
 
     public const string Card = "Card"; // Card
@@ -88,6 +90,8 @@ public class  TokenValues
     public const string PathToPhoto = "PathToPhoto"; // PathToPhoto
     // CardType, Rareness, political_currents
     public const string PoliticalCurrent = "PoliticalCurrent"; // Political_Current
+
+    public const string EffectText = "EffectText"; // Text explaining the effect
     public const string Effect = "Effect"; // Effect
     public const string Unit = "Unit"; // Unit
     public const string Event = "Event"; // Event
@@ -97,4 +101,18 @@ public class  TokenValues
     public const string Common = "Common"; // Common
     public const string If = "if"; // if
     public const string Else = "else"; // else
+
+    // Effects -------------------------------
+    public const string DrawCards = "DrawCards";
+    public const string DestroyCard = "DestroyCard";
+    public const string DecreaseHealth = "DecreaseHealth";
+    public const string IncreaseHealth = "IncreaseHealth";
+    public const string DecreaseAttack = "DecreaseAttack";
+    public const string IncreaseAttack = "IncreaseAttack";
+
+    // Effects Conditionals--------------------------------------
+    public const string minHealth = "minHealth";
+    public const string minAttack = "minAttack";
+    public const string maxHealth = "maxHealth";
+    public const string maxAttack = "maxAttack";
 }

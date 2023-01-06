@@ -5,122 +5,75 @@ Card FriederichHayek
     CardType = Unit;
     Rareness = Legendary;
     Lore = "Liberal writer and Nobel's Economic Prize Winner";
-    Health = 700+12*5;
+    Health = 760;
     Attack = 1300;
     political_current = Capitalist;
     PathToPhoto = "Hayek";
-    Effect = [if(FriederichHayek.Health>600)
-    {
-        print("Death To Soviets");
-    }]
-}
-
-Card AgrarianReform
-{
-    CardType = Politic;
-    Rareness = Legendary;
-    Lore = "Agrarian Reform";
-    Health = 0;
-    Attack = 0;
-    political_current = Communist;
-    PathToPhoto = ;
-    Effect = [if(FriederichHayek.Health>6)
-    {
-        print("Death To Soviets");
-    }]
-}
-
-Card FidelCastroRuz
-{
-    CardType = Unit;
-    Rareness = Legendary;
-    Lore = "Commander in Chief of the Cuban Revolution";
-    Health = 1300;
-    Attack = 1300;
-    political_current = Communist;
-    PathToPhoto = "fidel";
-    Effect = [if(FriederichHayek.Health>6)
-    {
-        print("Death To Soviets");
-    }]
-}
-
-if(7<10 && true || (8 == 7))
-{
-    Card Che
-    {
-        CardType = Unit;
-        Rareness = Legendary;
-        Lore = "The Heroic Guerrilla";
-        Health = 900;
-        Attack = 2100+30;
-        political_current = Communist;
-        PathToPhoto = "che.jpg";
-        Effect = [if(Che.Attack>600)
+    EffectText = "Si su vida es mayor que 600, entonces robas una carta";
+    Effect = [
+        if(FriederichHayek.Health>600)
         {
-            print("Death To Soviets");
-        }]
-    }
+            DrawCards(1);
+        }
+    ]
 }
 
-Card FriederichEngels
+Card AdamSmith
 {
     CardType = Unit;
     Rareness = Legendary;
-    Lore = "German philosopher, political theorist and revolutionary socialist";
-    Health = 600;
-    Attack = 1700;
-    political_current = Communist;
-    PathToPhoto = "Engels";
-    Effect = [if(FriederichHayek.Health>6)
-    {
-        print("Death To Soviets");
-    }]
+    Lore = "Writer of The Welth of the Nations";
+    Health = 800;
+    Attack = 1000;
+    political_current = Capitalist;
+    PathToPhoto = "smith";
 }
 
-Card KarlMarx
+Card ElonMusk
 {
     CardType = Unit;
     Rareness = Legendary;
-    Lore = "German philosoher. Father of Scientist Comunism";
-    Health = 700;
-    Attack = 1300;
-    political_current = Communist;
-    PathToPhoto = "Marx.jpg";
-    Effect = [if(FriederichHayek.Health>6)
-    {
-        print("Death To Soviets");
-    }]
+    Lore = "Business Magnate and Investor";
+    Health = 100;
+    Attack = 2000;
+    political_current = Capitalist;
+    PathToPhoto = "musk";
+    EffectText = "Si su ataque es mayor que 1299, entonces destruyes una carta";
+    Effect = [
+        if(ElonMusk.Attack>1200)
+        {
+            DestroyCard();
+        }
+    ]
 }
 
-Card OctoberSocialistRevolution
+Card DonaldTrump
+{
+    CardType = Unit;
+    Rareness = Legendary;
+    Lore = "Former Republican President of the Unated States. Far Right";
+    Health = 1500;
+    Attack = 300;
+    political_current = Capitalist;
+    PathToPhoto = "trump";
+    EffectText = "Si su vida es mayor que 500, aumenta el ataque de una carta en 700";
+    Effect = [
+        if(DonaldTrump.Health>=500)
+        {
+            IncreaseAttack(700);
+        }
+    ]
+}
+
+Card FrenchRevolution
 {
     CardType = Event;
     Rareness = Legendary;
-    Lore = "October Socialist Revolution";
-    Health = 0;
-    Attack = 0;
-    political_current = Communist;
+    Lore = "French Revolution";
+    political_current = Capitalist;
     PathToPhoto = ;
-    Effect = [if(FriederichHayek.Health>6)
-    {
-        print("Death To Soviets");
-    }]
+    EffectText = "Aumenta el ataque de la carta con menor vida en 1000";
+    Effect = [
+        IncreaseAttack(1000, minHealth);
+    ]
 }
-
-Card VladimirLenin
-{
-    CardType = Unit;
-    Rareness = Legendary;
-    Lore = "Marxist leader of the Russian Revolution";
-    Health = 400;
-    Attack = 2000;
-    political_current = Communist;
-    PathToPhoto = "lenin";
-    Effect = [if(FriederichHayek.Health>6)
-    {
-        print("Death To Soviets");
-    }]
-}
-
-

@@ -16,6 +16,5 @@ public enum ExpressionType
     Text,
     Number,
     Boolean,
-    POO,
     ErrorType
 }
