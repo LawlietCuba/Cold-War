@@ -7,5 +7,6 @@ Card <Name>
     Attack = <double>;
     PoliticalCurrent = <political_current>;
     PathToPhoto = <path_to_photo>;
+    EffectText = <effect_text>;
     Effect = <code string>;
 }
