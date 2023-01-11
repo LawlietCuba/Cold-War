@@ -25,8 +25,8 @@ public class Card : ASTNode
     {
 
         bool checkCardType = cardtype.CheckSemantic(context, scope, errors);
-        if(cardtype.ToString() != Card_Type.Unit.ToString() && cardtype.ToString() != Card_Type.Event.ToString() && cardtype.ToString() != Card_Type.Politic.ToString()) {
-            errors.Add(new CompilingError(Location, ErrorCode.Invalid, "The CardType only accept Unit, Event or Politic"));
+        if(cardtype.ToString() != Card_Type.Unit.ToString() && cardtype.ToString() != Card_Type.Politic.ToString()) {
+            errors.Add(new CompilingError(Location, ErrorCode.Invalid, "The CardType only accept Unit or Politic"));
         }
 
         bool checkRareness = Rareness.CheckSemantic(context, scope, errors);
@@ -103,6 +103,13 @@ public class Card : ASTNode
     }
 
     public void AddToTheDeckAsCardTemplate() {
+        CardTemplate card_template = ConvertToCardTemplate();
+    
+        card_template.CreateJson();
+    }
+
+    public CardTemplate ConvertToCardTemplate()
+    {
         string nName = "";
         for(int i=0; i<Id.Length; i++)
         {
@@ -133,9 +140,7 @@ public class Card : ASTNode
 
         string nEffectText = this.EffectText.GetValue().ToString();
         
-        CardTemplate card_template = new CardTemplate(nName, ncardtype, nRareness, nLore, nHealth, nAttack, npolitcal_current, nPathToPhoto, nEffectText, this.Effect);
-    
-        card_template.CreateJson();
+        return new CardTemplate(nName, ncardtype, nRareness, nLore, nHealth, nAttack, npolitcal_current, nPathToPhoto, nEffectText, this.Effect);
     }
 
     string CreateJsonDirection(string path, string name) {
@@ -156,45 +161,6 @@ public class Card : ASTNode
         return null;
     }
 
-    // public void DoEffect()
-    // {
-    //     if(this.Effect != null)
-    //     {
-    //         TokenStream effect_stream = new TokenStream(this.Effect);
-    //         Parser effect_parser = new Parser(effect_stream);
-    //         List<CompilingError> effect_errors = new List<CompilingError>();
-    //         ColdWarProgram effect_program = effect_parser.ParseProgram(effect_errors);
-
-    //         if (effect_errors.Count > 0)
-    //         {
-    //             foreach (CompilingError error in effect_errors)
-    //             {
-    //                 Console.WriteLine("{0}, {1}, {2}", error.Location.Line, error.Code, error.Argument);
-    //             }
-    //         }
-    //         else
-    //         {
-    //             Context context = new Context();
-    //             Scope scope = new Scope();
-
-    //             effect_program.CheckSemantic(context, scope, effect_errors);
-
-    //             if (effect_errors.Count > 0)
-    //             {
-    //                 foreach (CompilingError error in effect_errors)
-    //                 {
-    //                     Console.WriteLine("{0}, {1}, {2}", error.Location.Line, error.Code, error.Argument);
-    //                 }
-    //             }
-    //             else
-    //             {
-    //                 effect_program.Evaluate();
-
-    //             }
-    //         } 
-    //     }
-    // }
-
     public Card(CodeLocation location) : base(location)
     {
 
@@ -204,8 +170,7 @@ public class Card : ASTNode
 public enum Card_Type
 {
     Unit,
-    Politic,
-    Event
+    Politic
 }
 public enum RarenessType
 {

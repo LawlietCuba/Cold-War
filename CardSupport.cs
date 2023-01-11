@@ -10,29 +10,29 @@ public class CardSupport : Node2D
     public string Lore { get; set; }
     public int Attack { get; set; }
     public int Health { get; set; }
-    public string EffectText{get;set;}
-    public List<Token> Effect { get; set; }
     public string political_current { get; set; }
     public string PathToPhoto { get; set; }
+    public string EffectText{get;set;}
+    public List<Token> Effect { get; set; }
     public bool summoned { get; set; }
     public bool hasParent { get; set; }
     public bool hasAttacked { get; set; }
     public bool hasActivatedEffect { get; set; }
     // Called when the node enters the scene tree for the first time.
 
-    // public CardSupport(string name, string lore, string classcard, int attack, int Life, string effect, string type, string rareness, string pathtophoto)
-    // {
-    //     this.Name = name;
-    //     this.Lore = lore;
-    //     this.ClassCard = classcard;
-    //     this.Attack = attack;
-    //     this.Life = Life;
-    //     this.Effect = effect;
-    //     this.Type = type;
-    //     this.Rareness = rareness;
-    //     this.PathToPhoto = pathtophoto;
-    // }
-
+    public CardSupport(string CardName, string cardtype, string Rareness, string Lore, int Attack, int Health, string politcal_current, string PathToPhoto, string EffectText, List<Token> Effect)
+    {
+        this.CardName = CardName;
+        this.cardtype = cardtype;
+        this.Rareness = Rareness;
+        this.Lore = Lore;
+        this.Attack = Attack;
+        this.Health = Health;
+        this.political_current = politcal_current;
+        this.PathToPhoto = PathToPhoto;
+        this.EffectText = EffectText;
+        this.Effect = Effect;
+    }
     public List<EffectExpression> DoEffect()
     {
         if(this.Effect != null)
@@ -111,11 +111,6 @@ public class CardSupport : Node2D
                 Game.ReadyForEffect = false;
                 Game.readyforexecuteeffect = true;
             }
-            // else
-            // {
-            //     Game.SelectedCardName = this.CardName;
-            //     Game.cardselected = true;
-            // }
         }
         else
         {

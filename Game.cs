@@ -23,6 +23,7 @@ public class Game : Node2D
     bool nextroundpressed = true;
     Dictionary<string, PlayerTemplate> RoundWinner = new Dictionary<string, PlayerTemplate>();
     int Round = 1;
+    int Turns;
     List<Position2D> HumanPlayerField = new List<Position2D>();
     List<Position2D> EnemyPlayerField = new List<Position2D>();
     public static PlayerTemplate HumanPlayer;
@@ -38,6 +39,7 @@ public class Game : Node2D
     public static string EffectObjetive;
     public static string Effect;
     public static int TempAmount;
+    public static CardTemplate TempCard;
     public static bool AutomaticEffect;
 
     // Called when the node enters the scene tree for the first time.
@@ -129,20 +131,20 @@ public class Game : Node2D
                 case TokenValues.DrawCards:
                     break;
                 case TokenValues.DecreaseHealth:
-                    if(CanDoTheEffect()) DecreaseHealth(GetNode<CardSupport>("Board/" + EffectObjetive));
-                    else GetNode<RichTextLabel>("Board/ActionMessage").Text = "This effect can't effect Event and Politic Types";
+                    if(TheCardIsUnit()) DecreaseHealth(GetNode<CardSupport>("Board/" + EffectObjetive));
+                    else GetNode<RichTextLabel>("Board/ActionMessage").Text = "This effect can't effect Politic Types";
                     break;
                 case TokenValues.DecreaseAttack:
-                    if(CanDoTheEffect())DecreaseAttack(GetNode<CardSupport>("Board/" + EffectObjetive));
-                    else GetNode<RichTextLabel>("Board/ActionMessage").Text = "This effect can't effect Event and Politic Types";
+                    if(TheCardIsUnit())DecreaseAttack(GetNode<CardSupport>("Board/" + EffectObjetive));
+                    else GetNode<RichTextLabel>("Board/ActionMessage").Text = "This effect can't effect Politic Types";
                     break;
                 case TokenValues.IncreaseHealth:
-                    if(CanDoTheEffect()) IncreaseHealth(GetNode<CardSupport>("Board/" + EffectObjetive));
-                    else GetNode<RichTextLabel>("Board/ActionMessage").Text = "This effect can't effect Event and Politic Types";
+                    if(TheCardIsUnit()) IncreaseHealth(GetNode<CardSupport>("Board/" + EffectObjetive));
+                    else GetNode<RichTextLabel>("Board/ActionMessage").Text = "This effect can't effect Politic Types";
                     break;
                 case TokenValues.IncreaseAttack:
-                    if(CanDoTheEffect())IncreaseAttack(GetNode<CardSupport>("Board/" + EffectObjetive));
-                    else GetNode<RichTextLabel>("Board/ActionMessage").Text = "This effect can't effect Event and Politic Types";
+                    if(TheCardIsUnit())IncreaseAttack(GetNode<CardSupport>("Board/" + EffectObjetive));
+                    else GetNode<RichTextLabel>("Board/ActionMessage").Text = "This effect can't effect Politic Types";
                     break;
                 default:
                     break;
@@ -211,16 +213,16 @@ public class Game : Node2D
         }
     }
 
-    private bool CanDoTheEffect()
+    private bool TheCardIsUnit()
     {
-        if(GetNode<CardSupport>("Board/"+EffectObjetive).cardtype == TokenValues.Event || GetNode<CardSupport>("Board/"+EffectObjetive).cardtype == TokenValues.Politic)
+        if(GetNode<CardSupport>("Board/"+EffectObjetive).cardtype == TokenValues.Politic)
             return false;
         return true;
     }
 
-    private bool CanDoTheEffect(string CardName)
+    private bool TheCardIsUnit(string CardName)
     {
-        if(GetNode<CardSupport>("Board/"+CardName).cardtype == TokenValues.Event || GetNode<CardSupport>("Board/"+CardName).cardtype == TokenValues.Politic)
+        if(GetNode<CardSupport>("Board/"+CardName).cardtype == TokenValues.Politic)
             return false;
         return true;
     }
@@ -450,9 +452,6 @@ public class Game : Node2D
             case "Unit":
                 typetexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Unit.png");
                 break;
-            case "Event":
-                typetexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Event.png");
-                break;
             case "Politic":
                 typetexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Politic.png");
                 break;
@@ -615,6 +614,7 @@ public class Game : Node2D
             for (var i = amount - 1; i >= 0; i--)
             {
                 Player.PlayerBoard.HandCards.Add(Player.PlayerBoard.Deck[i]);
+                if(Player == HumanPlayer) GetNode<RichTextLabel>("Board/ActionMessage").Text = "Has robado " + Player.PlayerBoard.Deck[i].CardName;
                 Player.PlayerBoard.Deck.RemoveAt(i);
             }
             PrintCardsinRange(Player.PlayerBoard.HandCards, Left, Right, Player.PlayerBoard.HandCards.Count);
@@ -832,10 +832,6 @@ public class Game : Node2D
                         amounttosummon = EnemyPlayer.PlayerBoard.HandCards.Count;
                     }
                     SortAscendingByLife(EnemyPlayer.PlayerBoard.HandCards);
-                    for (int i = 0; i < EnemyPlayer.PlayerBoard.HandCards.Count; i++)
-                    {
-                        GD.Print(EnemyPlayer.PlayerBoard.HandCards[i].CardName + " " + EnemyPlayer.PlayerBoard.HandCards[i].Health);
-                    }
                     List<Position2D> PossiblePositions = new List<Position2D>();
                     SetPossiblePositions(EnemyPlayer, EnemyPlayerField, PossiblePositions);
                     for (int i = amounttosummon - 1; i >= 0; i--)
@@ -907,7 +903,6 @@ public class Game : Node2D
 
         if(cardselected)
         {
-
             if ((communistside && GetNode<CardSupport>("Board/" + SelectedCardName).political_current == "Communist") || (!communistside && GetNode<CardSupport>("Board/" + SelectedCardName).political_current == "Capitalist"))
             {
                 if (!GetNode<CardSupport>("Board/" + SelectedCardName).hasActivatedEffect)
@@ -923,8 +918,11 @@ public class Game : Node2D
                             switch(eff.GetValue().ToString())
                             {
                                 case TokenValues.DrawCards:
-                                    TempAmount = Convert.ToInt32( eff.Amount.GetValue());
-                                    DrawCards(HumanPlayer, GetNode<Position2D>("Board/Position2D17"), GetNode<Position2D>("Board/Position2D18"), TempAmount);
+                                    TempAmount = Convert.ToInt32(eff.Amount.GetValue());
+                                    if((communistside && HumanPlayer.name == "Communist") || (!communistside && HumanPlayer.name == "Capitalist"))
+                                        DrawCards(HumanPlayer, GetNode<Position2D>("Board/Position2D17"), GetNode<Position2D>("Board/Position2D18"), TempAmount);
+                                    else
+                                        DrawCards(EnemyPlayer, GetNode<Position2D>("Board/Positions2D19"), GetNode<Position2D>("Board/Positions2D20"), TempAmount);
                                     break;
                                 case TokenValues.DestroyCard:
                                     Effect = eff.GetValue().ToString();
@@ -942,16 +940,75 @@ public class Game : Node2D
                                     if(AutomaticEffect) readyforexecuteeffect = true;
                                     else ReadyForEffect = true;
                                     break;
+                                case TokenValues.AddCardToBoard:
+                                    Effect = eff.GetValue().ToString();
+                                    TempCard = eff.CardToHandle.ConvertToCardTemplate();
+
+                                    GD.Print("Hay que annadir una carta al tablero");
+
+                                    NewNode = (PackedScene)GD.Load("res://CardSupport.tscn");
+                                    CardSupport newcard = (CardSupport)NewNode.Instance();
+
+                                    var CardTexture = new ImageTexture();
+                                    CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
+
+                                    newcard.GetNode<Sprite>("CardMargin/BackgroundCard").Texture = CardTexture;
+                                    newcard.GetNode<MarginContainer>("CardMargin").RectSize = GetNode<MarginContainer>("Board/CardOnBoardMargin").RectSize;
+
+                                    newcard.CardName = TempCard.CardName;
+                                    newcard.Lore = TempCard.Lore;
+                                    newcard.political_current = TempCard.political_current;
+                                    newcard.Attack = TempCard.Attack;
+                                    newcard.Health = TempCard.Health;
+                                    newcard.Effect = TempCard.Effect;
+                                    newcard.cardtype = TempCard.cardtype;
+                                    newcard.Rareness = TempCard.Rareness;
+                                    newcard.PathToPhoto = TempCard.PathToPhoto;
+
+                                    newcard.Hide();
+
+                                    MakeCard(newcard);
+
+                                    GetNode<Sprite>("Board").AddChild(newcard, true);
+                                    GetNode<Node2D>("Board/CardSupport").Name = newcard.CardName;
+                                    newcard.hasParent = true;
+
+                                    if((communistside && HumanPlayer.name == "Communist") || (!communistside && HumanPlayer.name == "Capitalist"))
+                                    {
+                                        if(ThereIsSpaceInTheBoard(HumanPlayer, HumanPlayerField))
+                                        {
+                                            GD.Print("Hay espacio en el tablero");
+                                            
+                                            ReadytoSummonCardName = TempCard.CardName;
+                                            AddCardToTheBoard(HumanPlayer, HumanPlayerField, newcard);
+                                        }
+                                        else
+                                            GetNode<RichTextLabel>("Board/ActionMessage").Text = "There aren't available spaces in the board";
+                                    }
+                                    else
+                                    {
+                                        if(ThereIsSpaceInTheBoard(EnemyPlayer, EnemyPlayerField))
+                                        {
+                                            AddCardToTheBoard(EnemyPlayer, EnemyPlayerField, newcard);
+                                        }
+                                        else
+                                            GetNode<RichTextLabel>("Board/ActionMessage").Text = "There aren't available spaces in the board";
+                                    }
+                                    break;
                                 default:
                                     break;
                             }
                         }
-
-                        if(GetNode<CardSupport>("Board/" + SelectedCardName).cardtype == "Event" || GetNode<CardSupport>("Board/" + SelectedCardName).cardtype == "Politic")
-                        {
-                            DestroyCard(GetNode<CardSupport>("Board/"+SelectedCardName));
-                        }
+                          
                     } 
+                    else
+                    {
+                        GetNode<RichTextLabel>("Board/ActionMessage").Text = "This card don't have effects";
+                    }
+                    if(GetNode<CardSupport>("Board/" + SelectedCardName).cardtype == "Politic")
+                    {
+                        DestroyCard(GetNode<CardSupport>("Board/"+SelectedCardName));
+                    }
 
                     GetNode<CardSupport>("Board/" + SelectedCardName).hasActivatedEffect = true;
                 }
@@ -965,21 +1022,20 @@ public class Game : Node2D
         }
     }
 
-    public void OrderByAttack(List<CardSupport> Cards)
+    private void AddCardToTheBoard(PlayerTemplate Player, List<Position2D> PlayerField, CardSupport newcard)
     {
-        for (int i = 0; i < Cards.Count; i++)
+        for (int i = 0; i < 8; i++)
         {
-            for (int j = 0; j < Cards.Count; j++)
+            if (!Player.PlayerBoard.CardsOnBoard.ContainsValue(PlayerField.ElementAt(i)))
             {
-                if (Cards[i].Attack > Cards[j].Attack)
-                {
-                    CardSupport temp = Cards[i];
-                    Cards[i] = Cards[j];
-                    Cards[j] = temp;
-                }
+                MakeSummon(PlayerField[i]);
             }
         }
+        newcard.Show();
+
+        // The card is on the board
     }
+
     public void SortDescendingByLife(List<CardSupport> Cards)
     {
         for (int i = 0; i < Cards.Count; i++)
@@ -1021,27 +1077,39 @@ public class Game : Node2D
         }
     }
 
+    public bool ThereIsSpaceInTheBoard(PlayerTemplate Player, List<Position2D> PlayerField)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            if (!Player.PlayerBoard.CardsOnBoard.ContainsValue(PlayerField.ElementAt(i)))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void DecreaseHealth(CardSupport Card)
     {
         Card.Health-=TempAmount;
-        GetNode<RichTextLabel>("Board/ActionMessage").Text = Card.CardName + " has lost " + TempAmount + "of points of health";
+        GetNode<RichTextLabel>("Board/ActionMessage").Text = Card.CardName + " has lost " + TempAmount + " of points of health";
     }
 
     public void DecreaseAttack(CardSupport Card)
     {
         Card.Attack-=TempAmount;
-        GetNode<RichTextLabel>("Board/ActionMessage").Text = Card.CardName + " has lost " + TempAmount + "of points of attack";
+        GetNode<RichTextLabel>("Board/ActionMessage").Text = Card.CardName + " has lost " + TempAmount + " of points of attack";
     }
     public void IncreaseHealth(CardSupport Card)
     {
 
         Card.Health+=TempAmount;
-        GetNode<RichTextLabel>("Board/ActionMessage").Text = Card.CardName + " has gain " + TempAmount + "of points of health";
+        GetNode<RichTextLabel>("Board/ActionMessage").Text = Card.CardName + " has gain " + TempAmount + " of points of health";
     }
     public void IncreaseAttack(CardSupport Card)
     {
         Card.Attack+=TempAmount;
-        GetNode<RichTextLabel>("Board/ActionMessage").Text = Card.CardName + " has gain " + TempAmount + "of points of attack";
+        GetNode<RichTextLabel>("Board/ActionMessage").Text = Card.CardName + " has gain " + TempAmount + " of points of attack";
     }
 
     public void checkEffectConditional(EffectExpression effexp)
@@ -1079,7 +1147,7 @@ public class Game : Node2D
     {
         foreach(CardSupport cardSupport in EnemyPlayer.PlayerBoard.CardsOnBoard.Keys)
         {
-            if(cardSupport.Health<=GetNode<CardSupport>("Board/"+EffectObjetive).Health && CanDoTheEffect(cardSupport.CardName))
+            if(cardSupport.Health<=GetNode<CardSupport>("Board/"+EffectObjetive).Health && TheCardIsUnit(cardSupport.CardName))
             {
                 EffectObjetive = cardSupport.CardName;
             }
@@ -1087,7 +1155,7 @@ public class Game : Node2D
 
         foreach(CardSupport cardSupport in HumanPlayer.PlayerBoard.CardsOnBoard.Keys)
         {
-            if(cardSupport.Health<=GetNode<CardSupport>("Board/"+EffectObjetive).Health && CanDoTheEffect(cardSupport.CardName))
+            if(cardSupport.Health<=GetNode<CardSupport>("Board/"+EffectObjetive).Health && TheCardIsUnit(cardSupport.CardName))
             {
                 EffectObjetive = cardSupport.CardName;
             }
@@ -1097,7 +1165,7 @@ public class Game : Node2D
     {
         foreach(CardSupport cardSupport in EnemyPlayer.PlayerBoard.CardsOnBoard.Keys)
         {
-            if(cardSupport.Attack<=GetNode<CardSupport>("Board/"+EffectObjetive).Attack && CanDoTheEffect(cardSupport.CardName))
+            if(cardSupport.Attack<=GetNode<CardSupport>("Board/"+EffectObjetive).Attack && TheCardIsUnit(cardSupport.CardName))
             {
                 EffectObjetive = cardSupport.CardName;
             }
@@ -1105,7 +1173,7 @@ public class Game : Node2D
 
         foreach(CardSupport cardSupport in HumanPlayer.PlayerBoard.CardsOnBoard.Keys)
         {
-            if(cardSupport.Attack<=GetNode<CardSupport>("Board/"+EffectObjetive).Attack && CanDoTheEffect(cardSupport.CardName))
+            if(cardSupport.Attack<=GetNode<CardSupport>("Board/"+EffectObjetive).Attack && TheCardIsUnit(cardSupport.CardName))
             {
                 EffectObjetive = cardSupport.CardName;
             }
@@ -1115,7 +1183,7 @@ public class Game : Node2D
     {
         foreach(CardSupport cardSupport in EnemyPlayer.PlayerBoard.CardsOnBoard.Keys)
         {
-            if(cardSupport.Health>=GetNode<CardSupport>("Board/"+EffectObjetive).Health && CanDoTheEffect(cardSupport.CardName))
+            if(cardSupport.Health>=GetNode<CardSupport>("Board/"+EffectObjetive).Health && TheCardIsUnit(cardSupport.CardName))
             {
                 EffectObjetive = cardSupport.CardName;
             }
@@ -1123,7 +1191,7 @@ public class Game : Node2D
 
         foreach(CardSupport cardSupport in HumanPlayer.PlayerBoard.CardsOnBoard.Keys)
         {
-            if(cardSupport.Health>=GetNode<CardSupport>("Board/"+EffectObjetive).Health && CanDoTheEffect(cardSupport.CardName))
+            if(cardSupport.Health>=GetNode<CardSupport>("Board/"+EffectObjetive).Health && TheCardIsUnit(cardSupport.CardName))
             {
                 EffectObjetive = cardSupport.CardName;
             }
@@ -1133,7 +1201,7 @@ public class Game : Node2D
     {
         foreach(CardSupport cardSupport in EnemyPlayer.PlayerBoard.CardsOnBoard.Keys)
         {
-            if(cardSupport.Attack>=GetNode<CardSupport>("Board/"+EffectObjetive).Attack && CanDoTheEffect(cardSupport.CardName))
+            if(cardSupport.Attack>=GetNode<CardSupport>("Board/"+EffectObjetive).Attack && TheCardIsUnit(cardSupport.CardName))
             {
                 EffectObjetive = cardSupport.CardName;
             }
@@ -1141,7 +1209,7 @@ public class Game : Node2D
 
         foreach(CardSupport cardSupport in HumanPlayer.PlayerBoard.CardsOnBoard.Keys)
         {
-            if(cardSupport.Attack>=GetNode<CardSupport>("Board/"+EffectObjetive).Attack && CanDoTheEffect(cardSupport.CardName))
+            if(cardSupport.Attack>=GetNode<CardSupport>("Board/"+EffectObjetive).Attack && TheCardIsUnit(cardSupport.CardName))
             {
                 EffectObjetive = cardSupport.CardName;
             }
@@ -1209,12 +1277,4 @@ public class Game : Node2D
             }
         }
     }
-    
-    // public override void _Input(InputEvent @event)
-    // {
-    //     if(@event is InputEventMouseButton eventMouseButton)
-    //     GD.Print(eventMouseButton.Position);
-    //     GD.Print("Viewport Resolution is: ", GetViewportRect().Size);   
-    //     GD.Print("Mouse Position", GetViewport().GetMousePosition());
-    // }
 }

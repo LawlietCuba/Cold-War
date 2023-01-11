@@ -13,7 +13,7 @@ public class Token
 
     public override string ToString()
     {
-        return string.Format("{0} [{1}]", Type, Value);
+        return string.Format(Type.ToString(), " ", Value.ToString());
     }
 }
 
@@ -94,7 +94,6 @@ public class  TokenValues
     public const string EffectText = "EffectText"; // Text explaining the effect
     public const string Effect = "Effect"; // Effect
     public const string Unit = "Unit"; // Unit
-    public const string Event = "Event"; // Event
     public const string Politic = "Politic"; // Politic
     public const string Legendary = "Legendary"; // Legendary
     public const string Rare = "Rare"; // Rare
@@ -110,6 +109,8 @@ public class  TokenValues
     public const string DecreaseAttack = "DecreaseAttack";
     public const string IncreaseAttack = "IncreaseAttack";
     public const string ReboundAttack = "ReboundAttack";
+    public const string AddCardToDeck = "AddCardToDeck";
+    public const string AddCardToBoard = "AddCardToBoard";
 
     // Effects Conditionals--------------------------------------
     public const string minHealth = "minHealth";

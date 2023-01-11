@@ -8,6 +8,7 @@ public class EffectExpression : Expression
         get;set;
     }
     public string EffectConditional{get;set;}
+    public Card CardToHandle{get;set;}
     public EffectExpression(CodeLocation location) : base(location)
     {
 
@@ -35,7 +36,18 @@ public class EffectExpression : Expression
             return false;
         }
 
-        return checkValue && checkAmount;
+        bool checkCardToHandle = CheckSemantic(context, scope, errors);
+        if(CardToHandle != null)
+        {
+            if(context.cards.Contains(CardToHandle.Id))
+            {
+                errors.Add(new CompilingError(Location, ErrorCode.Invalid, "That card doesn't exist in the actual context"));
+                Type = ExpressionType.ErrorType;
+                return false;
+            }
+        }
+
+        return checkValue && checkAmount && checkCardToHandle;
 
     }
 

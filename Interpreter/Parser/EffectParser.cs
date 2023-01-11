@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 
@@ -45,7 +46,7 @@ public class EffectParser : Parser
                     if (polishNotationTokens == null)
                         return program;
 
-                    List<string>.Enumerator enumerator = NewMethod(polishNotationTokens);
+                    List<string>.Enumerator enumerator = polishNotationTokens.GetEnumerator();
                     enumerator.MoveNext();
                     BoolExpr expr = Make(ref enumerator, errors);
 
@@ -115,7 +116,13 @@ public class EffectParser : Parser
                 case TokenValues.DestroyCard:
                     ParseDestroyCard(program, errors);
                     break;
+                case TokenValues.AddCardToDeck:
+                case TokenValues.AddCardToBoard:
+                    // GD.Print("Tienes un AddCardToBoard");
+                    ParseEffectWithCard(program, errors);
+                    break;
                 default:
+                    // GD.Print(Stream.LookAhead().Value);
                     errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Invalid, "Bad expression"));
                     return program;
             }
@@ -124,6 +131,41 @@ public class EffectParser : Parser
         }
 
         return program;
+    }
+
+    protected void ParseEffectWithCard(ColdWarProgram program, List<CompilingError> errors)
+    {
+        EffectExpression effexp = new EffectExpression(Stream.LookAhead().Location);
+        effexp.SetValue(Stream.LookAhead().Value.ToString());
+
+        if (!Stream.Next(TokenValues.OpenBracket))
+        {
+            errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Expected, "( expected"));
+            return;
+        }
+
+        if(!Stream.Next(TokenType.Identifier))
+        {
+            errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Expected, "A card expected"));
+            return;
+        }
+
+        effexp.CardToHandle = program.Cards[Stream.LookAhead().Value];
+        // GD.Print(effexp.CardToHandle.Id);
+
+        if (!Stream.Next(TokenValues.ClosedBracket))
+        {
+            errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Expected, "( expected"));
+            return;
+        }
+
+        if (!Stream.Next(TokenValues.StatementSeparator))
+        {
+            errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Expected, "; expected"));
+            return;
+        }
+
+        program.Effects.Add(effexp);
     }
 
     public void ParseEffectWithAmount(ColdWarProgram program, List<CompilingError> errors)

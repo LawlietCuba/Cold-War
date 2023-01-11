@@ -42,7 +42,6 @@ public class POObject : BinaryExpression
     }
     public override void Evaluate()
     {
-
         Evaluate(true);
     }
 

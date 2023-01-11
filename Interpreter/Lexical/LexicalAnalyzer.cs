@@ -48,7 +48,6 @@ public class Compiling
                 __LexicalProcess.RegisterKeyword("CardType", TokenValues.CardType);
                 // Here the card types
                 __LexicalProcess.RegisterKeyword("Unit", TokenValues.Unit);
-                __LexicalProcess.RegisterKeyword("Event", TokenValues.Event);
                 __LexicalProcess.RegisterKeyword("Politic", TokenValues.Politic);
 
                 __LexicalProcess.RegisterKeyword("Rareness", TokenValues.Rareness);
@@ -78,6 +77,8 @@ public class Compiling
                 __LexicalProcess.RegisterKeyword("IncreaseHealth", TokenValues.IncreaseHealth);
                 __LexicalProcess.RegisterKeyword("DecreaseAttack", TokenValues.DecreaseAttack);
                 __LexicalProcess.RegisterKeyword("IncreaseAttack", TokenValues.IncreaseAttack);
+                __LexicalProcess.RegisterKeyword("AddCardToDeck", TokenValues.AddCardToDeck);
+                __LexicalProcess.RegisterKeyword("AddCardToBoard", TokenValues.AddCardToBoard);
 
                 // Effects Conditionals ----------------------------------------
                 __LexicalProcess.RegisterKeyword("minHealth", TokenValues.minHealth);

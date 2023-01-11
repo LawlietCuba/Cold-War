@@ -45,14 +45,15 @@ public class Menu : Node2D
     public override void _Process(float delta)
     {
         GetNode<RichTextLabel>("SelectCards/NumberSelected").Text = $"{numberofcardsselected}";
-        if (numberofcardsselected >= 24)
-        {
-            GetNode<Button>("SelectCards/Ready").Disabled = false;
-        }
-        else
-        {
-            GetNode<Button>("SelectCards/Ready").Disabled = true;
-        }
+        // if (numberofcardsselected >= 24)
+        // {
+        //     GetNode<Button>("SelectCards/Ready").Disabled = false;
+        // }
+        // else
+        // {
+        //     GetNode<Button>("SelectCards/Ready").Disabled = true;
+        // }
+        GetNode<Button>("SelectCards/Ready").Disabled = false;
     }
     public void _on_PlayGame_pressed()
     {
@@ -138,9 +139,6 @@ public class Menu : Node2D
         {
             case "Unit":
                 typetexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Unit.png");
-                break;
-            case "Event":
-                typetexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Event.png");
                 break;
             case "Politic":
                 typetexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Politic.png");

@@ -50,7 +50,7 @@ public class Parser
                     if (polishNotationTokens == null)
                         return program;
 
-                    List<string>.Enumerator enumerator = NewMethod(polishNotationTokens);
+                    List<string>.Enumerator enumerator = polishNotationTokens.GetEnumerator();
                     enumerator.MoveNext();
                     BoolExpr expr = Make(ref enumerator, errors);
 
@@ -119,11 +119,6 @@ public class Parser
 
 
         return program;
-    }
-
-    protected static List<string>.Enumerator NewMethod(List<string> polishNotationTokens)
-    {
-        return polishNotationTokens.GetEnumerator();
     }
 
     protected List<string> TransformToPolishNotation(List<CompilingError> errors)
@@ -316,9 +311,9 @@ public class Parser
         if (!SimpleParse(TokenValues.CardType, errors)) return card;
 
         /* Here we parse the expression. If null is returned, we send an error */
-        if (!(Stream.Next(TokenValues.Unit)) && !(Stream.Next(TokenValues.Event)) && !(Stream.Next(TokenValues.Politic)))
+        if (!(Stream.Next(TokenValues.Unit)) && !(Stream.Next(TokenValues.Politic)))
         {
-            errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Invalid, "Bad expression. Expected Unit, Event or Politic"));
+            errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Invalid, "Bad expression. Expected Unit or Politic"));
             return card;
         }
         card.cardtype = new Text(Stream.LookAhead().Value, Stream.LookAhead().Location);
@@ -494,19 +489,15 @@ public class Parser
             }
 
             List<Token> new_effect = ParseEffect(errors);
-            if(exp == null)
-            {
-                card.Effect = null;
-            }
-            else
-            {
-                card.Effect = new_effect;
-            }
+            card.Effect = new_effect;
         }
         else
         {
             card.Effect = null;
         }
+
+
+        // End of the card
 
         if (!Stream.Next(TokenValues.ClosedCurlyBraces))
         {
@@ -596,11 +587,18 @@ public class Parser
         }
 
         List<Token> code_card_effect = new List<Token>();
-        while(Stream.LookAhead(1).Value != TokenValues.ClosedSquareBracket && Stream.CanLookAhead(1))
+        int BalanceSquareBrackets = 1;
+        while(Stream.CanLookAhead(1))
         {
             Stream.MoveNext(1);
             code_card_effect.Add(Stream.LookAhead());
+            if(Stream.LookAhead().Value == TokenValues.OpenSquareBracket) BalanceSquareBrackets++;
+            if(Stream.LookAhead().Value == TokenValues.ClosedSquareBracket) BalanceSquareBrackets--;
+            if(BalanceSquareBrackets == 0) break;
         }
+
+        code_card_effect.RemoveAt(code_card_effect.Count-1); 
+        Stream.MoveBack(1);
 
         if(!Stream.Next(TokenValues.ClosedSquareBracket))
         {
