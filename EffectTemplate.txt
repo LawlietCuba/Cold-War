@@ -2,6 +2,11 @@ Effect =
 [
 	DestroyCard();
 	DrawCards(<int>);
-	
+	IncreaseHealth(<int>, <conditional_effect>);
+	DecreaseHealth(<int>, <conditional_effect>);
+	IncreaseAttack(<int>, <conditional_effect>);
+	DecreaseHealth(<int>, <conditional_effect>);
+	AddCardToDeck(<Card>);
+	AddCardToBoard(<Card>);
 ]
 
