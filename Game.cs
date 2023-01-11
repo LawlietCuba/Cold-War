@@ -23,7 +23,6 @@ public class Game : Node2D
     bool nextroundpressed = true;
     Dictionary<string, PlayerTemplate> RoundWinner = new Dictionary<string, PlayerTemplate>();
     int Round = 1;
-    int Turns;
     List<Position2D> HumanPlayerField = new List<Position2D>();
     List<Position2D> EnemyPlayerField = new List<Position2D>();
     public static PlayerTemplate HumanPlayer;
@@ -39,7 +38,7 @@ public class Game : Node2D
     public static string EffectObjetive;
     public static string Effect;
     public static int TempAmount;
-    public static CardTemplate TempCard;
+    public static CardSupport TempCard;
     public static bool AutomaticEffect;
 
     // Called when the node enters the scene tree for the first time.
@@ -151,6 +150,7 @@ public class Game : Node2D
             }
             readyforexecuteeffect = false;
             AutomaticEffect = false;
+            CleanBoardPolitics();
         }
         if (!endround)
         {
@@ -512,6 +512,7 @@ public class Game : Node2D
             Deck[i].political_current = Cards[i].political_current;
             Deck[i].Attack = Cards[i].Attack;
             Deck[i].Health = Cards[i].Health;
+            Deck[i].EffectText = Cards[i].EffectText;
             Deck[i].Effect = Cards[i].Effect;
             Deck[i].cardtype = Cards[i].cardtype;
             Deck[i].Rareness = Cards[i].Rareness;
@@ -614,7 +615,7 @@ public class Game : Node2D
             for (var i = amount - 1; i >= 0; i--)
             {
                 Player.PlayerBoard.HandCards.Add(Player.PlayerBoard.Deck[i]);
-                if(Player == HumanPlayer) GetNode<RichTextLabel>("Board/ActionMessage").Text = "Has robado " + Player.PlayerBoard.Deck[i].CardName;
+                if(Player == HumanPlayer) GetNode<RichTextLabel>("Board/ActionMessage").Text = "You drawn " + Player.PlayerBoard.Deck[i].CardName;
                 Player.PlayerBoard.Deck.RemoveAt(i);
             }
             PrintCardsinRange(Player.PlayerBoard.HandCards, Left, Right, Player.PlayerBoard.HandCards.Count);
@@ -942,45 +943,22 @@ public class Game : Node2D
                                     break;
                                 case TokenValues.AddCardToBoard:
                                     Effect = eff.GetValue().ToString();
-                                    TempCard = eff.CardToHandle.ConvertToCardTemplate();
-
-                                    GD.Print("Hay que annadir una carta al tablero");
-
-                                    NewNode = (PackedScene)GD.Load("res://CardSupport.tscn");
-                                    CardSupport newcard = (CardSupport)NewNode.Instance();
-
-                                    var CardTexture = new ImageTexture();
-                                    CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
-
-                                    newcard.GetNode<Sprite>("CardMargin/BackgroundCard").Texture = CardTexture;
-                                    newcard.GetNode<MarginContainer>("CardMargin").RectSize = GetNode<MarginContainer>("Board/CardOnBoardMargin").RectSize;
-
-                                    newcard.CardName = TempCard.CardName;
-                                    newcard.Lore = TempCard.Lore;
-                                    newcard.political_current = TempCard.political_current;
-                                    newcard.Attack = TempCard.Attack;
-                                    newcard.Health = TempCard.Health;
-                                    newcard.Effect = TempCard.Effect;
-                                    newcard.cardtype = TempCard.cardtype;
-                                    newcard.Rareness = TempCard.Rareness;
-                                    newcard.PathToPhoto = TempCard.PathToPhoto;
-
-                                    newcard.Hide();
-
-                                    MakeCard(newcard);
-
-                                    GetNode<Sprite>("Board").AddChild(newcard, true);
-                                    GetNode<Node2D>("Board/CardSupport").Name = newcard.CardName;
-                                    newcard.hasParent = true;
 
                                     if((communistside && HumanPlayer.name == "Communist") || (!communistside && HumanPlayer.name == "Capitalist"))
                                     {
                                         if(ThereIsSpaceInTheBoard(HumanPlayer, HumanPlayerField))
                                         {
-                                            GD.Print("Hay espacio en el tablero");
-                                            
+                                            TempCard = InstanceANewCardSupport(eff.CardToHandle.ConvertToCardTemplate());
+
+                                            GetNode<Sprite>("Board").AddChild(TempCard, true);
+                                            GetNode<Node2D>("Board/CardSupport").Name = TempCard.CardName;
+                                            TempCard.hasParent = true;
+
+                                            HumanPlayer.PlayerBoard.HandCards.Add(TempCard);
+
                                             ReadytoSummonCardName = TempCard.CardName;
-                                            AddCardToTheBoard(HumanPlayer, HumanPlayerField, newcard);
+                                            
+                                            AddCardToTheBoard(HumanPlayer, HumanPlayerField, TempCard);
                                         }
                                         else
                                             GetNode<RichTextLabel>("Board/ActionMessage").Text = "There aren't available spaces in the board";
@@ -989,10 +967,33 @@ public class Game : Node2D
                                     {
                                         if(ThereIsSpaceInTheBoard(EnemyPlayer, EnemyPlayerField))
                                         {
-                                            AddCardToTheBoard(EnemyPlayer, EnemyPlayerField, newcard);
+                                            TempCard = InstanceANewCardSupport(eff.CardToHandle.ConvertToCardTemplate());
+
+                                            GetNode<Sprite>("Board").AddChild(TempCard, true);
+                                            GetNode<Node2D>("Board/CardSupport").Name = TempCard.CardName;
+                                            TempCard.hasParent = true;
+
+                                            EnemyPlayer.PlayerBoard.HandCards.Add(TempCard);
+                                            ReadytoSummonCardName = TempCard.CardName;
+                                            AddCardToTheBoard(EnemyPlayer, EnemyPlayerField, TempCard);
                                         }
                                         else
                                             GetNode<RichTextLabel>("Board/ActionMessage").Text = "There aren't available spaces in the board";
+                                    }
+                                    break;
+                                case TokenValues.AddCardToDeck:
+                                    Effect = eff.GetValue().ToString();
+                                    TempCard = InstanceANewCardSupport(eff.CardToHandle.ConvertToCardTemplate());
+                                    TempCard.Show();
+                                    if((communistside && HumanPlayer.name == "Communist") || (!communistside && HumanPlayer.name == "Capitalist"))
+                                    {
+                                        HumanPlayer.PlayerBoard.Deck.Add(TempCard);
+                                        ShuffleCards(HumanPlayer.PlayerBoard.Deck);
+                                    }
+                                    else
+                                    {
+                                        EnemyPlayer.PlayerBoard.Deck.Add(TempCard);
+                                        ShuffleCards(EnemyPlayer.PlayerBoard.Deck);
                                     }
                                     break;
                                 default:
@@ -1005,10 +1006,6 @@ public class Game : Node2D
                     {
                         GetNode<RichTextLabel>("Board/ActionMessage").Text = "This card don't have effects";
                     }
-                    if(GetNode<CardSupport>("Board/" + SelectedCardName).cardtype == "Politic")
-                    {
-                        DestroyCard(GetNode<CardSupport>("Board/"+SelectedCardName));
-                    }
 
                     GetNode<CardSupport>("Board/" + SelectedCardName).hasActivatedEffect = true;
                 }
@@ -1017,9 +1014,54 @@ public class Game : Node2D
                     GetNode<RichTextLabel>("Board/ActionMessage").Text = SelectedCardName + " has already activated effect";
                 }
             }
-
-            
         }
+    }
+
+    private void CleanBoardPolitics()
+    {
+        List<CardSupport> ToDestroy = new List<CardSupport>();
+        foreach(CardSupport cardSupport in HumanPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            if(cardSupport.cardtype == TokenValues.Politic && cardSupport.hasActivatedEffect)
+                ToDestroy.Add(cardSupport);
+        }
+        foreach(CardSupport cardSupport in EnemyPlayer.PlayerBoard.CardsOnBoard.Keys)
+        {
+            if(cardSupport.cardtype == TokenValues.Politic && cardSupport.hasActivatedEffect)
+                ToDestroy.Add(cardSupport);
+        }
+
+        foreach(CardSupport cardSupport in ToDestroy)
+            DestroyCard(cardSupport);
+    }
+
+    private CardSupport InstanceANewCardSupport(CardTemplate cardTemplate)
+    {
+        NewNode = (PackedScene)GD.Load("res://CardSupport.tscn");
+        CardSupport newcard = (CardSupport)NewNode.Instance();
+
+        var CardTexture = new ImageTexture();
+        CardTexture.Load(System.IO.Directory.GetCurrentDirectory() + "/Textures/Card.jpg");
+
+        newcard.GetNode<Sprite>("CardMargin/BackgroundCard").Texture = CardTexture;
+        newcard.GetNode<MarginContainer>("CardMargin").RectSize = GetNode<MarginContainer>("Board/CardOnBoardMargin").RectSize;
+
+        newcard.CardName = cardTemplate.CardName;
+        newcard.Lore = cardTemplate.Lore;
+        newcard.political_current = cardTemplate.political_current;
+        newcard.Attack = cardTemplate.Attack;
+        newcard.Health = cardTemplate.Health;
+        newcard.EffectText = cardTemplate.EffectText;
+        newcard.Effect = cardTemplate.Effect;
+        newcard.cardtype = cardTemplate.cardtype;
+        newcard.Rareness = cardTemplate.Rareness;
+        newcard.PathToPhoto = cardTemplate.PathToPhoto;
+
+        newcard.Hide();
+
+        MakeCard(newcard);
+
+        return newcard;
     }
 
     private void AddCardToTheBoard(PlayerTemplate Player, List<Position2D> PlayerField, CardSupport newcard)
@@ -1029,6 +1071,7 @@ public class Game : Node2D
             if (!Player.PlayerBoard.CardsOnBoard.ContainsValue(PlayerField.ElementAt(i)))
             {
                 MakeSummon(PlayerField[i]);
+                break;
             }
         }
         newcard.Show();

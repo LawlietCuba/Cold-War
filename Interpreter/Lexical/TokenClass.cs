@@ -17,11 +17,16 @@ public class Token
     }
 }
 
-public struct CodeLocation
+public class CodeLocation
 {
-    public string File;
-    public int Line;
-    public int Column;
+    public string File{get;set;}
+    public int Line{get;set;}
+    public int Column{get;set;}
+
+    public CodeLocation()
+    {
+        
+    }
 }
 
 

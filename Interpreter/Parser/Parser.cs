@@ -592,6 +592,7 @@ public class Parser
         {
             Stream.MoveNext(1);
             code_card_effect.Add(Stream.LookAhead());
+
             if(Stream.LookAhead().Value == TokenValues.OpenSquareBracket) BalanceSquareBrackets++;
             if(Stream.LookAhead().Value == TokenValues.ClosedSquareBracket) BalanceSquareBrackets--;
             if(BalanceSquareBrackets == 0) break;

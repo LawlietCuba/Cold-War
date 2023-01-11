@@ -118,11 +118,9 @@ public class EffectParser : Parser
                     break;
                 case TokenValues.AddCardToDeck:
                 case TokenValues.AddCardToBoard:
-                    // GD.Print("Tienes un AddCardToBoard");
                     ParseEffectWithCard(program, errors);
                     break;
                 default:
-                    // GD.Print(Stream.LookAhead().Value);
                     errors.Add(new CompilingError(Stream.LookAhead().Location, ErrorCode.Invalid, "Bad expression"));
                     return program;
             }

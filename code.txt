@@ -25,12 +25,11 @@ Card DonaldTrump
     Attack = 4000;
     political_current = Capitalist;
     PathToPhoto = "trump";
-    EffectText = "Si su vida es mayor que 3000, aumenta el ataque de una carta en 1500 y disminuye la vida de una carta en 900";
+    EffectText = "Si su vida es mayor que 3000, aumenta el ataque de una carta en 1500";
     Effect = [
         if(DonaldTrump.Health>=3000)
         {
             IncreaseAttack(1500);
-            DecreaseHealth(900);
         }
     ]
 }
@@ -335,7 +334,7 @@ Card FidelCastroRuz
             Lore = "The history will absorb me";
             political_current = Communist;
             PathToPhoto = ;
-            EffectText = "Aumenta la vida de una carta en el campo en mil";
+            EffectText = "Aumenta la vida de una carta en el campo en 1000";
             Effect = 
             [
                 IncreaseHealth(1000);
@@ -355,6 +354,26 @@ Card FriederichEngels
     Attack = 5235;
     political_current = Communist;
     PathToPhoto = "Engels";
+    EffectText = "Add a Anti-Dühring to the Deck";
+    Effect =
+    [
+        import Decks;
+        Card AntiDühring
+        {
+            CardType = Politic;
+            Rareness = Legendary;
+            Lore = "Anti-Dühring is a book by Friedrich Engels, first published in German in 1878";
+            political_current = Communist;
+            PathToPhoto = ;
+            EffectText = "Destroy a card on the board";
+            Effect =
+            [
+                DestroyCard();
+            ]
+        }
+
+        AddCardToDeck(AntiDühring);
+    ]
 }
 
 Card KarlMarx
